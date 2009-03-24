@@ -1,48 +1,51 @@
 CREATE TABLE Item (
-		itemId INTEGER(9),
-		title VARCHAR(30),
-		genreId INTEGER(9),
-		rating INTEGER(2),
+		itemId INTEGER PRIMARY KEY AUTOINCREMENT,
+		title VARCHAR(30) NOT NULL,
+		genreId INTEGER NOT NULL,
+		rating INTEGER(2) NOT NULL DEFAULT 0,
 		year INTEGER(4),
-		dateAdded DATE,
+		dateAdded DATE NOT NULL,
 		notes VARCHAR,
-		PRIMARY KEY (itemId)
+		FOREIGN KEY (genreId) REFERENCES Genre(genreId)
 );
 
 CREATE TABLE Person (
-		personId INTEGER(9),
-		fName VARCHAR(30),
-		lName VARCHAR(30),
-		PRIMARY KEY (personId)
+		personId INTEGER PRIMARY KEY AUTOINCREMENT,
+		fName VARCHAR(30) NOT NULL,
+		lName VARCHAR(30) NOT NULL
 );
 
 CREATE TABLE Tag (
-		tagId INTEGER(9),
-		name VARCHAR(30),
-		PRIMARY KEY (tagId)
+		tagId INTEGER PRIMARY KEY AUTOINCREMENT,
+		name VARCHAR(30) NOT NULL
+);
+
+CREATE TABLE Genre (
+		genreId INTEGER PRIMARY KEY AUTOINCREMENT,
+		name VARCHAR(30)
 );
 
 CREATE TABLE DVD (
-		itemId INTEGER(9),
+		itemId INTEGER,
 		directorName VARCHAR(60),
 		PRIMARY KEY (itemId),
 		FOREIGN KEY (itemId) REFERENCES Item(itemId)
 );
 
 CREATE TABLE CD (
-		itemId INTEGER(9),
+		itemId INTEGER,
 		PRIMARY KEY (itemId),
 		FOREIGN KEY (itemId) REFERENCES Item(itemId)
 );
 
 CREATE TABLE VideoGame (
-		itemId INTEGER(9),
+		itemId INTEGER,
 		PRIMARY KEY (itemId),
 		FOREIGN KEY (itemId) REFERENCES Item(itemId)
 );
 
 CREATE TABLE Book (
-		itemId INTEGER(9),
+		itemId INTEGER,
 		publisher VARCHAR(30),
 		isbn CHAR(13),
 		PRIMARY KEY (itemId),
@@ -50,24 +53,24 @@ CREATE TABLE Book (
 );
 
 CREATE TABLE BookAuthor (
-		book_itemId INTEGER(9),
-		author_personId INTEGER(9),
+		book_itemId INTEGER,
+		author_personId INTEGER,
 		PRIMARY KEY (book_itemId, author_personId),
 		FOREIGN KEY (book_itemId) REFERENCES Book(itemId),
 		FOREIGN KEY (author_personId) REFERENCES Person(personId)
 );
 
 CREATE TABLE CDArtist (
-		cd_itemId INTEGER(9),
-		artist_personId INTEGER(9),
+		cd_itemId INTEGER,
+		artist_personId INTEGER,
 		PRIMARY KEY (cd_itemId, artist_personId),
 		FOREIGN KEY (cd_itemId) REFERENCES CD(itemId),
 		FOREIGN KEY (artist_personId) REFERENCES Person(personId)
 );
 
 CREATE TABLE ItemTag (
-		itemId INTEGER(9),
-		tagId INTEGER(9),
+		itemId INTEGER,
+		tagId INTEGER,
 		PRIMARY KEY (itemId, tagId),
 		FOREIGN KEY (itemId) REFERENCES Item(itemId),
 		FOREIGN KEY (tagId) REFERENCES Tag(tagId)
