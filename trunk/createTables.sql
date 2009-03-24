@@ -46,5 +46,21 @@ CREATE TABLE Book (
 		publisher VARCHAR(30),
 		isbn CHAR(13),
 		PRIMARY KEY (itemId),
-		FOREIGN KEY (itemId) REFERENCES Item(itemid)
+		FOREIGN KEY (itemId) REFERENCES Item(itemId)
+);
+
+CREATE TABLE BookAuthor (
+		book_itemId INTEGER(9),
+		author_personId INTEGER(9),
+		PRIMARY KEY (book_itemId, author_personId),
+		FOREIGN KEY (book_itemId) REFERENCES Book(itemId),
+		FOREIGN KEY (author_personId) REFERENCES Person(personId)
+);
+
+CREATE TABLE CDArtist (
+		cd_itemId INTEGER(9),
+		artist_personId INTEGER(9),
+		PRIMARY KEY (cd_itemId, artist_personId),
+		FOREIGN KEY (cd_itemId) REFERENCES CD(itemId),
+		FOREIGN KEY (artist_personId) REFERENCES Person(personId)
 );
