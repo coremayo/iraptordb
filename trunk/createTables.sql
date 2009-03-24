@@ -64,3 +64,11 @@ CREATE TABLE CDArtist (
 		FOREIGN KEY (cd_itemId) REFERENCES CD(itemId),
 		FOREIGN KEY (artist_personId) REFERENCES Person(personId)
 );
+
+CREATE TABLE ItemTag (
+		itemId INTEGER(9),
+		tagId INTEGER(9),
+		PRIMARY KEY (itemId, tagId),
+		FOREIGN KEY (itemId) REFERENCES Item(itemId),
+		FOREIGN KEY (tagId) REFERENCES Tag(tagId)
+);
