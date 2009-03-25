@@ -186,6 +186,7 @@ public class iRaptorGUI extends javax.swing.JFrame {
     * @param args the command line arguments
     */
     public static void main(String args[]) {
+			Class.forName("org.jdesktop.layout");
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
