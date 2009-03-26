@@ -196,9 +196,9 @@ public class raptorAddGUI extends javax.swing.JFrame {
           Class.forName("org.sqlite.JDBC");
           conn = DriverManager.getConnection("jdbc:sqlite:test.db");
           Statement query = conn.createStatement();
-          String s = "INSERT INTO Item(title, genre, rating, year, dateAdded, notes) VALUES ('" + title + "','" + genreType + "','" + rating + "','" + yearReleased + "', CURRENT_TIMESTAMP" + "','" + notes + "');";
+          String s = "INSERT INTO Item(title, genre, rating, year, dateAdded, notes) VALUES ('" + title + "','" + genreType + "'," + rating + "," + yearReleased + ", CURRENT_TIMESTAMP" + ",'" + notes + "');";
           query.executeUpdate(s);
-          }catch(Exception e){}
+          }catch(Exception e){System.out.println(e.getMessage());}
           finally{
               try{
                   if (conn != null) conn.close();} catch(SQLException e){}}

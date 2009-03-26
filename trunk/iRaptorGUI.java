@@ -32,42 +32,26 @@ public class iRaptorGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tabPanel = new javax.swing.JTabbedPane();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        movieTable = new javax.swing.JTable();
+        movieTab = new javax.swing.JTabbedPane();
         jScrollPane2 = new javax.swing.JScrollPane();
         bookTable = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
         gameTable = new javax.swing.JTable();
         jScrollPane4 = new javax.swing.JScrollPane();
         CDTable = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        movieTextArea = new javax.swing.JTextArea();
         addItemButton = new javax.swing.JButton();
         removeItemButton = new javax.swing.JButton();
         searchButton = new javax.swing.JButton();
         recommendButton = new javax.swing.JButton();
+        updateButton = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        movieTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
-            },
-            new String [] {
-                "Name", "Director", "Year Released", "Genre", "Rating", "Date Added", "Tags", "Other"
-            }
-        ));
-        movieTable.setColumnSelectionAllowed(true);
-        jScrollPane5.setViewportView(movieTable);
-        movieTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        movieTable.getColumnModel().getColumn(2).setResizable(false);
-
-        tabPanel.addTab("Movies", jScrollPane5);
 
         bookTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -82,7 +66,7 @@ public class iRaptorGUI extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(bookTable);
 
-        tabPanel.addTab("Books", jScrollPane2);
+        movieTab.addTab("Books", jScrollPane2);
 
         gameTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -97,7 +81,7 @@ public class iRaptorGUI extends javax.swing.JFrame {
         ));
         jScrollPane3.setViewportView(gameTable);
 
-        tabPanel.addTab("Games", jScrollPane3);
+        movieTab.addTab("Games", jScrollPane3);
 
         CDTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -112,7 +96,29 @@ public class iRaptorGUI extends javax.swing.JFrame {
         ));
         jScrollPane4.setViewportView(CDTable);
 
-        tabPanel.addTab("CDs", jScrollPane4);
+        movieTab.addTab("CDs", jScrollPane4);
+
+        movieTextArea.setColumns(20);
+        movieTextArea.setRows(5);
+        jScrollPane5.setViewportView(movieTextArea);
+
+        org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .add(jScrollPane5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 792, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(94, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanel1Layout.createSequentialGroup()
+                .add(jScrollPane5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 360, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
+
+        movieTab.addTab("Movies", jPanel1);
 
         addItemButton.setText("Add Item");
         addItemButton.addActionListener(new java.awt.event.ActionListener() {
@@ -132,6 +138,13 @@ public class iRaptorGUI extends javax.swing.JFrame {
 
         recommendButton.setText("Recommend");
 
+        updateButton.setText("Update Table");
+        updateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateButtonActionPerformed(evt);
+            }
+        });
+
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
 
@@ -147,7 +160,6 @@ public class iRaptorGUI extends javax.swing.JFrame {
             .add(layout.createSequentialGroup()
                 .addContainerGap()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(tabPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 901, Short.MAX_VALUE)
                     .add(layout.createSequentialGroup()
                         .add(addItemButton)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
@@ -155,20 +167,25 @@ public class iRaptorGUI extends javax.swing.JFrame {
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                         .add(searchButton)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                        .add(recommendButton)))
-                .addContainerGap())
+                        .add(recommendButton)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                        .add(updateButton)
+                        .addContainerGap(444, Short.MAX_VALUE))
+                    .add(layout.createSequentialGroup()
+                        .add(movieTab, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 901, Short.MAX_VALUE)
+                        .add(144, 144, 144))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
+            .add(layout.createSequentialGroup()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(addItemButton)
                     .add(removeItemButton)
                     .add(searchButton)
-                    .add(recommendButton))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 13, Short.MAX_VALUE)
-                .add(tabPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 408, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                    .add(recommendButton)
+                    .add(updateButton))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 24, Short.MAX_VALUE)
+                .add(movieTab, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 408, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -182,11 +199,37 @@ public class iRaptorGUI extends javax.swing.JFrame {
         /* Remove selected item from database */
 }//GEN-LAST:event_removeItemButtonActionPerformed
 
+    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
+        Connection conn = null;
+          try{
+          Class.forName("org.sqlite.JDBC");
+          String mainTitle = null;
+          String mainGenre = null;
+          String mainTimeStamp = null;
+          String mainRating = null;
+          String mainAdded = null;
+
+          conn = DriverManager.getConnection("jdbc:sqlite:test.db");
+          Statement query = conn.createStatement();
+          ResultSet rs = query.executeQuery("select * from Item;");
+          while(rs.next()){
+              mainTitle = rs.getString("title");
+              mainGenre = rs.getString("genre");
+              mainRating = rs.getString("rating");
+              mainAdded = rs.getString("year");
+              mainTimeStamp = rs.getString("dateAdded");
+              String s  =  mainTitle + "," + mainGenre + "," + mainRating + "," + mainAdded + "," + mainTimeStamp +"\n";
+              movieTextArea.append(s);
+          }
+          
+          
+          }catch(Exception e){System.out.println(e.getMessage());}
+    }//GEN-LAST:event_updateButtonActionPerformed
+
     /**
     * @param args the command line arguments
     */
     public static void main(String args[]) {
-		
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
@@ -203,16 +246,18 @@ public class iRaptorGUI extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTable movieTable;
+    private javax.swing.JTabbedPane movieTab;
+    private javax.swing.JTextArea movieTextArea;
     private javax.swing.JButton recommendButton;
     private javax.swing.JButton removeItemButton;
     private javax.swing.JButton searchButton;
-    private javax.swing.JTabbedPane tabPanel;
+    private javax.swing.JButton updateButton;
     // End of variables declaration//GEN-END:variables
 
 }
