@@ -29,7 +29,7 @@ public class DBUtil {
 	 * @param notes
 	 * @return The new item's id or a negative value if unsuccessful
 	 */
-	private int addItem(String title, String genre, 
+	private static int addItem(String title, String genre, 
 			int rating, int year, String notes) {
 		//add a new row to the item table with a specified title and 
 		//date added being the current timestamp
@@ -46,6 +46,20 @@ public class DBUtil {
 	}
 	
 	/**
+	 * The removeItem function will remove the row in the Item table with the 
+	 * specified itemId
+	 * @param itemId the itemId of the item to be removed.
+	 * @return Positive integer if successful, negative otherwise.
+	 */
+	private static int removeItem(int itemId){
+		int ret = -1;
+		String sqltxt = "DELETE FROM Item WHERE itemId = " + itemId + ";";
+		
+		ret = insertQuery(sqltxt);
+		return ret;
+	}
+	
+	/**
 	 * The addBook function will add a new row into the Item table then add a 
 	 * row to the Book table with the same itemId. The only parameter required 
 	 * is title; all others can be set to null if unknown.
@@ -59,7 +73,7 @@ public class DBUtil {
 	 * @return The itemId of the newly added book or a 
 	 * negative value if unsuccessful.
 	 */
-	public int addBook(String title, String genre, int rating, 
+	public static int addBook(String title, String genre, int rating, 
 			int year, String notes, String publisher, String isbn) {
 		int itemId;
 		String sqltxt;
@@ -87,12 +101,32 @@ public class DBUtil {
 	}
 	
 	/**
+	 * The removeBook function will remove the row from the Item and Book 
+	 * tables which have the same itemId.  
+	 * @param itemId The itemId of the item which will be removed.
+	 * @return A positive integer if successful, negative if failed.
+	 */
+	public static int removeBook(int itemId) {
+		int ret = -1;
+		String sqltxt;
+		
+		if ((ret = removeItem(itemId)) < 0) {
+			return ret;
+		}
+		
+		sqltxt = "DELETE FROM Book WHERE itemId = " + itemId + ";";
+		
+		ret = insertQuery(sqltxt);
+		return ret;
+	}
+	
+	/**
 	 * The getTitle function will return the title in the Item table in the 
 	 * database associated with the specified itemId
 	 * @param itemId itemId which we will look up
 	 * @return that particular item's title or empty string if problems arise
 	 */
-	public String getTitle(int itemId) {
+	public static String getTitle(int itemId) {
 		//this sql query will get the title for the given itemId
 		String sqltxt = 
 			 "SELECT title FROM Item " +
@@ -137,7 +171,7 @@ public class DBUtil {
 	 * @param input string which might cause SQL injection
 	 * @return string which should not cause SQL injection
 	 */
-	private String makeSQLSafe(String input) {
+	private static String makeSQLSafe(String input) {
 		String output;
 		
 		/* TODO 
@@ -153,7 +187,7 @@ public class DBUtil {
 	 * @param sqltxt INSERT statement to send
 	 * @return positive value if successful, negative if failed
 	 */
-	private int insertQuery(String sqltxt) {
+	private static int insertQuery(String sqltxt) {
 		int ret = -1;
 		Connection conn = null; //first, set up connection
 		try {
@@ -189,10 +223,11 @@ public class DBUtil {
 	 * @return the itemId of the item added to the database most recently or a 
 	 * negative value if something failed
 	 */
-	public int mostRecentItem() {
+	public static int mostRecentItem() {
 		//Since we are autoincrementing, the most recent 
 		//item should be the one with the max itemId.
 		String sqltxt = "SELECT MAX(itemId) AS itemId FROM Item;";
+		int ret = -1;
 
 		Connection conn = null; //same stuff to set up connection
 		try {
@@ -200,11 +235,11 @@ public class DBUtil {
 			conn = DriverManager.getConnection("jdbc:sqlite:" + fileName.getName());
 			Statement query = conn.createStatement();
 			ResultSet rs = query.executeQuery(sqltxt);
-			return rs.getInt("itemId");
+			ret = rs.getInt("itemId");
 		}
 		catch (Exception e) {
 			System.err.println(e.getMessage());
-			return -1;
+			ret = -1;
 		}
 		finally {
 			if (conn != null) {
@@ -216,5 +251,6 @@ public class DBUtil {
 				}
 			}
 		}
+		return ret;
 	}
 }
