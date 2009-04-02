@@ -7,6 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/* TODO convert sql queries to use prepared statements
+ * useful website about prepared statements and sql injection:
+ * http://www.owasp.org/index.php/Preventing_SQL_Injection_in_Java
+ */
+
 /**
  * This class is used to interface with the database. Any function that 
  * interacts directly should be put in this file, so that it is all in one 
@@ -235,7 +240,8 @@ public class DBUtil {
 	private static String makeSQLSafe(String input) {
 		String output;
 		
-		/* TODO 
+		/* TODO implement makeSQLSafe function 
+		 * (wont be needed if using prepared statements)
 		 * make this function actually do something :)
 		 * perhaps it could replace all ' with '' for starters 
 		 */
