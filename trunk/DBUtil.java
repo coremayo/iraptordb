@@ -46,6 +46,33 @@ public class DBUtil {
 	}
 	
 	/**
+	 * This function will modify the row in the Item table with the specified 
+	 * itemId with the given values 
+	 * @param itemId
+	 * @param title
+	 * @param genre
+	 * @param rating
+	 * @param year
+	 * @param notes
+	 * @return The itemId modified if successful or a negative value otherwise.
+	 */
+	private static int updateItem(int itemId, String title, String genre, 
+			int rating, int year, String notes) {
+		String sqltxt = 
+			"UPDATE Item " +
+			   "SET title='" + makeSQLSafe(title) + "', " + 
+			        "genre='" + makeSQLSafe(genre) + "', " +
+			        "rating=" + rating + ", " +
+			        "year=" + year + " " + 
+			 "WHERE itemId=" + itemId + ";";
+		
+		if (insertQuery(sqltxt) > 0) {
+			return itemId;
+		}
+		return -1;
+	}
+	
+	/**
 	 * The removeItem function will remove the row in the Item table with the 
 	 * specified itemId
 	 * @param itemId the itemId of the item to be removed.
@@ -98,6 +125,40 @@ public class DBUtil {
 		
 		return -4; // chosen by fair dice roll.
 		           // guaranteed to be random.
+	}
+	
+	/**
+	 * This function will modify the row in the Book table with the specified 
+	 * itemId and the given values. 
+	 * @param itemId
+	 * @param title
+	 * @param genre
+	 * @param rating
+	 * @param year
+	 * @param notes
+	 * @param publisher
+	 * @param isbn
+	 * @return The book's itemId if successful or a negative value otherwise.
+	 */
+	public static int updateBook(int itemId, String title, String genre, 
+			int rating, int year, String notes, String publisher, String isbn) {
+		String sqltxt;
+		
+		if (updateItem(itemId, title, genre, rating, year, notes) < 0) {
+			return -1;
+		}
+		
+		sqltxt = 
+			"UPDATE Book " +
+			   "SET publisher='" + makeSQLSafe(publisher) + "', " +
+			   		"isbn='" + makeSQLSafe(isbn) + "' " +
+			 "WHERE itemId=" + itemId + ";";
+		
+		if (insertQuery(sqltxt) < 0) {
+			return -1;
+		}
+		
+		return itemId;
 	}
 	
 	/**
@@ -183,7 +244,8 @@ public class DBUtil {
 	}
 	
 	/**
-	 * This function will send an INSERT statement to the database
+	 * This function will send an INSERT, UPDATE, or DELETE 
+	 * statement to the database
 	 * @param sqltxt INSERT statement to send
 	 * @return positive value if successful, negative if failed
 	 */
