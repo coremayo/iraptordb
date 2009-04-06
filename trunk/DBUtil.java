@@ -3,6 +3,7 @@
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -36,18 +37,52 @@ public class DBUtil {
 	 */
 	private static int addItem(String title, String genre, 
 			int rating, int year, String notes) {
-		//add a new row to the item table with a specified title and 
-		//date added being the current timestamp
+		int ret = -1;
 		String sqltxt = 
-			"INSERT INTO Item (title, dateAdded) " +
-			"VALUES ('" + makeSQLSafe(title) + "', CURRENT_TIMESTAMP)";
+			"INSERT INTO Item (" +
+			             "title, " +
+			             "genre, " +
+			             "rating, " +
+			             "year, " +
+			             "notes, " +
+			             "dateAdded" +
+			") VALUES (" +
+			             "?, " +
+			             "?, " +
+			             "?, " +
+			             "?, " +
+			             "?, " +
+			             "CURRENT_TIMESTAMP);";
 		
-		if (insertQuery(sqltxt) > 0) {
-			return mostRecentItem();
+		Connection conn = null;
+		
+		try {
+			Class.forName("org.sqlite.JDBC");
+			conn = DriverManager.getConnection(
+					"jdbc:sqlite:" + fileName.getName());
+			
+			PreparedStatement ps = conn.prepareStatement(sqltxt);
+			ps.setString(1, title);
+			ps.setString(2, genre);
+			ps.setInt(3, rating);
+			ps.setInt(4, year);
+			ps.setString(5, notes);
+			ps.execute();
+			
+			ret = mostRecentItem();
+		} catch (Exception e) {
+			ret = -1;
+			System.err.println(e.getMessage());
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (Exception e) {
+					System.err.println(e.getMessage());
+				}
+			}
 		}
-		else {
-			return -1;
-		}
+		return ret;
 	}
 	
 	/**
@@ -63,18 +98,46 @@ public class DBUtil {
 	 */
 	private static int updateItem(int itemId, String title, String genre, 
 			int rating, int year, String notes) {
+		int ret = -1;
 		String sqltxt = 
-			"UPDATE Item " +
-			   "SET title='" + makeSQLSafe(title) + "', " + 
-			        "genre='" + makeSQLSafe(genre) + "', " +
-			        "rating=" + rating + ", " +
-			        "year=" + year + " " + 
-			 "WHERE itemId=" + itemId + ";";
+		"UPDATE Item " +
+		   "SET title=?, " + 
+		        "genre=?, " +
+		        "rating=?, " +
+		        "year=?, " + 
+		        "notes=? " +
+		 "WHERE itemId=?;";
 		
-		if (insertQuery(sqltxt) > 0) {
-			return itemId;
+		Connection conn = null;
+		
+		try {
+			Class.forName("org.sqlite.JDBC");
+			conn = DriverManager.getConnection(
+					"jdbc:sqlite:" + fileName.getName());
+			
+			PreparedStatement ps = conn.prepareStatement(sqltxt);
+			ps.setString(1, title);
+			ps.setString(2, genre);
+			ps.setInt(3, rating);
+			ps.setInt(4, year);
+			ps.setString(5, notes);
+			ps.setInt(6, itemId);
+			ps.execute();
+			
+			ret = itemId;
+		} catch (Exception e) {
+			ret = -1;
+			System.err.println(e.getMessage());
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (Exception e) {
+					System.err.println(e.getMessage());
+				}
+			}
 		}
-		return -1;
+		return ret;
 	}
 	
 	/**
@@ -85,9 +148,32 @@ public class DBUtil {
 	 */
 	private static int removeItem(int itemId){
 		int ret = -1;
-		String sqltxt = "DELETE FROM Item WHERE itemId = " + itemId + ";";
+		//parameterized form of our sql query
+		String sqltxt = "DELETE FROM Item WHERE itemId = ?";
+		Connection conn = null;
 		
-		ret = insertQuery(sqltxt);
+		try {
+			Class.forName("org.sqlite.JDBC");
+			conn = DriverManager.getConnection(
+					"jdbc:sqlite:" + fileName.getName());
+			
+			PreparedStatement ps = conn.prepareStatement(sqltxt);
+			ps.setInt(1, itemId);
+			ps.execute();
+			
+			ret = 1;
+		} catch (Exception e) {
+			ret = -1;
+			System.err.println(e.getMessage());
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (Exception e) {
+					System.err.println(e.getMessage());
+				}
+			}
+		}
 		return ret;
 	}
 	
@@ -108,11 +194,12 @@ public class DBUtil {
 	public static int addBook(String title, String genre, int rating, 
 			int year, String notes, String publisher, String isbn) {
 		int itemId;
+		int ret = -1;
 		String sqltxt;
 		
 		itemId = addItem(title, genre, rating, year, notes);
 		if (itemId < 0) {  //if a negative value was returned from
-			return itemId; //adding to the Item table, then we have failed.
+			return ret; //adding to the Item table, then we have failed.
 		}
 		
 		sqltxt = "INSERT INTO Book (" +
@@ -120,16 +207,37 @@ public class DBUtil {
 				              "publisher, " +
 				              "isbn" +
 				    ") VALUES (" + 
-				              itemId + ", '" + 
-				              makeSQLSafe(publisher) + "', '" + 
-				              makeSQLSafe(isbn) + "');";
+				              "?, " +
+				              "?, " +
+				              "?);";
 		
-		if (insertQuery(sqltxt) > 0) {
-			return itemId;
+		Connection conn = null;
+		
+		try {
+			Class.forName("org.sqlite.JDBC");
+			conn = DriverManager.getConnection(
+					"jdbc:sqlite:" + fileName.getName());
+			
+			PreparedStatement ps = conn.prepareStatement(sqltxt);
+			ps.setInt(1, itemId);
+			ps.setString(2, publisher);
+			ps.setString(3, isbn);
+			ps.execute();
+			
+			ret = itemId;
+		} catch (Exception e) {
+			ret = -1;
+			System.err.println(e.getMessage());
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (Exception e) {
+					System.err.println(e.getMessage());
+				}
+			}
 		}
-		
-		return -4; // chosen by fair dice roll.
-		           // guaranteed to be random.
+		return ret;
 	}
 	
 	/**
@@ -148,22 +256,44 @@ public class DBUtil {
 	public static int updateBook(int itemId, String title, String genre, 
 			int rating, int year, String notes, String publisher, String isbn) {
 		String sqltxt;
-		
+		int ret = -1;
 		if (updateItem(itemId, title, genre, rating, year, notes) < 0) {
-			return -1;
+			return ret;
 		}
 		
 		sqltxt = 
 			"UPDATE Book " +
-			   "SET publisher='" + makeSQLSafe(publisher) + "', " +
-			   		"isbn='" + makeSQLSafe(isbn) + "' " +
-			 "WHERE itemId=" + itemId + ";";
+			   "SET publisher=?, " +
+			   		"isbn=? " +
+			 "WHERE itemId=?;";
 		
-		if (insertQuery(sqltxt) < 0) {
-			return -1;
+		Connection conn = null;
+		
+		try {
+			Class.forName("org.sqlite.JDBC");
+			conn = DriverManager.getConnection(
+					"jdbc:sqlite:" + fileName.getName());
+			
+			PreparedStatement ps = conn.prepareStatement(sqltxt);
+			ps.setString(1, publisher);
+			ps.setString(2, isbn);
+			ps.setInt(3, itemId);
+			ps.execute();
+			
+			ret = itemId;
+		} catch (Exception e) {
+			ret = -1;
+			System.err.println(e.getMessage());
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (Exception e) {
+					System.err.println(e.getMessage());
+				}
+			}
 		}
-		
-		return itemId;
+		return ret;
 	}
 	
 	/**
@@ -174,15 +304,34 @@ public class DBUtil {
 	 */
 	public static int removeBook(int itemId) {
 		int ret = -1;
-		String sqltxt;
-		
-		if ((ret = removeItem(itemId)) < 0) {
+		if ((removeItem(itemId)) < 0) {
 			return ret;
 		}
+		String sqltxt = "DELETE FROM Book WHERE itemId = ?;";
+		Connection conn = null;
 		
-		sqltxt = "DELETE FROM Book WHERE itemId = " + itemId + ";";
-		
-		ret = insertQuery(sqltxt);
+		try {
+			Class.forName("org.sqlite.JDBC");
+			conn = DriverManager.getConnection(
+					"jdbc:sqlite:" + fileName.getName());
+			
+			PreparedStatement ps = conn.prepareStatement(sqltxt);
+			ps.setInt(1, itemId);
+			ps.execute();
+			
+			ret = 1;
+		} catch (Exception e) {
+			ret = -1;
+			System.err.println(e.getMessage());
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (Exception e) {
+					System.err.println(e.getMessage());
+				}
+			}
+		}
 		return ret;
 	}
 	
