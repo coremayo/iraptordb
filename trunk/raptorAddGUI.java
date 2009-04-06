@@ -1,5 +1,6 @@
-import java.sql.*;
-import java.util.Scanner;
+package iRaptorPackage;
+
+
 
 /*
  * To change this template, choose Tools | Templates
@@ -21,6 +22,7 @@ public class raptorAddGUI extends javax.swing.JFrame {
     /** Creates new form raptorAddGUI */
     public raptorAddGUI() {
         initComponents();
+
 
     }
     /** This method is called from within the constructor to
@@ -50,7 +52,7 @@ public class raptorAddGUI extends javax.swing.JFrame {
         closeButton = new javax.swing.JButton();
         genreTextField = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Add Item");
 
         jLabel1.setText("Type");
 
@@ -95,6 +97,7 @@ public class raptorAddGUI extends javax.swing.JFrame {
         notesArea.setPreferredSize(new java.awt.Dimension(6, 20));
         jScrollPane2.setViewportView(notesArea);
 
+        closeButton.setVisible(false);
         closeButton.setText("Close");
         closeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -187,11 +190,15 @@ public class raptorAddGUI extends javax.swing.JFrame {
           Object selectedMediaType = jComboBox1.getSelectedItem();
           String genreType = genreTextField.getText();
           String rating = ratingTextField.getText();
+          int b = Integer.parseInt(rating);
           String title = titleTextField.getText();
           String yearReleased = yearReleasedTextField.getText();
+          int intYearReleased = Integer.parseInt(yearReleased);
           String notes = notesArea.getText();
+          System.out.println(genreType);
+          DBUtil.addBook(title, genreType, b, intYearReleased, notes, "help", "help me");
           /*do stuff with database here */
-          Connection conn = null;
+          /*Connection conn = null;
           try{
           Class.forName("org.sqlite.JDBC");
           conn = DriverManager.getConnection("jdbc:sqlite:test.db");
@@ -201,7 +208,7 @@ public class raptorAddGUI extends javax.swing.JFrame {
           }catch(Exception e){System.out.println(e.getMessage());}
           finally{
               try{
-                  if (conn != null) conn.close();} catch(SQLException e){}}
+                  if (conn != null) conn.close();} catch(SQLException e){}}*/
 
 }//GEN-LAST:event_addItemButtonActionPerformed
 
