@@ -4,9 +4,7 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 /* TODO convert sql queries to use prepared statements
  * useful website about prepared statements and sql injection:
@@ -67,7 +65,7 @@ public class DBUtil {
 			ps.setInt(3, rating);
 			ps.setInt(4, year);
 			ps.setString(5, notes);
-			ps.execute();
+			ps.executeUpdate();
 			
 			ret = mostRecentItem();
 		} catch (Exception e) {
@@ -122,7 +120,7 @@ public class DBUtil {
 			ps.setInt(4, year);
 			ps.setString(5, notes);
 			ps.setInt(6, itemId);
-			ps.execute();
+			ps.executeUpdate();
 			
 			ret = itemId;
 		} catch (Exception e) {
@@ -159,7 +157,7 @@ public class DBUtil {
 			
 			PreparedStatement ps = conn.prepareStatement(sqltxt);
 			ps.setInt(1, itemId);
-			ps.execute();
+			ps.executeUpdate();
 			
 			ret = 1;
 		} catch (Exception e) {
@@ -222,7 +220,7 @@ public class DBUtil {
 			ps.setInt(1, itemId);
 			ps.setString(2, publisher);
 			ps.setString(3, isbn);
-			ps.execute();
+			ps.executeUpdate();
 			
 			ret = itemId;
 		} catch (Exception e) {
@@ -278,7 +276,7 @@ public class DBUtil {
 			ps.setString(1, publisher);
 			ps.setString(2, isbn);
 			ps.setInt(3, itemId);
-			ps.execute();
+			ps.executeUpdate();
 			
 			ret = itemId;
 		} catch (Exception e) {
@@ -317,7 +315,7 @@ public class DBUtil {
 			
 			PreparedStatement ps = conn.prepareStatement(sqltxt);
 			ps.setInt(1, itemId);
-			ps.execute();
+			ps.executeUpdate();
 			
 			ret = 1;
 		} catch (Exception e) {
@@ -344,18 +342,17 @@ public class DBUtil {
 	public static String getTitle(int itemId) {
 		//this sql query will get the title for the given itemId
 		String sqltxt = 
-			 "SELECT title FROM Item " +
-			  "WHERE itemId = " + itemId + ";";
+			 "SELECT title FROM Item WHERE itemId = ?;";
 		
 		Connection conn = null; //first, we need to set up the connection
 		try {
 			Class.forName("org.sqlite.JDBC");
 			conn = DriverManager.getConnection(
 					"jdbc:sqlite:" + fileName.getName());
-			Statement query = conn.createStatement();
+			PreparedStatement ps = conn.prepareStatement(sqltxt);
 			
 			//this will return the first record in the "title" column
-			return query.executeQuery(sqltxt).getString("title");
+			return ps.executeQuery().getString("title");
 		}
 		catch (Exception e) {
 			System.err.println("getTitle function failed");
@@ -375,67 +372,6 @@ public class DBUtil {
 	}              //we will return an empty string
 	
 	/**
-	 * This function takes in a string and escapes every special character
-	 * in it so that it should not cause any SQL injection
-	 * <br /><br />
-	 * For example: in Java <em>"INSERT into Item (title) VALUES ('" + titleVar 
-	 * + "');"</em> should be changed to <em>"INSERT into Item (title) VALUES 
-	 * ('" + makeSQLSafe(titleVar) + "');"</em> so that everything that needs 
-	 * will be escaped
-	 * 
-	 * @param input string which might cause SQL injection
-	 * @return string which should not cause SQL injection
-	 */
-	private static String makeSQLSafe(String input) {
-		String output;
-		
-		/* TODO implement makeSQLSafe function 
-		 * (wont be needed if using prepared statements)
-		 * make this function actually do something :)
-		 * perhaps it could replace all ' with '' for starters 
-		 */
-		output = input;
-		return output;
-	}
-	
-	/**
-	 * This function will send an INSERT, UPDATE, or DELETE 
-	 * statement to the database
-	 * @param sqltxt INSERT statement to send
-	 * @return positive value if successful, negative if failed
-	 */
-	private static int insertQuery(String sqltxt) {
-		int ret = -1;
-		Connection conn = null; //first, set up connection
-		try {
-			Class.forName("org.sqlite.JDBC");
-			conn = DriverManager.getConnection(
-					"jdbc:sqlite:" + fileName.getName());
-			Statement query = conn.createStatement();
-			
-			query.executeUpdate(sqltxt); //this line executes the INSERT
-			
-			ret = 1;
-		}
-		catch (Exception e) { //do some error handling
-			System.err.println("'" + sqltxt + "' failed for some reason");
-			System.err.println(e.getMessage());
-			
-		} finally { //no matter what, try to close connection
-			if (conn != null) {
-				try {
-					conn.close();
-				}
-				catch (SQLException e) {
-					System.err.println(e.getMessage());
-					ret = -1;
-				}
-			}
-		}
-		return ret;
-	}
-	
-	/**
 	 * Finds the most recently added item
 	 * @return the itemId of the item added to the database most recently or a 
 	 * negative value if something failed
@@ -450,9 +386,8 @@ public class DBUtil {
 		try {
 			Class.forName("org.sqlite.JDBC");
 			conn = DriverManager.getConnection("jdbc:sqlite:" + fileName.getName());
-			Statement query = conn.createStatement();
-			ResultSet rs = query.executeQuery(sqltxt);
-			ret = rs.getInt("itemId");
+			PreparedStatement ps = conn.prepareStatement(sqltxt);
+			ret = ps.executeQuery().getInt("itemId");
 		}
 		catch (Exception e) {
 			System.err.println(e.getMessage());
