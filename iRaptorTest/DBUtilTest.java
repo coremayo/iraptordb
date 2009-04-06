@@ -82,6 +82,22 @@ public class DBUtilTest {
 		System.out.println("--mostRecentItem test finished");
 	}
 	
+	@Test
+	public void testFindBookByTitle() {
+		String title = "search for me";
+		String searchString = "search for";
+		int itemId = DBUtil.addBook(title, null, 5, 5, null, null, null);
+		int searchItemId = DBUtil.findBookByTitle(searchString);
+		
+		if (itemId != searchItemId) {
+			System.out.println("returned item: " + searchItemId + " when " +
+					"should have returned: " + itemId);
+			fail("did not find correct item");
+		}
+		
+		System.out.println("--findBookByTitle test finished");
+	}
+	
 	@After
 	public void tearDown() throws Exception { }
 	
