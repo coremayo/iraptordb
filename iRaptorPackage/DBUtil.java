@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -443,6 +444,59 @@ public class DBUtil {
 				}
 			}
 		}
+	}
+	
+	/**
+	 * The findBookByTitle method with attempt to search the database for a 
+	 * book with the given title.
+	 * 
+	 * @param searchTitle the title to search the database for
+	 * @return the itemId of the first book found or a negative value if none 
+	 * were found or a problem occurred
+	 */
+	public static int findBookByTitle(String searchTitle) {
+		int ret = -1;
+		
+		String sqltxt = 
+			    "SELECT Book.itemId " +
+			      "FROM Item " +
+			"INNER JOIN Book " +
+			        "ON Item.itemId=Book.itemId " +
+			     "WHERE title " +
+			      "LIKE ?;";
+		
+		Connection conn = null;
+		
+		try {
+			Class.forName("org.sqlite.JDBC");
+			conn = DriverManager.getConnection("jdbc:sqlite:" + 
+					fileName.getAbsolutePath());
+			PreparedStatement ps = conn.prepareStatement(sqltxt);
+			ps.setString(1, searchTitle);
+			ResultSet rs = ps.executeQuery();
+			rs.first();
+//			System.out.println(rs.first());
+			int retu = rs.getInt("itemId");
+			System.out.println("find returning item: " + retu);
+			return retu;
+			
+			//ret = ps.executeQuery().getInt("itemId");
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			ret = -1;
+		}
+		finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				}
+				catch (SQLException e) {
+					System.err.println(e.getMessage());
+				}
+			}
+		}
+		return ret;
 	}
 	
 	/**
