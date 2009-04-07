@@ -95,6 +95,13 @@ public class DBUtilTest {
 			fail("did not find correct item");
 		}
 		
+		searchString = "NOBOOKSHOULDBETITLEDANYTHINGLIKETHIS";
+		searchItemId = DBUtil.findBookByTitle(searchString);
+		
+		if (!(searchItemId < 0)) {
+			fail("shouldn't have found a book with that title");
+		}
+		
 		System.out.println("--findBookByTitle test finished");
 	}
 	
