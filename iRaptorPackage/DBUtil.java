@@ -457,6 +457,9 @@ public class DBUtil {
 	public static int findBookByTitle(String searchTitle) {
 		int ret = -1;
 		
+		//we have to enclose our search term in %'s for the LIKE keyword to work
+		searchTitle = "%" + searchTitle + "%";
+		
 		String sqltxt = 
 			    "SELECT Book.itemId " +
 			      "FROM Item " +
@@ -474,13 +477,13 @@ public class DBUtil {
 			PreparedStatement ps = conn.prepareStatement(sqltxt);
 			ps.setString(1, searchTitle);
 			ResultSet rs = ps.executeQuery();
-			rs.first();
-//			System.out.println(rs.first());
-			int retu = rs.getInt("itemId");
-			System.out.println("find returning item: " + retu);
-			return retu;
-			
-			//ret = ps.executeQuery().getInt("itemId");
+			if (rs.next()) {
+				ret = rs.getInt("itemId");
+			} else {
+				ret = -1;
+			}
+			rs.close();
+			ps.close();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
