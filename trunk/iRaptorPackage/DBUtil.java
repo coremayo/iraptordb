@@ -29,6 +29,28 @@ public class DBUtil {
 	public static File fileName = new File("test.db");
 	
 	/**
+	 * DBUtil.BOOK_TYPE, DBUtil.DVD_TYPE, DBUtil.VIDEO_GAME_TYPE, and 
+	 * DBUtil.CD_TYPE are ints that are used to determine which type of item 
+	 * are returned by certain functions in the DBUtil class.
+	 */
+	public static final int BOOK_TYPE=1, DVD_TYPE=2, 
+			VIDEO_GAME_TYPE=3, CD_TYPE=4;
+	
+	private static Connection getConnection() {
+		Connection conn = null;
+		
+		try {
+			Class.forName("org.sqlite.JDBC");
+			conn = DriverManager.getConnection(
+					"jdbc:sqlite:" + fileName.getAbsolutePath());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return conn;
+	}
+	
+	/**
 	 * This function will add a new Item to the database then return its itemId
 	 * The only parameter required is the title, all others can be set to null
 	 * @param title
@@ -57,13 +79,9 @@ public class DBUtil {
 			             "?, " +
 			             "CURRENT_TIMESTAMP);";
 		
-		Connection conn = null;
+		Connection conn = getConnection();
 		
 		try {
-			Class.forName("org.sqlite.JDBC");
-			conn = DriverManager.getConnection(
-					"jdbc:sqlite:" + fileName.getAbsolutePath());
-			
 			PreparedStatement ps = conn.prepareStatement(sqltxt);
 			ps.setString(1, title);
 			ps.setString(2, genre);
@@ -71,19 +89,12 @@ public class DBUtil {
 			ps.setInt(4, year);
 			ps.setString(5, notes);
 			ps.executeUpdate();
-			
+			ps.close();
+			conn.close();
 			ret = mostRecentItem();
 		} catch (Exception e) {
 			ret = -1;
 			System.err.println(e.getMessage());
-		} finally {
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (Exception e) {
-					System.err.println(e.getMessage());
-				}
-			}
 		}
 		return ret;
 	}
@@ -111,13 +122,9 @@ public class DBUtil {
 		        "notes=? " +
 		 "WHERE itemId=?;";
 		
-		Connection conn = null;
+		Connection conn = getConnection();
 		
 		try {
-			Class.forName("org.sqlite.JDBC");
-			conn = DriverManager.getConnection(
-					"jdbc:sqlite:" + fileName.getAbsolutePath());
-			
 			PreparedStatement ps = conn.prepareStatement(sqltxt);
 			ps.setString(1, title);
 			ps.setString(2, genre);
@@ -126,19 +133,12 @@ public class DBUtil {
 			ps.setString(5, notes);
 			ps.setInt(6, itemId);
 			ps.executeUpdate();
-			
+			ps.close();
+			conn.close();
 			ret = itemId;
 		} catch (Exception e) {
 			ret = -1;
 			System.err.println(e.getMessage());
-		} finally {
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (Exception e) {
-					System.err.println(e.getMessage());
-				}
-			}
 		}
 		return ret;
 	}
@@ -153,29 +153,18 @@ public class DBUtil {
 		int ret = -1;
 		//parameterized form of our sql query
 		String sqltxt = "DELETE FROM Item WHERE itemId = ?";
-		Connection conn = null;
+		Connection conn = getConnection();
 		
 		try {
-			Class.forName("org.sqlite.JDBC");
-			conn = DriverManager.getConnection(
-					"jdbc:sqlite:" + fileName.getAbsolutePath());
-			
 			PreparedStatement ps = conn.prepareStatement(sqltxt);
 			ps.setInt(1, itemId);
 			ps.executeUpdate();
-			
+			ps.close();
+			conn.close();
 			ret = 1;
 		} catch (Exception e) {
 			ret = -1;
 			System.err.println(e.getMessage());
-		} finally {
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (Exception e) {
-					System.err.println(e.getMessage());
-				}
-			}
 		}
 		return ret;
 	}
@@ -214,32 +203,102 @@ public class DBUtil {
 				              "?, " +
 				              "?);";
 		
-		Connection conn = null;
+		Connection conn = getConnection();
 		
 		try {
-			Class.forName("org.sqlite.JDBC");
-			conn = DriverManager.getConnection(
-					"jdbc:sqlite:" + fileName.getAbsolutePath());
-			
 			PreparedStatement ps = conn.prepareStatement(sqltxt);
 			ps.setInt(1, itemId);
 			ps.setString(2, publisher);
 			ps.setString(3, isbn);
 			ps.executeUpdate();
-			
+			ps.close();
+			conn.close();
 			ret = itemId;
 		} catch (Exception e) {
 			ret = -1;
 			System.err.println(e.getMessage());
-		} finally {
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (Exception e) {
-					System.err.println(e.getMessage());
-				}
-			}
 		}
+		return ret;
+	}
+	
+	/**
+	 * Adds a new DVD to the database
+	 * @param title
+	 * @param genre
+	 * @param rating
+	 * @param year
+	 * @param notes
+	 * @param director
+	 * @return The itemId of the newly added DVD or a negative if it failed.
+	 */
+	public static int addDVD(String title, String genre, int rating, int year, 
+			String notes, String director) {
+		int ret = -1, itemId;
+		String sqltxt;
+		
+		itemId = addItem(title, genre, rating, year, notes);
+		if (itemId < 0) {
+			return ret;
+		}
+		
+		sqltxt = 
+			"INSERT INTO DVD (" +
+			             "itemId, " +
+			             "directorName" +
+			   ") VALUES (" +
+			             "?, " +
+			             "?);";
+		
+		Connection conn = getConnection();
+		
+		try {
+			PreparedStatement ps = conn.prepareStatement(sqltxt);
+			ps.setInt(1, itemId);
+			ps.setString(2, director);
+			ps.executeUpdate();
+			ps.close();
+			conn.close();
+			ret = itemId;
+		} catch (Exception e) {
+			e.printStackTrace();
+			ret = -1;
+		}
+		
+		return ret;
+	}
+	
+	/**
+	 * Adds a new CD to the database
+	 * @param title
+	 * @param genre
+	 * @param rating
+	 * @param year
+	 * @param notes
+	 * @return The itemId of the newly added CD or a negative if it failed.
+	 */
+	public static int addCD(String title, String genre, int rating, int year, 
+			String notes) {
+		int ret = -1;
+		//TODO implement addCD
+		//TODO add test for addCD
+		return ret;
+	}
+	
+	/**
+	 * Adds a new VideoGame to the database.
+	 * @param title
+	 * @param genre
+	 * @param rating
+	 * @param year
+	 * @param notes
+	 * @return The itemId of the newly added VideoGame or 
+	 * a negative if it failed.
+	 */
+	public static int addVideoGame(String title, String genre, int rating, 
+			int year, String notes) {
+		int ret = -1;
+		//TODO implement addVideoGame
+		//TODO add test for addVideoGame
 		return ret;
 	}
 	
@@ -270,32 +329,45 @@ public class DBUtil {
 			   		"isbn=? " +
 			 "WHERE itemId=?;";
 		
-		Connection conn = null;
+		Connection conn = getConnection();
 		
 		try {
-			Class.forName("org.sqlite.JDBC");
-			conn = DriverManager.getConnection(
-					"jdbc:sqlite:" + fileName.getAbsolutePath());
-			
 			PreparedStatement ps = conn.prepareStatement(sqltxt);
 			ps.setString(1, publisher);
 			ps.setString(2, isbn);
 			ps.setInt(3, itemId);
 			ps.executeUpdate();
-			
+			ps.close();
+			conn.close();
 			ret = itemId;
 		} catch (Exception e) {
 			ret = -1;
 			System.err.println(e.getMessage());
-		} finally {
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (Exception e) {
-					System.err.println(e.getMessage());
-				}
-			}
 		}
+		return ret;
+	}
+	
+	public static int updateDVD(int itemId, String title, String genre, 
+			int rating, int year, String notes, String director) {
+		int ret = -1;
+		//TODO implement updateDVD
+		//TODO add test for updateDVD
+		return ret;
+	}
+	
+	public static int updateCD(int itemId, String title, String genre, 
+			int rating, int year, String notes) {
+		int ret = -1;
+		//TODO implement updateCD
+		//TODO add test for updateCD
+		return ret;
+	}
+	
+	public static int updateVideoGame(int itemId, String title, String genre, 
+			int rating, int year, String notes) {
+		int ret = -1;
+		//TODO implement updateVideoGame
+		//TODO add test for updateVideoGame
 		return ret;
 	}
 	
@@ -311,31 +383,38 @@ public class DBUtil {
 			return ret;
 		}
 		String sqltxt = "DELETE FROM Book WHERE itemId = ?;";
-		Connection conn = null;
+		Connection conn = getConnection();
 		
 		try {
-			Class.forName("org.sqlite.JDBC");
-			conn = DriverManager.getConnection(
-					"jdbc:sqlite:" + fileName.getAbsolutePath());
-			
 			PreparedStatement ps = conn.prepareStatement(sqltxt);
 			ps.setInt(1, itemId);
 			ps.executeUpdate();
-			
+			ps.close();
+			conn.close();
 			ret = 1;
 		} catch (Exception e) {
 			ret = -1;
 			System.err.println(e.getMessage());
-		} finally {
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (Exception e) {
-					System.err.println(e.getMessage());
-				}
-			}
 		}
 		return ret;
+	}
+	
+	//TODO implement removeDVD
+	//TODO add test for removeDVD
+	public static int removeDVD(int itemId) {
+		return -1;
+	}
+	
+	//TODO implement removeCD
+	//TODO add test for removeCD
+	public static int removeCD(int itemId) {
+		return -1;
+	}
+	
+	//TODO implement removeVideoGame
+	//TODO add test for removeVideoGame
+	public static int removeVideoGame(int itemId) {
+		return -1;
 	}
 	
 	/**
@@ -348,35 +427,26 @@ public class DBUtil {
 		//this SQL query will get the title for the given itemId
 		String sqltxt = 
 			 "SELECT title FROM Item WHERE itemId = ?;";
+		String ret;
 		
-		Connection conn = null; //first, we need to set up the connection
+		Connection conn = getConnection();
 		try {
-			Class.forName("org.sqlite.JDBC");
-			conn = DriverManager.getConnection(
-					"jdbc:sqlite:" + fileName.getAbsolutePath());
 			PreparedStatement ps = conn.prepareStatement(sqltxt);
 			ps.setInt(1, itemId);
 			
 			//this will return the first record in the "title" column
-			return ps.executeQuery().getString("title");
+			ret = ps.executeQuery().getString("title");
+			ps.close();
+			conn.close();
 		}
 		catch (Exception e) {
 			System.err.println("getTitle function failed while trying to get " +
 					"title for item: " + itemId);
 			e.printStackTrace();
+			ret = "";
 		}
-		finally {
-			if (conn != null) {
-				try {             //we have to close the connection no
-					conn.close(); //matter what
-				}
-				catch (SQLException e) { //this will occur if the connection 
-					System.err.println(e.getMessage()); //fails to close
-				}
-			}
-		}
-		return ""; //if something happened, & we haven't returned anything yet,
-	}              //we will return an empty string
+		return ret;
+	}
 	
 	/**
 	 * Finds the most recently added item
@@ -389,27 +459,16 @@ public class DBUtil {
 		String sqltxt = "SELECT MAX(itemId) AS itemId FROM Item;";
 		int ret = -1;
 
-		Connection conn = null; //same stuff to set up connection
+		Connection conn = getConnection();
 		try {
-			Class.forName("org.sqlite.JDBC");
-			conn = DriverManager.getConnection("jdbc:sqlite:" + 
-					fileName.getAbsolutePath());
 			PreparedStatement ps = conn.prepareStatement(sqltxt);
 			ret = ps.executeQuery().getInt("itemId");
+			ps.close();
+			conn.close();
 		}
 		catch (Exception e) {
 			System.err.println(e.getMessage());
 			ret = -1;
-		}
-		finally {
-			if (conn != null) {
-				try {
-					conn.close();
-				}
-				catch (SQLException e) {
-					System.err.println(e.getMessage());
-				}
-			}
 		}
 		return ret;
 	}
@@ -419,12 +478,8 @@ public class DBUtil {
 	 * newly created file so that it can be used by the application
 	 */
 	public static void setUpDatabase() {
-		Connection conn = null;
+		Connection conn = getConnection();
 		try {
-			Class.forName("org.sqlite.JDBC");
-			conn = DriverManager.getConnection("jdbc:sqlite:" + 
-					fileName.getAbsolutePath());
-			
 			File file = new File("createTables.sql");
 			FileReader fr = new FileReader(file);
 			BufferedReader br = new BufferedReader(fr);
@@ -433,75 +488,78 @@ public class DBUtil {
 			
 			script.loadScript();
 			script.execute();
+			
+			conn.close();
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
-		} finally {
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (Exception e) {
-					System.err.println(e.getMessage());
-				}
-			}
 		}
 	}
 	
+	//TODO implement all find methods
 	/**
 	 * The findBookByTitle method with attempt to search the database for a 
 	 * book with the given title.
+	 * <br /><br />
+	 * there will eventually be the following search methods:<br />
+	 * -findBookByTitle<br />
+	 * -findDVDByTitle<br />
+	 * -findCDByTitle<br />
+	 * -findVideoGameByTitle<br />
+	 * -findBookByGenre<br />
+	 * -findDVDByGenre<br />
+	 * -findCDByGenre<br />
+	 * -findVideoGameByGenre<br />
+	 * -findByTitle<br />
+	 * -findByGenre<br />
+	 * 
+	 * The final two methods, findByTitle and findByGenre, will search items of 
+	 * all mediums and will return a 2D array as follows:<br />
+	 * itemId, typeId<br />
+	 * itemId, typeId<br />
+	 * ...<br />
+	 * where typeId is defined in DBUtil.BOOK_TYPE, DBUtil.DVD_TYPE, etc.
 	 * 
 	 * @param searchTitle the title to search the database for
 	 * @return the itemId of the first book found or a negative value if none 
 	 * were found or a problem occurred
 	 */
-	public static int findBookByTitle(String searchTitle) {
-		int ret = -1;
-		
-		//we have to enclose our search term in %'s for the LIKE keyword to work
-		searchTitle = "%" + searchTitle + "%";
-		
-		String sqltxt = 
-			    "SELECT Book.itemId " +
-			      "FROM Item " +
-			"INNER JOIN Book " +
-			        "ON Item.itemId=Book.itemId " +
-			     "WHERE title " +
-			      "LIKE ?;";
-		
-		Connection conn = null;
-		
-		try {
-			Class.forName("org.sqlite.JDBC");
-			conn = DriverManager.getConnection("jdbc:sqlite:" + 
-					fileName.getAbsolutePath());
-			PreparedStatement ps = conn.prepareStatement(sqltxt);
-			ps.setString(1, searchTitle);
-			ResultSet rs = ps.executeQuery();
-			if (rs.next()) {
-				ret = rs.getInt("itemId");
-			} else {
-				ret = -1;
-			}
-			rs.close();
-			ps.close();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			ret = -1;
-		}
-		finally {
-			if (conn != null) {
-				try {
-					conn.close();
-				}
-				catch (SQLException e) {
-					System.err.println(e.getMessage());
-				}
-			}
-		}
+	public static int[] findBookByTitle(String searchTitle) {
+		int[] ret = {-1};
 		return ret;
+		//TODO implement findBookByTitle to return an array of itemId's
+//		//we have to enclose our search term in %'s for the LIKE keyword to work
+//		searchTitle = "%" + searchTitle + "%";
+//		
+//		String sqltxt = 
+//			    "SELECT Book.itemId " +
+//			      "FROM Item " +
+//			"INNER JOIN Book " +
+//			        "ON Item.itemId=Book.itemId " +
+//			     "WHERE title " +
+//			      "LIKE ?;";
+//		
+//		Connection conn = getConnection();
+//		
+//		try {
+//			PreparedStatement ps = conn.prepareStatement(sqltxt);
+//			ps.setString(1, searchTitle);
+//			ResultSet rs = ps.executeQuery();
+//			if (rs.next()) {
+//				ret = rs.getInt("itemId");
+//			} else {
+//				ret = -1;
+//			}
+//			rs.close();
+//			ps.close();
+//			conn.close();
+//		}
+//		catch (Exception e) {
+//			e.printStackTrace();
+//			ret = -1;
+//		}
+//		return ret;
 	}
-	
+
 	/**
 	 * Will execute a SQL script file on a connection
 	 * 
