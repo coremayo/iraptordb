@@ -35,22 +35,33 @@ public class raptorAddGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         ratingTextField = new javax.swing.JTextField();
+        ratingTextField.setName("rating text field");  //FOR OUR TEST METHODS
+        
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         ohGod2 = new javax.swing.JButton();
         ohGod = new javax.swing.JButton();
+        
         addItemButton = new javax.swing.JButton();
+        addItemButton.setName("add item done button");  //FOR OUR TEST METHODS
+        
         jComboBox1 = new javax.swing.JComboBox();
         jLabel7 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         titleTextField = new javax.swing.JTextField();
+        titleTextField.setName("title text field"); //FOR OUR TEST METHODS
+        
         yearReleasedTextField = new javax.swing.JTextField();
+        yearReleasedTextField.setName("year release text field"); //FOR OUR TEST METHODS
+        
         jScrollPane2 = new javax.swing.JScrollPane();
         notesArea = new javax.swing.JTextArea();
         closeButton = new javax.swing.JButton();
+        
         genreTextField = new javax.swing.JTextField();
+        genreTextField.setName("genre test field"); //FOR OUR TEST METHODS
 
         setTitle("Add Item");
 
@@ -86,7 +97,8 @@ public class raptorAddGUI extends javax.swing.JFrame {
         });
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Movie", "Book", "Game", "CD" }));
-
+        jComboBox1.setName("add item combo box");  //FOR OUR TEST METHODS
+        
         jLabel7.setText("Year Released");
 
         jLabel6.setText("Name");
