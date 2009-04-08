@@ -37,22 +37,45 @@ public class iRaptorGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPane1 = new javax.swing.JScrollPane();        
         tabPane = new javax.swing.JTabbedPane();
         jScrollPane3 = new javax.swing.JScrollPane();
+        
         gameTable = new javax.swing.JTable();
+        gameTable.setName("game table"); //FOR OUR TESTING METHODS
+        //setting a name allows us to access this item from our testing classes by calling getName()
+        
         jScrollPane4 = new javax.swing.JScrollPane();
+        
         CDTable = new javax.swing.JTable();
+        CDTable.setName("cd table");  //FOR OUR TESTING METHODS
+        
         jPanel1 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
+        
         movieTable = new javax.swing.JTable();
+        movieTable.setName("movie table"); //FOR OUR TESTING METHODS
+        
         jScrollPane2 = new javax.swing.JScrollPane();
+        
         bookTable = new javax.swing.JTable();
+        bookTable.setName("book table"); //FOR OUR TESTING METHODS
+        
         addItemButton = new javax.swing.JButton();
+        addItemButton.setName("add item button");
+        
         removeItemButton = new javax.swing.JButton();
+        removeItemButton.setName("remove item button"); //FOR OUR TESTING METHODS
+        
         searchButton = new javax.swing.JButton();
+        searchButton.setName("search button"); //FOR OUR TESTING METHODS
+        
         recommendButton = new javax.swing.JButton();
+        recommendButton.setName("recommend button"); //FOR OUR TESTING METHODS
+        
         updateButton = new javax.swing.JButton();
+        updateButton.setName("update button"); //FOR OUR TESTING METHODS
+        
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -221,7 +244,7 @@ public class iRaptorGUI extends javax.swing.JFrame {
         String selectedIDString = selectedID.toString();
         int selectedIDNum = Integer.parseInt(selectedIDString);
         System.out.println(selectedIDNum);
-        DBUtil.removeBook(selectedIDNum);
+        iRaptorPackage.DBUtil.removeBook(selectedIDNum);
 }//GEN-LAST:event_removeItemButtonActionPerformed
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
@@ -302,7 +325,7 @@ public class iRaptorGUI extends javax.swing.JFrame {
         String selectedTitle = movieTable.getValueAt(selectedRow, 1).toString();
         String selectedGenre = movieTable.getValueAt(selectedRow, 2).toString();
         try{
-        WebUtility.amazonSearch(selectedTitle, "DVD");
+        iRaptorPackage.WebUtility.amazonSearch(selectedTitle, "DVD");
         }catch(Exception e){}
     }//GEN-LAST:event_searchButtonActionPerformed
 
