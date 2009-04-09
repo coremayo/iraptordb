@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Vector;
 
 /* converted sql queries to use prepared statements
  * useful website about prepared statements and sql injection:
@@ -279,8 +280,29 @@ public class DBUtil {
 	public static int addCD(String title, String genre, int rating, int year, 
 			String notes) {
 		int ret = -1;
-		//TODO implement addCD
-		//TODO add test for addCD
+		int itemId;
+		String sqltxt;
+		
+		itemId = addItem(title, genre, rating, year, notes);
+		if (itemId < 0) {
+			return ret;
+		}
+		
+		sqltxt = "INSERT INTO CD (itemId) VALUES (?);";
+		
+		Connection conn = getConnection();
+		
+		try {
+			PreparedStatement ps = conn.prepareStatement(sqltxt);
+			ps.setInt(1, itemId);
+			ps.executeUpdate();
+			ps.close();
+			conn.close();
+			ret = itemId;
+		} catch (Exception e) {
+			e.printStackTrace();
+			ret = 1;
+		}
 		return ret;
 	}
 	
@@ -297,8 +319,29 @@ public class DBUtil {
 	public static int addVideoGame(String title, String genre, int rating, 
 			int year, String notes) {
 		int ret = -1;
-		//TODO implement addVideoGame
-		//TODO add test for addVideoGame
+		int itemId;
+		String sqltxt;
+		
+		itemId = DBUtil.addItem(title, genre, rating, year, notes);
+		if (itemId < 0) {
+			return ret;
+		}
+		
+		sqltxt = "INSERT INTO VideoGame (itemId) VALUES (?);";
+		
+		Connection conn = getConnection();
+		
+		try {
+			PreparedStatement ps = conn.prepareStatement(sqltxt);
+			ps.setInt(1, itemId);
+			ps.executeUpdate();
+			ps.close();
+			conn.close();
+			ret = itemId;
+		} catch (Exception e) {
+			e.printStackTrace();
+			ret = -1;
+		}
 		return ret;
 	}
 	
@@ -347,28 +390,74 @@ public class DBUtil {
 		return ret;
 	}
 	
+	/**
+	 * Updates the attributes of a DVD in the database
+	 * @param itemId
+	 * @param title
+	 * @param genre
+	 * @param rating
+	 * @param year
+	 * @param notes
+	 * @param director
+	 * @return DVD's itemId if successful or a negative
+	 */
 	public static int updateDVD(int itemId, String title, String genre, 
 			int rating, int year, String notes, String director) {
 		int ret = -1;
-		//TODO implement updateDVD
-		//TODO add test for updateDVD
+		String sqltxt;
+		
+		if (updateItem(itemId, title, genre, rating, year, notes) < 0) {
+			return ret;
+		}
+		
+		sqltxt = "UPDATE DVD " +
+				    "SET directorName=? " +
+				  "WHERE itemId=?;";
+		
+		Connection conn = getConnection();
+		try {
+			PreparedStatement ps = conn.prepareStatement(sqltxt);
+			ps.setString(1, director);
+			ps.setInt(2, itemId);
+			ps.executeUpdate();
+			ps.close();
+			conn.close();
+			ret = itemId;
+		} catch (Exception e) {
+			e.printStackTrace();
+			ret = -1;
+		}
 		return ret;
 	}
 	
+	/**
+	 * Updates a CD in the database
+	 * @param itemId
+	 * @param title
+	 * @param genre
+	 * @param rating
+	 * @param year
+	 * @param notes
+	 * @return itemId if successful or negative value
+	 */
 	public static int updateCD(int itemId, String title, String genre, 
 			int rating, int year, String notes) {
-		int ret = -1;
-		//TODO implement updateCD
-		//TODO add test for updateCD
-		return ret;
+		return updateItem(itemId, title, genre, rating, year, notes);
 	}
 	
+	/**
+	 * updates a video game in the database
+	 * @param itemId
+	 * @param title
+	 * @param genre
+	 * @param rating
+	 * @param year
+	 * @param notes
+	 * @return itemId if successful else negative value
+	 */
 	public static int updateVideoGame(int itemId, String title, String genre, 
 			int rating, int year, String notes) {
-		int ret = -1;
-		//TODO implement updateVideoGame
-		//TODO add test for updateVideoGame
-		return ret;
+		return updateItem(itemId, title, genre, rating, year, notes);
 	}
 	
 	/**
@@ -399,22 +488,82 @@ public class DBUtil {
 		return ret;
 	}
 	
-	//TODO implement removeDVD
-	//TODO add test for removeDVD
+	/**
+	 * removes a DVD from the database
+	 * @param itemId
+	 * @return positive if successful else negative
+	 */
 	public static int removeDVD(int itemId) {
-		return -1;
+		int ret = -1;
+		if ((removeItem(itemId)) < 0) {
+			return ret;
+		}
+		String sqltxt = "DELETE FROM DVD WHERE itemId=?;";
+		Connection conn = getConnection();
+		try {
+			PreparedStatement ps = conn.prepareStatement(sqltxt);
+			ps.setInt(1, itemId);
+			ps.executeUpdate();
+			ps.close();
+			conn.close();
+			ret = 1;
+		} catch (Exception e) {
+			ret = -1;
+			System.err.println(e.getMessage());
+		}
+		return ret;
 	}
-	
-	//TODO implement removeCD
-	//TODO add test for removeCD
+
+	/**
+	 * removes a CD from the database
+	 * @param itemId
+	 * @return positive if successful else negative
+	 */
 	public static int removeCD(int itemId) {
-		return -1;
+		int ret = -1;
+		if ((removeItem(itemId)) < 0) {
+			return ret;
+		}
+		String sqltxt = "DELETE FROM CD WHERE itemId=?;";
+		Connection conn = getConnection();
+		try {
+			PreparedStatement ps = conn.prepareStatement(sqltxt);
+			ps.setInt(1, itemId);
+			ps.executeUpdate();
+			ps.close();
+			conn.close();
+			ret = 1;
+		} catch (Exception e) {
+			ret = -1;
+			System.err.println(e.getMessage());
+		}
+		return ret;
 	}
 	
-	//TODO implement removeVideoGame
-	//TODO add test for removeVideoGame
+	/**
+	 * removes a VideoGame from the database
+	 * @param itemId
+	 * @return positive if successful else negative
+	 */
 	public static int removeVideoGame(int itemId) {
-		return -1;
+		int ret = -1;
+		if ((removeItem(itemId)) < 0) {
+			return ret;
+		}
+		String sqltxt = "DELETE FROM VideoGame WHERE itemId=?;";
+		Connection conn = getConnection();
+		try {
+			PreparedStatement ps = conn.prepareStatement(sqltxt);
+			ps.setInt(1, itemId);
+			ps.executeUpdate();
+			ps.close();
+			conn.close();
+			ret = 1;
+		} catch (Exception e) {
+			ret = -1;
+			System.err.println(e.getMessage());
+		}
+		return ret;
 	}
 	
 	/**
@@ -495,6 +644,50 @@ public class DBUtil {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param searchTitle
+	 * @returna 2D array as follows:<br />
+	 * itemId, typeId<br />
+	 * itemId, typeId<br />
+	 * ...<br />
+	 * where typeId is defined in DBUtil.BOOK_TYPE, DBUtil.DVD_TYPE, etc.
+	 */
+	public static int[][] findByTitle(String searchTitle) {
+		int[][] ret = new int[0][2];
+		int[] books, DVDs, CDs, videoGames;
+		
+		books = findBookByTitle(searchTitle);
+		DVDs = findDVDByTitle(searchTitle);
+		CDs = findCDByTitle(searchTitle);
+		videoGames = findVideoGameByTitle(searchTitle);
+		
+		int i = 0;
+		int size = books.length + DVDs.length + CDs.length + videoGames.length;
+		if (size == 0) {
+			return ret;
+		}
+		
+		ret = new int[size][2];
+		for (int item : books) {
+			ret[i][0] = item;
+			ret[i][1] = BOOK_TYPE;
+		}
+		for (int item : DVDs) {
+			ret[i][0] = item;
+			ret[i][1] = DVD_TYPE;
+		}
+		for (int item : CDs) {
+			ret[i][0] = item;
+			ret[i][1] = CD_TYPE;
+		}
+		for (int item : videoGames) {
+			ret[i][0] = item;
+			ret[i][1] = VIDEO_GAME_TYPE;
+		}
+		return ret;
+	}
+	
 	//TODO implement all find methods
 	/**
 	 * The findBookByTitle method with attempt to search the database for a 
@@ -520,44 +713,183 @@ public class DBUtil {
 	 * where typeId is defined in DBUtil.BOOK_TYPE, DBUtil.DVD_TYPE, etc.
 	 * 
 	 * @param searchTitle the title to search the database for
-	 * @return the itemId of the first book found or a negative value if none 
-	 * were found or a problem occurred
+	 * @return the itemIds of the books found or a zero element 
+	 * array  if a problem occurred
 	 */
 	public static int[] findBookByTitle(String searchTitle) {
-		int[] ret = {-1};
+		int[] ret = new int[0];
+		Vector<Integer> books = new Vector<Integer>();
+		//we have to enclose our search term in %'s for the LIKE keyword to work
+		searchTitle = "%" + searchTitle + "%";
+		
+		String sqltxt = 
+			    "SELECT Book.itemId " +
+			      "FROM Item " +
+			"INNER JOIN Book " +
+			        "ON Item.itemId=Book.itemId " +
+			     "WHERE title " +
+			      "LIKE ?;";
+		
+		Connection conn = getConnection();
+		
+		try {
+			PreparedStatement ps = conn.prepareStatement(sqltxt);
+			ps.setString(1, searchTitle);
+			ResultSet rs = ps.executeQuery();
+
+			int i = 0;
+			while (rs.next()) {
+				books.add(rs.getInt("itemId"));
+				i++;
+			}
+			if (i != 0) {
+				ret = new int[books.size()];
+				for (i = 0; i < books.size(); i++) {
+					ret[i] = books.get(i);
+				}
+			}
+
+			rs.close();
+			ps.close();
+			conn.close();
+		}
+		catch (Exception e) {
+			ret = new int[0];
+			e.printStackTrace();
+		}
 		return ret;
-		//TODO implement findBookByTitle to return an array of itemId's
-//		//we have to enclose our search term in %'s for the LIKE keyword to work
-//		searchTitle = "%" + searchTitle + "%";
-//		
-//		String sqltxt = 
-//			    "SELECT Book.itemId " +
-//			      "FROM Item " +
-//			"INNER JOIN Book " +
-//			        "ON Item.itemId=Book.itemId " +
-//			     "WHERE title " +
-//			      "LIKE ?;";
-//		
-//		Connection conn = getConnection();
-//		
-//		try {
-//			PreparedStatement ps = conn.prepareStatement(sqltxt);
-//			ps.setString(1, searchTitle);
-//			ResultSet rs = ps.executeQuery();
-//			if (rs.next()) {
-//				ret = rs.getInt("itemId");
-//			} else {
-//				ret = -1;
-//			}
-//			rs.close();
-//			ps.close();
-//			conn.close();
-//		}
-//		catch (Exception e) {
-//			e.printStackTrace();
-//			ret = -1;
-//		}
-//		return ret;
+	}
+	
+	public static int[] findDVDByTitle(String searchTitle) {
+		int[] ret = {};
+		Vector<Integer> dvds = new Vector<Integer>();
+		//we have to enclose our search term in %'s for the LIKE keyword to work
+		searchTitle = "%" + searchTitle + "%";
+		
+		String sqltxt = 
+			    "SELECT DVD.itemId " +
+			      "FROM Item " +
+			"INNER JOIN DVD " +
+			        "ON Item.itemId=DVD.itemId " +
+			     "WHERE title " +
+			      "LIKE ?;";
+		
+		Connection conn = getConnection();
+		
+		try {
+			PreparedStatement ps = conn.prepareStatement(sqltxt);
+			ps.setString(1, searchTitle);
+			ResultSet rs = ps.executeQuery();
+
+			int i = 0;
+			while (rs.next()) {
+				dvds.add(rs.getInt("itemId"));
+				i++;
+			}
+			if (i != 0) {
+				ret = new int[dvds.size()];
+				for (i = 0; i < dvds.size(); i++) {
+					ret[i] = dvds.get(i);
+				}
+			}
+
+			rs.close();
+			ps.close();
+			conn.close();
+		}
+		catch (Exception e) {
+			ret = new int[0];
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	
+	public static int[] findCDByTitle(String searchTitle) {
+		int[] ret = {};
+		Vector<Integer> cds = new Vector<Integer>();
+		//we have to enclose our search term in %'s for the LIKE keyword to work
+		searchTitle = "%" + searchTitle + "%";
+		
+		String sqltxt = 
+			    "SELECT CD.itemId " +
+			      "FROM Item " +
+			"INNER JOIN CD " +
+			        "ON Item.itemId=CD.itemId " +
+			     "WHERE title " +
+			      "LIKE ?;";
+		
+		Connection conn = getConnection();
+		
+		try {
+			PreparedStatement ps = conn.prepareStatement(sqltxt);
+			ps.setString(1, searchTitle);
+			ResultSet rs = ps.executeQuery();
+
+			int i = 0;
+			while (rs.next()) {
+				cds.add(rs.getInt("itemId"));
+				i++;
+			}
+			if (i != 0) {
+				ret = new int[cds.size()];
+				for (i = 0; i < cds.size(); i++) {
+					ret[i] = cds.get(i);
+				}
+			}
+
+			rs.close();
+			ps.close();
+			conn.close();
+		}
+		catch (Exception e) {
+			ret = new int[0];
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	
+	public static int[] findVideoGameByTitle(String searchTitle) {
+		int[] ret = {};
+		Vector<Integer> videoGames = new Vector<Integer>();
+		//we have to enclose our search term in %'s for the LIKE keyword to work
+		searchTitle = "%" + searchTitle + "%";
+		
+		String sqltxt = 
+			    "SELECT VideoGame.itemId " +
+			      "FROM Item " +
+			"INNER JOIN VideoGame " +
+			        "ON Item.itemId=VideoGame.itemId " +
+			     "WHERE title " +
+			      "LIKE ?;";
+		
+		Connection conn = getConnection();
+		
+		try {
+			PreparedStatement ps = conn.prepareStatement(sqltxt);
+			ps.setString(1, searchTitle);
+			ResultSet rs = ps.executeQuery();
+
+			int i = 0;
+			while (rs.next()) {
+				videoGames.add(rs.getInt("itemId"));
+				i++;
+			}
+			if (i != 0) {
+				ret = new int[videoGames.size()];
+				for (i = 0; i < videoGames.size(); i++) {
+					ret[i] = videoGames.get(i);
+				}
+			}
+
+			rs.close();
+			ps.close();
+			conn.close();
+		}
+		catch (Exception e) {
+			ret = new int[0];
+			e.printStackTrace();
+		}
+		return ret;
 	}
 
 	/**
