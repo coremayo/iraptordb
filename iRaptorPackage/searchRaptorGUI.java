@@ -51,7 +51,8 @@ public class searchRaptorGUI extends javax.swing.JFrame {
         jButton1.setText("Execute Search");
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Movies", "Books", "Games", "CDs" }));
-
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "idNum", "Title", "Genre", "Rating", "Year Released", "Date Added", "Notes" }));
+        
 
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -178,11 +179,11 @@ public class searchRaptorGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     	Object selectedMediaType = jComboBox1.getSelectedItem();
     	
-        if(selectedMediaType == "Movie"){
+        if(selectedMediaType == "Movies"){
             jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "idNum", "Title", "Genre", "Rating", "Year Released", "Date Added", "Notes" }));
         }
         
-        if(selectedMediaType == "CD"){
+        if(selectedMediaType == "CDs"){
             jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "idNum", "Name", "Artist", "Genre", "Rating", "Year Released", "Date Added", "Tags", "Other" }));
         }
         
