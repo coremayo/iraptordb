@@ -35,8 +35,6 @@ public class DBUtilTest {
 		if (ret < 0) {
 			fail("Returned negative value");
 		}
-		
-		System.out.println("--addBook test finished");
 	}
 	
 	@Test
@@ -44,7 +42,6 @@ public class DBUtilTest {
 		int ret = DBUtil.addDVD("Mission Impossible", "Action", 8, 1984, 
 				"Tom Cruise is a scientologist", "not sure");
 		assertFalse("Returned negative value", (ret < 0));
-		System.out.println("--addDVD test finished");
 	}
 	
 	@Test
@@ -52,7 +49,13 @@ public class DBUtilTest {
 		int ret = DBUtil.addCD("Inhuman Rampage", "Power Metal", 
 				10, 1999, "Awesome");
 		assertFalse("Returned negative value", (ret < 0));
-		System.out.println("--addCD test finished");
+	}
+	
+	@Test
+	public void testAddVideoGame() {
+		int ret = DBUtil.addVideoGame("Counterstrike", "First Person Shooter", 
+				9, 2000, "Classic");
+		assertFalse("Returned negative value", (ret < 0));
 	}
 
 	@Test
@@ -61,8 +64,43 @@ public class DBUtilTest {
 				"non-fiction", 5, 2008, "not as good", "nope", "4321")) < 0){
 			fail("returned negative value");
 		}
+	}
+	
+	@Test
+	public void testUpdateDVD() {
+		String title = "Ocean's 11";
+		String newTitle = "Ocean's 13";
+		int itemId = DBUtil.addDVD(title, "Action", 9, 2011, 
+				"Sweet casino heist", null);
+		assertEquals("adding dvd failed", title, 
+				DBUtil.getTitle(DBUtil.mostRecentItem()));
+		assertFalse(DBUtil.updateDVD(itemId, newTitle, 
+				null, 9, 2011, null, null) < 0);
+		assertEquals("update dvd failed", newTitle, DBUtil.getTitle(itemId));
+	}
+	
+	@Test
+	public void testUpdateCD() {
+		String title = "Bob Dylan";
+		String newTitle = "the Beatles";
 		
-		System.out.println("--updateBook test finished");
+		int itemId = DBUtil.addCD(title, "Rock", 9, 1901, null);
+		assertTrue(itemId > 0);
+		assertFalse(
+				DBUtil.updateCD(itemId, newTitle, null, 10, 1902, null) < 0);
+		assertEquals(newTitle, DBUtil.getTitle(itemId));
+	}
+	
+	@Test
+	public void testUpdateVideoGame() {
+		String title = "Half Life";
+		String newTitle = "Half Life 2";
+		
+		int itemId = DBUtil.addVideoGame(title, null, 9, 1901, null);
+		assertTrue(itemId > 0);
+		assertFalse(DBUtil.updateVideoGame(itemId, newTitle, 
+				null, 10, 1902, null) < 0);
+		assertEquals(newTitle, DBUtil.getTitle(itemId));
 	}
 
 	@Test
@@ -72,8 +110,21 @@ public class DBUtilTest {
 		if (ret < 0) {
 			fail("returned negative value");
 		}
-		
-		System.out.println("--removeBook test finished");
+	}
+
+	@Test
+	public void testRemoveDVD() {
+		//TODO add test for removeDVD
+	}
+
+	@Test
+	public void testRemoveCD() {
+		//TODO add test for removeCD
+	}
+
+	@Test
+	public void testRemoveVideoGame() {
+		//TODO add test for removeVideoGame
 	}
 
 	@Test
@@ -82,8 +133,6 @@ public class DBUtilTest {
 		if (title == "") {
 			fail("returned empty string");
 		}
-
-		System.out.println("--getTitle test finished");
 	}
 
 	@Test
@@ -94,33 +143,22 @@ public class DBUtilTest {
 		if (newItemId != itemId) {
 			fail("most recent item was not returned");
 		}
-		
-		System.out.println("--mostRecentItem test finished");
 	}
 	
 	@Test
 	//TODO implement find test methods
-	//find methods will return array of int instead of a single int
 	public void testFindBookByTitle() {
-//		String title = "search for me";
-//		String searchString = "search for";
-//		int itemId = DBUtil.addBook(title, null, 5, 5, null, null, null);
-//		int searchItemId = DBUtil.findBookByTitle(searchString);
-//		
-//		if (itemId != searchItemId) {
-//			System.out.println("returned item: " + searchItemId + " when " +
-//					"should have returned: " + itemId);
-//			fail("did not find correct item");
-//		}
-//		
-//		searchString = "NOBOOKSHOULDBETITLEDANYTHINGLIKETHIS";
-//		searchItemId = DBUtil.findBookByTitle(searchString);
-//		
-//		if (!(searchItemId < 0)) {
-//			fail("shouldn't have found a book with that title");
-//		}
-//		
-//		System.out.println("--findBookByTitle test finished");
+		String title = "search for me";
+		String searchString = "search for";
+		int itemId = DBUtil.addBook(title, null, 5, 5, null, null, null);
+		int[] searchItemId = DBUtil.findBookByTitle(searchString);
+		
+		assertTrue(arrayContains(searchItemId, itemId));
+		
+		searchString = "NOBOOKSHOULDBETITLEDANYTHINGLIKETHIS";
+		searchItemId = DBUtil.findBookByTitle(searchString);
+		
+		assertFalse(arrayContains(searchItemId, itemId));
 	}
 	
 	@After
@@ -128,7 +166,15 @@ public class DBUtilTest {
 	
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
-		System.out.println("Done with testing DBUtil");
+	}
+	
+	private boolean arrayContains(int[] arr, int i) {
+		for (int j : arr) {
+			if (i == j) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }
