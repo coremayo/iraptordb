@@ -37,45 +37,23 @@ public class iRaptorGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();        
+        jScrollPane1 = new javax.swing.JScrollPane();
         tabPane = new javax.swing.JTabbedPane();
         jScrollPane3 = new javax.swing.JScrollPane();
-        
         gameTable = new javax.swing.JTable();
-        gameTable.setName("game table"); //FOR OUR TESTING METHODS
-        //setting a name allows us to access this item from our testing classes by calling getName()
-        
         jScrollPane4 = new javax.swing.JScrollPane();
-        
         CDTable = new javax.swing.JTable();
-        CDTable.setName("cd table");  //FOR OUR TESTING METHODS
-        
         jPanel1 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        
         movieTable = new javax.swing.JTable();
-        movieTable.setName("movie table"); //FOR OUR TESTING METHODS
-        
         jScrollPane2 = new javax.swing.JScrollPane();
-        
         bookTable = new javax.swing.JTable();
-        bookTable.setName("book table"); //FOR OUR TESTING METHODS
-        
         addItemButton = new javax.swing.JButton();
-        addItemButton.setName("add item button");
-        
         removeItemButton = new javax.swing.JButton();
-        removeItemButton.setName("remove item button"); //FOR OUR TESTING METHODS
-        
-        searchButton = new javax.swing.JButton();
-        searchButton.setName("search button"); //FOR OUR TESTING METHODS
-        
         recommendButton = new javax.swing.JButton();
-        recommendButton.setName("recommend button"); //FOR OUR TESTING METHODS
-        
         updateButton = new javax.swing.JButton();
-        updateButton.setName("update button"); //FOR OUR TESTING METHODS
-        
+        searchWebButton = new javax.swing.JButton();
+        searchiRaptorButton = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -94,7 +72,6 @@ public class iRaptorGUI extends javax.swing.JFrame {
                 "idNum", "Name", "Genre", "Rating", "Date Added", "Year Released", "Tags", "Other"
             }
         ));
-        gameTable.setColumnSelectionAllowed(false);
         jScrollPane3.setViewportView(gameTable);
 
         tabPane.addTab("Games", jScrollPane3);
@@ -110,7 +87,6 @@ public class iRaptorGUI extends javax.swing.JFrame {
                 "idNum", "Name", "Artists", "Genre", "Rating", "Year Released", "Date Added", "Tags", "Other"
             }
         ));
-        CDTable.setColumnSelectionAllowed(false);
         jScrollPane4.setViewportView(CDTable);
 
         tabPane.addTab("CDs", jScrollPane4);
@@ -151,10 +127,12 @@ public class iRaptorGUI extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "idNum", "Name", "Authors", "Publisher", "Genre", "Rating", "isbn", "Year Released", "Date Added", "Tags", "Other"
+                "idNum", "Name", "Authors", "Genre", "Rating", "Date Added", "Year Released", "isbn", "Publisher", "Tags", "Other"
             }
         ));
         jScrollPane2.setViewportView(bookTable);
+        bookTable.getColumnModel().getColumn(5).setResizable(false);
+        bookTable.getColumnModel().getColumn(8).setResizable(false);
 
         tabPane.addTab("Books", jScrollPane2);
 
@@ -172,13 +150,6 @@ public class iRaptorGUI extends javax.swing.JFrame {
             }
         });
 
-        searchButton.setText("Search");
-        searchButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchButtonActionPerformed(evt);
-            }
-        });
-
         recommendButton.setText("Recommend");
 
         updateButton.setText("Update Table");
@@ -187,6 +158,15 @@ public class iRaptorGUI extends javax.swing.JFrame {
                 updateButtonActionPerformed(evt);
             }
         });
+
+        searchWebButton.setText("Info from the Web");
+        searchWebButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchWebButtonActionPerformed(evt);
+            }
+        });
+
+        searchiRaptorButton.setText("Search iRaptor");
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -204,15 +184,18 @@ public class iRaptorGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(layout.createSequentialGroup()
+                        .add(8, 8, 8)
                         .add(addItemButton)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                         .add(removeItemButton)
+                        .add(20, 20, 20)
+                        .add(updateButton)
+                        .add(76, 76, 76)
+                        .add(searchWebButton)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                        .add(searchButton)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                        .add(recommendButton)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                        .add(updateButton))
+                        .add(searchiRaptorButton)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 191, Short.MAX_VALUE)
+                        .add(recommendButton))
                     .add(tabPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 901, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -220,13 +203,15 @@ public class iRaptorGUI extends javax.swing.JFrame {
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(addItemButton)
-                    .add(removeItemButton)
-                    .add(searchButton)
                     .add(recommendButton)
-                    .add(updateButton))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 24, Short.MAX_VALUE)
-                .add(tabPane, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 408, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(updateButton)
+                    .add(removeItemButton)
+                    .add(addItemButton)
+                    .add(searchWebButton)
+                    .add(searchiRaptorButton))
+                .add(18, 18, 18)
+                .add(tabPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
+                .add(11, 11, 11))
         );
 
         pack();
@@ -248,7 +233,14 @@ public class iRaptorGUI extends javax.swing.JFrame {
 }//GEN-LAST:event_removeItemButtonActionPerformed
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
-        Connection conn = null;
+       UITableUtil gameTableUtil = new UITableUtil(gameTable, "game");
+       UITableUtil movieTableUtil = new UITableUtil(movieTable, "movie");
+       UITableUtil cdTableUtil = new UITableUtil(CDTable, "cd");
+       UITableUtil bookTableUtil = new UITableUtil(bookTable, "book");
+       movieTableUtil.updateTable();
+        
+        
+        /*Connection conn = null;
         int rowCount = 0;
         try{
         Class.forName("org.sqlite.JDBC");
@@ -313,7 +305,12 @@ public class iRaptorGUI extends javax.swing.JFrame {
         }
         /* 
           }
-              
+            int selectedRow = movieTable.getSelectedRow();
+        String selectedTitle = movieTable.getValueAt(selectedRow, 1).toString();
+        String selectedGenre = movieTable.getValueAt(selectedRow, 2).toString();
+        try{
+        iRaptorPackage.WebUtility.amazonSearch(selectedTitle, "DVD");
+        }catch(Exception e){}
           
           
           */
@@ -321,13 +318,17 @@ public class iRaptorGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_updateButtonActionPerformed
 /* Searches the web for a description of the related item*/
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
+
+    }//GEN-LAST:event_searchButtonActionPerformed
+
+    private void searchWebButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchWebButtonActionPerformed
         int selectedRow = movieTable.getSelectedRow();
         String selectedTitle = movieTable.getValueAt(selectedRow, 1).toString();
         String selectedGenre = movieTable.getValueAt(selectedRow, 2).toString();
         try{
         iRaptorPackage.WebUtility.amazonSearch(selectedTitle, "DVD");
         }catch(Exception e){}
-    }//GEN-LAST:event_searchButtonActionPerformed
+    }//GEN-LAST:event_searchWebButtonActionPerformed
 
     /**
     * @param args the command line arguments
@@ -358,7 +359,8 @@ public class iRaptorGUI extends javax.swing.JFrame {
     private javax.swing.JTable movieTable;
     private javax.swing.JButton recommendButton;
     private javax.swing.JButton removeItemButton;
-    private javax.swing.JButton searchButton;
+    private javax.swing.JButton searchWebButton;
+    private javax.swing.JButton searchiRaptorButton;
     private javax.swing.JTabbedPane tabPane;
     private javax.swing.JButton updateButton;
     // End of variables declaration//GEN-END:variables
