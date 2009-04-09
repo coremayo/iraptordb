@@ -35,33 +35,28 @@ public class raptorAddGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         ratingTextField = new javax.swing.JTextField();
-        ratingTextField.setName("rating text field");  //FOR OUR TEST METHODS
-        
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         ohGod2 = new javax.swing.JButton();
         ohGod = new javax.swing.JButton();
-        
         addItemButton = new javax.swing.JButton();
-        addItemButton.setName("add item done button");  //FOR OUR TEST METHODS
-        
-        jComboBox1 = new javax.swing.JComboBox();
+        typeComboBox = new javax.swing.JComboBox();
         jLabel7 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         titleTextField = new javax.swing.JTextField();
-        titleTextField.setName("title text field"); //FOR OUR TEST METHODS
-        
         yearReleasedTextField = new javax.swing.JTextField();
-        yearReleasedTextField.setName("year release text field"); //FOR OUR TEST METHODS
-        
         jScrollPane2 = new javax.swing.JScrollPane();
         notesArea = new javax.swing.JTextArea();
         closeButton = new javax.swing.JButton();
-        
         genreTextField = new javax.swing.JTextField();
-        genreTextField.setName("genre test field"); //FOR OUR TEST METHODS
+        directorLabel = new javax.swing.JLabel();
+        isbnLabel = new javax.swing.JLabel();
+        publisherLabel = new javax.swing.JLabel();
+        directorField = new javax.swing.JTextField();
+        publisherField = new javax.swing.JTextField();
+        isbnField = new javax.swing.JTextField();
 
         setTitle("Add Item");
 
@@ -96,9 +91,13 @@ public class raptorAddGUI extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Movie", "Book", "Game", "CD" }));
-        jComboBox1.setName("add item combo box");  //FOR OUR TEST METHODS
-        
+        typeComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Movie", "Book", "Game", "CD" }));
+        typeComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                typeComboBoxActionPerformed(evt);
+            }
+        });
+
         jLabel7.setText("Year Released");
 
         jLabel6.setText("Name");
@@ -117,6 +116,26 @@ public class raptorAddGUI extends javax.swing.JFrame {
             }
         });
 
+        directorLabel.setText("Director");
+        directorLabel.setVisible(false);
+
+        isbnLabel.setText("ISBN");
+        isbnLabel.setVisible(false);
+
+        publisherLabel.setText("Publisher");
+        publisherLabel.setVisible(false);
+
+        directorField.setVisible(false);
+        directorField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                directorFieldActionPerformed(evt);
+            }
+        });
+
+        publisherField.setVisible(false);
+
+        isbnField.setVisible(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -133,24 +152,35 @@ public class raptorAddGUI extends javax.swing.JFrame {
                                         .addComponent(jLabel3)
                                         .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING))
                                     .addComponent(jLabel2)
+                                    .addComponent(jLabel1)
+                                    .addComponent(directorLabel)
                                     .addComponent(jLabel4)
-                                    .addComponent(jLabel1))
-                                .addGap(34, 34, 34)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE)
-                                    .addGroup(layout.createSequentialGroup()
+                                    .addComponent(publisherLabel)
+                                    .addComponent(isbnLabel))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addGap(34, 34, 34)
+                                        .addComponent(typeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addGap(34, 34, 34)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(ratingTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
-                                            .addComponent(titleTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
-                                            .addComponent(genreTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(ohGod2)
-                                            .addComponent(ohGod)))
-                                    .addComponent(yearReleasedTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(ratingTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
+                                                    .addComponent(titleTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
+                                                    .addComponent(genreTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                        .addComponent(isbnField, javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(publisherField, javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(directorField, javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(yearReleasedTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(ohGod2)
+                                                    .addComponent(ohGod)))))))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(122, 122, 122)
+                        .addGap(121, 121, 121)
                         .addComponent(addItemButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(closeButton)))
@@ -162,7 +192,7 @@ public class raptorAddGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(typeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
@@ -177,38 +207,62 @@ public class raptorAddGUI extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(ratingTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ohGod))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
                     .addComponent(yearReleasedTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(directorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(directorField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(8, 8, 8)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(publisherLabel)
+                    .addComponent(publisherField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(isbnLabel)
+                    .addComponent(isbnField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(92, 92, 92)
-                        .addComponent(jLabel4))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(95, 95, 95)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addItemButton)
-                    .addComponent(closeButton))
-                .addContainerGap(30, Short.MAX_VALUE))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(addItemButton)
+                            .addComponent(closeButton)))
+                    .addComponent(jLabel4))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void addItemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemButtonActionPerformed
-          Object selectedMediaType = jComboBox1.getSelectedItem();
+          Object selectedMediaType = typeComboBox.getSelectedItem();
           String genreType = genreTextField.getText();
           String rating = ratingTextField.getText();
-          int b = Integer.parseInt(rating);
+          int intRating = Integer.parseInt(rating);
           String title = titleTextField.getText();
           String yearReleased = yearReleasedTextField.getText();
           int intYearReleased = Integer.parseInt(yearReleased);
+          String isbn = isbnField.getText();
+          String publisher = publisherField.getText();
+          String director = directorField.getText();
           String notes = notesArea.getText();
           System.out.println(genreType);
-          DBUtil.addBook(title, genreType, b, intYearReleased, notes, "help", "help me");
+          if(selectedMediaType == "Book"){
+          DBUtil.addBook(title, genreType, intRating, intYearReleased, notes, isbn, publisher);
+          }
+          if(selectedMediaType == "Movie"){
+              System.out.println("Success");
+          }
+          if(selectedMediaType == "CD"){
+
+          }
+          if(selectedMediaType == "Game"){
+
+          }
           /*do stuff with database here */
           /*Connection conn = null;
           try{
@@ -236,6 +290,46 @@ public class raptorAddGUI extends javax.swing.JFrame {
         
 }//GEN-LAST:event_closeButtonActionPerformed
 
+    private void typeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_typeComboBoxActionPerformed
+      Object selectedMediaType = typeComboBox.getSelectedItem();
+      if(selectedMediaType == "Book"){
+              directorField.setVisible(false);
+              isbnField.setVisible(true);
+              publisherField.setVisible(true);
+              isbnLabel.setVisible(true);
+              publisherLabel.setVisible(true);
+              directorLabel.setVisible(false);
+      }
+      if(selectedMediaType == "Movie"){
+              isbnLabel.setVisible(false);
+              publisherLabel.setVisible(false);
+              directorLabel.setVisible(true);
+              directorField.setVisible(true);
+              isbnField.setVisible(false);
+              publisherField.setVisible(false);
+      }
+      if(selectedMediaType == "CD"){
+              directorLabel.setVisible(false);
+              isbnLabel.setVisible(false);
+              publisherLabel.setVisible(false);
+              directorField.setVisible(false);
+              isbnField.setVisible(false);
+              publisherField.setVisible(false);
+      }
+      if(selectedMediaType == "Game"){
+              directorLabel.setVisible(false);
+              isbnLabel.setVisible(false);
+              publisherLabel.setVisible(false);
+              directorField.setVisible(false);
+              isbnField.setVisible(false);
+              publisherField.setVisible(false);
+      }
+    }//GEN-LAST:event_typeComboBoxActionPerformed
+
+    private void directorFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_directorFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_directorFieldActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -243,8 +337,11 @@ public class raptorAddGUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addItemButton;
     private javax.swing.JButton closeButton;
+    private javax.swing.JTextField directorField;
+    private javax.swing.JLabel directorLabel;
     private javax.swing.JTextField genreTextField;
-    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JTextField isbnField;
+    private javax.swing.JLabel isbnLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -255,8 +352,11 @@ public class raptorAddGUI extends javax.swing.JFrame {
     private javax.swing.JTextArea notesArea;
     private javax.swing.JButton ohGod;
     private javax.swing.JButton ohGod2;
+    private javax.swing.JTextField publisherField;
+    private javax.swing.JLabel publisherLabel;
     private javax.swing.JTextField ratingTextField;
     private javax.swing.JTextField titleTextField;
+    private javax.swing.JComboBox typeComboBox;
     private javax.swing.JTextField yearReleasedTextField;
     // End of variables declaration//GEN-END:variables
 
