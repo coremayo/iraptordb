@@ -329,7 +329,7 @@ public class raptorAddGUI extends javax.swing.JFrame {
     * @param args the command line arguments
     */
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Varies declaration - do not modify//GEN-BEGIN:varies
     private javax.swing.JButton addItemButton;
     private javax.swing.JButton closeButton;
     private javax.swing.JTextField directorField;
@@ -353,6 +353,6 @@ public class raptorAddGUI extends javax.swing.JFrame {
     private javax.swing.JTextField titleField;
     private javax.swing.JComboBox typeComboBox;
     private javax.swing.JTextField yearReleasedField;
-    // End of variables declaration//GEN-END:variables
+    // End of varies declaration//GEN-END:varies
 
 }

@@ -174,6 +174,11 @@ public class iRaptorGUI extends javax.swing.JFrame {
         });
 
         searchiRaptorButton.setText("Search iRaptor");
+        searchiRaptorButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	searchiRaptorButtonActionPerformed(evt);
+            }
+        });
 
         strategyGuideButton.setText("Get Strategy Guide");
         strategyGuideButton.addActionListener(new java.awt.event.ActionListener() {
@@ -236,6 +241,10 @@ public class iRaptorGUI extends javax.swing.JFrame {
 
     private void addItemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemButtonActionPerformed
         new raptorAddGUI().setVisible(true);
+}//GEN-LAST:event_addItemButtonActionPerformed
+    
+    private void searchiRaptorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemButtonActionPerformed
+        new searchRaptorGUI().setVisible(true);
 }//GEN-LAST:event_addItemButtonActionPerformed
 
     private void removeItemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeItemButtonActionPerformed
