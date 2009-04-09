@@ -54,12 +54,19 @@ public class iRaptorGUI extends javax.swing.JFrame {
         updateButton = new javax.swing.JButton();
         searchWebButton = new javax.swing.JButton();
         searchiRaptorButton = new javax.swing.JButton();
+        strategyGuideButton = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("iRaptor");
+
+        tabPane.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                tabPaneStateChanged(evt);
+            }
+        });
 
         gameTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -168,6 +175,13 @@ public class iRaptorGUI extends javax.swing.JFrame {
 
         searchiRaptorButton.setText("Search iRaptor");
 
+        strategyGuideButton.setText("Get Strategy Guide");
+        strategyGuideButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                strategyGuideButtonActionPerformed(evt);
+            }
+        });
+
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
 
@@ -183,6 +197,7 @@ public class iRaptorGUI extends javax.swing.JFrame {
             .add(layout.createSequentialGroup()
                 .addContainerGap()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(tabPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 901, Short.MAX_VALUE)
                     .add(layout.createSequentialGroup()
                         .add(8, 8, 8)
                         .add(addItemButton)
@@ -192,11 +207,12 @@ public class iRaptorGUI extends javax.swing.JFrame {
                         .add(updateButton)
                         .add(76, 76, 76)
                         .add(searchWebButton)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(searchiRaptorButton)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 191, Short.MAX_VALUE)
-                        .add(recommendButton))
-                    .add(tabPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 901, Short.MAX_VALUE))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(strategyGuideButton)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 64, Short.MAX_VALUE)
+                        .add(recommendButton)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -208,8 +224,9 @@ public class iRaptorGUI extends javax.swing.JFrame {
                     .add(removeItemButton)
                     .add(addItemButton)
                     .add(searchWebButton)
+                    .add(strategyGuideButton)
                     .add(searchiRaptorButton))
-                .add(18, 18, 18)
+                .add(35, 35, 35)
                 .add(tabPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
                 .add(11, 11, 11))
         );
@@ -237,6 +254,12 @@ public class iRaptorGUI extends javax.swing.JFrame {
        UITableUtil movieTableUtil = new UITableUtil(movieTable, "movie");
        UITableUtil cdTableUtil = new UITableUtil(CDTable, "cd");
        UITableUtil bookTableUtil = new UITableUtil(bookTable, "book");
+       gameTable.setValueAt(10, 0, 0);
+       gameTable.setValueAt("Fire Emblem", 0, 1);
+       gameTable.setValueAt("Strategy", 0, 2);
+       gameTable.setValueAt(5, 0, 3);
+       gameTable.setValueAt("2009-04-04 21:06:55", 0, 4);
+       gameTable.setValueAt(2009, 0, 5);
        movieTableUtil.updateTable();
         
         
@@ -330,6 +353,26 @@ public class iRaptorGUI extends javax.swing.JFrame {
         }catch(Exception e){}
     }//GEN-LAST:event_searchWebButtonActionPerformed
 
+    private void tabPaneStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tabPaneStateChanged
+        int selectedIndex = tabPane.getSelectedIndex();
+        if(selectedIndex == 0){
+            strategyGuideButton.setVisible(true);
+        }// TODO add your handling code here:
+        else{
+            strategyGuideButton.setVisible(false);
+        }
+    }//GEN-LAST:event_tabPaneStateChanged
+
+    private void strategyGuideButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_strategyGuideButtonActionPerformed
+         int selectedRow = gameTable.getSelectedRow();
+         String selectedTitle;
+         selectedTitle = gameTable.getValueAt(selectedRow, 1).toString();
+         try{
+             WebUtility.gamesFAQsearch(selectedTitle);
+         }catch(Exception e){}
+         // TODO add your handling code here:
+    }//GEN-LAST:event_strategyGuideButtonActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -361,6 +404,7 @@ public class iRaptorGUI extends javax.swing.JFrame {
     private javax.swing.JButton removeItemButton;
     private javax.swing.JButton searchWebButton;
     private javax.swing.JButton searchiRaptorButton;
+    private javax.swing.JButton strategyGuideButton;
     private javax.swing.JTabbedPane tabPane;
     private javax.swing.JButton updateButton;
     // End of variables declaration//GEN-END:variables
