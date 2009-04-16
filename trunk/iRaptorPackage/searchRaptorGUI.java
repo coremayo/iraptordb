@@ -45,6 +45,11 @@ public class searchRaptorGUI extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        
+        /*--------------------------------------------------------------
+         * FOR TESTING PURPOSES (do not delete)
+         */
+        jButton1.setName("search item done button");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 

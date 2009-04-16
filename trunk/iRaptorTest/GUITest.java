@@ -1,6 +1,7 @@
 package iRaptorTest;
 import iRaptorPackage.iRaptorGUI;
 import iRaptorPackage.raptorAddGUI;
+import iRaptorPackage.searchRaptorGUI;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -27,7 +28,7 @@ public class GUITest extends TestCase {
 	
 	static iRaptorGUI gui = new iRaptorGUI();
 	static raptorAddGUI addgui = new raptorAddGUI();
-	//static raptorSearchGUI searchgui = new raptorSearchGUI();
+	static searchRaptorGUI searchgui = new searchRaptorGUI();
 	
 	@Test
 	public void testTypeInGameTable() throws Exception {
@@ -94,7 +95,7 @@ public class GUITest extends TestCase {
 		for (int i = 0; i < 5; ++i) {  //add == null
 			Thread.sleep(200);
 			//we'll need to add this search gui in the application code and it should contain a search button where we call setName("search item done button")
-			//search = (JButton)TestUtils.getChildNamed(searchgui, "search item done button");
+			search = (JButton)TestUtils.getChildNamed(searchgui, "search item done button");
 			assertNotNull(search);
 		}
 		//assertEquals(UIManager.getString("OptionPane.addButtonText"), add.getText());
