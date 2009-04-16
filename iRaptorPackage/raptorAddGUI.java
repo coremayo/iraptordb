@@ -57,6 +57,13 @@ public class raptorAddGUI extends javax.swing.JFrame {
         directorField = new javax.swing.JTextField();
         publisherField = new javax.swing.JTextField();
         isbnField = new javax.swing.JTextField();
+        
+        /*---------------------------------------------------------------
+         * FOR TESTING PURPOSES (do not delete
+         */
+        addItemButton.setName("add item done button");
+        typeComboBox.setName("add item combo box");
+        titleField.setName("title text field");
 
         setTitle("Add Item");
 
