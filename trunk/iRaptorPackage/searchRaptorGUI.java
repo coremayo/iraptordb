@@ -35,7 +35,7 @@ public class searchRaptorGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox();
+        itemComboBox = new javax.swing.JComboBox();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -50,18 +50,21 @@ public class searchRaptorGUI extends javax.swing.JFrame {
          * FOR TESTING PURPOSES (do not delete)
          */
         jButton1.setName("search item done button");
+        jTable1.setName("all item table");
+        itemComboBox.setName("search item combo box");
+        jTextField1.setName("title text field");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jButton1.setText("Execute Search");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Movies", "Books", "Games", "CDs" }));
+        itemComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Movies", "Books", "Games", "CDs" }));
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "idNum", "Title", "Genre", "Rating", "Year Released", "Date Added", "Notes" }));
         
 
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        itemComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                itemComboBoxActionPerformed(evt);
             }
         });
         
@@ -148,7 +151,7 @@ public class searchRaptorGUI extends javax.swing.JFrame {
                 .addGap(45, 45, 45))
             .addGroup(layout.createSequentialGroup()
                 .addGap(57, 57, 57)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(itemComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(292, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -157,7 +160,7 @@ public class searchRaptorGUI extends javax.swing.JFrame {
                 .addGap(13, 13, 13)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(itemComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -180,9 +183,9 @@ public class searchRaptorGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void itemComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemComboBoxActionPerformed
         // TODO add your handling code here:
-    	Object selectedMediaType = jComboBox1.getSelectedItem();
+    	Object selectedMediaType = itemComboBox.getSelectedItem();
     	
         if(selectedMediaType == "Movies"){
             jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "idNum", "Title", "Genre", "Rating", "Year Released", "Date Added", "Notes" }));
@@ -202,7 +205,7 @@ public class searchRaptorGUI extends javax.swing.JFrame {
         
         
             //addBook(title, genreType, intRating, intYearReleased, notes, publisher, isbn);
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_itemComboBoxActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
@@ -216,7 +219,7 @@ public class searchRaptorGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JComboBox itemComboBox;
     private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

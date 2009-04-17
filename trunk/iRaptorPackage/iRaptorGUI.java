@@ -60,7 +60,7 @@ public class iRaptorGUI extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         
         /*------------------------------------------------------------
-         * FOR TESTING PURPOSESS (do not selete)
+         * FOR TESTING PURPOSESS (do not delete)
          */
         gameTable.setName("game table");
         CDTable.setName("cd table");
@@ -68,7 +68,8 @@ public class iRaptorGUI extends javax.swing.JFrame {
         bookTable.setName("book table");
         searchiRaptorButton.setName("search button");
         addItemButton.setName("add item button");
-        
+        updateButton.setName("update table button");
+        removeItemButton.setName("remove item button");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("iRaptor");
