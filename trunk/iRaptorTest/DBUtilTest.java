@@ -9,7 +9,8 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import iRaptorPackage.DBUtil;
+
+import domain.DBUtil;
 
 public class DBUtilTest {
 	

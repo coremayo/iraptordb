@@ -1,4 +1,4 @@
-package iRaptorPackage;
+package domain;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -37,7 +37,7 @@ public class DBUtil {
 	public static final int BOOK_TYPE=1, DVD_TYPE=2, 
 			VIDEO_GAME_TYPE=3, CD_TYPE=4;
 	
-	private static Connection getConnection() {
+	public static Connection getConnection() {
 		Connection conn = null;
 		
 		try {
