@@ -8,10 +8,9 @@ CREATE TABLE Item (
 		notes VARCHAR
 );
 
-CREATE TABLE Person (
-		personId INTEGER PRIMARY KEY AUTOINCREMENT,
-		fName VARCHAR(30) NOT NULL,
-		lName VARCHAR(30) NOT NULL
+CREATE TABLE Creator (
+		creatorId INTEGER PRIMARY KEY AUTOINCREMENT,
+		name VARCHAR(30) NOT NULL
 );
 
 CREATE TABLE Tag (
@@ -48,18 +47,18 @@ CREATE TABLE Book (
 
 CREATE TABLE BookAuthor (
 		book_itemId INTEGER,
-		author_personId INTEGER,
-		PRIMARY KEY (book_itemId, author_personId),
+		author_creatorId INTEGER,
+		PRIMARY KEY (book_itemId, author_creatorId),
 		FOREIGN KEY (book_itemId) REFERENCES Book(itemId),
-		FOREIGN KEY (author_personId) REFERENCES Person(personId)
+		FOREIGN KEY (author_creatorId) REFERENCES Creator(creatorId)
 );
 
 CREATE TABLE CDArtist (
 		cd_itemId INTEGER,
-		artist_personId INTEGER,
-		PRIMARY KEY (cd_itemId, artist_personId),
+		artist_creatorId INTEGER,
+		PRIMARY KEY (cd_itemId, artist_creatorId),
 		FOREIGN KEY (cd_itemId) REFERENCES CD(itemId),
-		FOREIGN KEY (artist_personId) REFERENCES Person(personId)
+		FOREIGN KEY (artist_creatorId) REFERENCES Creator(creatorId)
 );
 
 CREATE TABLE ItemTag (

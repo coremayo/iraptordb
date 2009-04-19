@@ -11,6 +11,8 @@
 
 package iRaptorPackage;
 
+import domain.DBUtil;
+
 /**
  *
  * @author Michael

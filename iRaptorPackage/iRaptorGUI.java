@@ -267,7 +267,7 @@ public class iRaptorGUI extends javax.swing.JFrame {
         String selectedIDString = selectedID.toString();
         int selectedIDNum = Integer.parseInt(selectedIDString);
         System.out.println(selectedIDNum);
-        iRaptorPackage.DBUtil.removeBook(selectedIDNum);
+        domain.DBUtil.removeBook(selectedIDNum);
 }//GEN-LAST:event_removeItemButtonActionPerformed
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
