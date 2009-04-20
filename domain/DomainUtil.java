@@ -1,29 +1,20 @@
 package domain;
 
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.Hashtable;
 
 public class DomainUtil {
-	private static List<Book> BOOKS;
-	private static List<DVD> DVDS;
-	private static List<VideoGame> VIDEOGAMES;
-	private static List<CD> CDS;
-	
-	protected static void initLists() {
-		BOOKS = new ArrayList<Book>();
-		DVDS = new ArrayList<DVD>();
-		VIDEOGAMES = new ArrayList<VideoGame>();
-		CDS = new ArrayList<CD>();
-	}
+	private static Hashtable<Integer,Book> BOOKS = new Hashtable<Integer,Book>();
+	private static Hashtable<Integer,DVD> DVDS = new Hashtable<Integer,DVD>();
+	private static Hashtable<Integer,VideoGame> VIDEOGAMES = new Hashtable<Integer,VideoGame>();
+	private static Hashtable<Integer,CD> CDS = new Hashtable<Integer,CD>();
 	
 	protected static void populateItems() {
 		try {
-			initLists();
 			populateBooks();
 			populateDVDs();
 			populateCDs();
@@ -42,8 +33,10 @@ public class DomainUtil {
 		Connection conn = DBUtil.getConnection();
 		PreparedStatement ps = conn.prepareStatement(sqltxt);
 		ResultSet rs = ps.executeQuery();
+		DVD d;
 		while (rs.next()) {
-			DVDS.add(new DVD(rs));
+			d = new DVD(rs);
+			DVDS.put(d.getItemId(), d);
 		}
 		rs.close();
 		ps.close();
@@ -59,8 +52,10 @@ public class DomainUtil {
 		Connection conn = DBUtil.getConnection();
 		PreparedStatement ps = conn.prepareStatement(sqltxt);
 		ResultSet rs = ps.executeQuery();
+		VideoGame v;
 		while (rs.next()) {
-			VIDEOGAMES.add(new VideoGame(rs));
+			v = new VideoGame(rs);
+			VIDEOGAMES.put(v.getItemId(), v);
 		}
 		rs.close();
 		ps.close();
@@ -76,8 +71,10 @@ public class DomainUtil {
 		Connection conn = DBUtil.getConnection();
 		PreparedStatement ps = conn.prepareStatement(sqltxt);
 		ResultSet rs = ps.executeQuery();
+		CD c;
 		while (rs.next()) {
-			CDS.add(new CD(rs));
+			c = new CD(rs);
+			CDS.put(c.getItemId(), c);
 		}
 		rs.close();
 		ps.close();
@@ -93,29 +90,53 @@ public class DomainUtil {
 		Connection conn = DBUtil.getConnection();
 		PreparedStatement ps = conn.prepareStatement(sqltxt);
 		ResultSet rs = ps.executeQuery();
+		Book b;
 		while (rs.next()) {
-			BOOKS.add(new Book(rs));
+			b = new Book(rs);
+			BOOKS.put(b.getItemId(), b);
 		}
 		rs.close();
 		ps.close();
 		conn.close();
 	}
+
+	public static Collection<Book> getBooks() {
+		return BOOKS.values();
+	}
 	
+	public static Book addBook(String title) {
+		Book b = new Book(title);
+		BOOKS.put(b.getItemId(), b);
+		return b;
+	}
+
+	public static Collection<DVD> getDVDs() {
+		return DVDS.values();
+	}
 	
-
-	public static List<Book> getBooks() {
-		return BOOKS;
+	public static DVD addDVD(String title) {
+		DVD d = new DVD(title);
+		DVDS.put(d.getItemId(), d);
+		return d;
 	}
 
-	public static List<DVD> getDVDs() {
-		return DVDS;
+	public static Collection<VideoGame> getVideoGames() {
+		return VIDEOGAMES.values();
+	}
+	
+	public static VideoGame addVideoGame(String title) {
+		VideoGame v = new VideoGame(title);
+		VIDEOGAMES.put(v.getItemId(), v);
+		return v;
 	}
 
-	public static List<VideoGame> getVideoGames() {
-		return VIDEOGAMES;
+	public static Collection<CD> getCDs() {
+		return CDS.values();
 	}
-
-	public static List<CD> getCDs() {
-		return CDS;
+	
+	public static CD addCD(String title) {
+		CD c = new CD(title);
+		CDS.put(c.getItemId(), c);
+		return c;
 	}
 }

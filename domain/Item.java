@@ -241,10 +241,12 @@ public abstract class Item {
 	public int getItemId() {
 		return itemId;
 	}
-	public void setItemId(int itemId) {
-		this.itemId = itemId;
-		updateDB();
-	}
+//	I don't think there is any reason we need this
+//	public void setItemId(int itemId) {
+//		this.itemId = itemId;
+//		updateDB();
+//	}
+	
 	public String getTitle() {
 		return title;
 	}
@@ -276,10 +278,11 @@ public abstract class Item {
 	public Date getDateAdded() {
 		return dateAdded;
 	}
-	public void setDateAdded(Date dateAdded) {
-		this.dateAdded = dateAdded;
-		updateDB();
-	}
+//	don't think we really need this either
+//	public void setDateAdded(Date dateAdded) {
+//		this.dateAdded = dateAdded;
+//		updateDB();
+//	}
 	public String getNotes() {
 		return notes;
 	}
