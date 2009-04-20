@@ -45,6 +45,7 @@ public class UITableUtil {
             String[] idList = new String[rowCount];
             String[] yearList = new String[rowCount];
             String[] dateList = new String[rowCount];
+            String[] director = new String[rowCount];
             String title;
             String genre;
             String rating;
@@ -66,7 +67,6 @@ public class UITableUtil {
                     genre = rs2.getString("genre");
                     year = rs2.getString("year");
                     date = rs2.getString("dateAdded");
-                    System.out.println(genre);
                     idList[J] = ID;
                     titleList[J] = title;
                     genreList[J] = genre;
