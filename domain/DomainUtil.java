@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Collection;
 import java.util.Hashtable;
 
@@ -154,5 +155,46 @@ public class DomainUtil {
 			return VIDEOGAMES.get(itemId);
 		}
 		return null;
+	}
+	
+	public static void removeItem(int itemId)  {
+		String type = "";
+		if (BOOKS.containsKey(itemId)) {
+			//item is a book
+			type = "Book";
+			BOOKS.remove(itemId);
+		}
+		else if (CDS.containsKey(itemId)) {
+			//item is a cd
+			type = "CD";
+			CDS.remove(itemId);
+		}
+		else if (DVDS.containsKey(itemId)) {
+			//item is a dvd
+			type = "DVD";
+			DVDS.remove(itemId);
+		}
+		else if (VIDEOGAMES.containsKey(itemId)) {
+			//item is a video game
+			type = "VideoGame";
+			VIDEOGAMES.remove(itemId);
+		}
+		else {
+			//we don't have that item :(
+			return;
+		}
+		String sql;
+		Connection conn = DBUtil.getConnection();
+		Statement s;
+		try {
+			sql = 
+				"DELETE FROM " + type + " WHERE itemId = " + itemId + "; " + 
+				"DELETE FROM Item WHERE itemId = " + itemId + ";";
+			s = conn.createStatement();
+			s.executeUpdate(sql);
+			s.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

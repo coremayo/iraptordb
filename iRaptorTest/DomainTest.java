@@ -59,6 +59,7 @@ public class DomainTest {
 			}
 		}
 		
+		//test the author stuff
 		String author1 = "Author1", author2 = "Author2";
 		b1.addAuthor(author1);
 		b1.addAuthor(author2);
@@ -66,5 +67,9 @@ public class DomainTest {
 		
 		b1.removeAuthor(author2);
 		assertEquals(b1.getAuthors().size(), 1);
+		
+		//test removing
+		int itemId = b1.getItemId();
+		DomainUtil.removeItem(itemId);
 	}
 }
