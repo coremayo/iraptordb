@@ -45,8 +45,12 @@ public class WebUtilityTest {
 			Vector<String> v;
 			v = WebUtility.getSuggestions("Finding Nemo", "dvd");
 			System.out.println(v.toString());
-			if( !v.get(0).startsWith("Monsters") ) //First should be Monsters, Inc.
-				fail("Wrong suggestions");
+			if(v.size() == 5) {
+				if( !v.get(0).startsWith("Monsters") ) //First should be Monsters, Inc.
+					fail("Wrong suggestions");
+			} else {
+				fail("Incorrect number of suggestions returned");
+			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			System.out.println(e.getClass());
