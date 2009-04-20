@@ -117,7 +117,7 @@ public class raptorAddGUI extends javax.swing.JFrame {
         notesArea.setPreferredSize(new java.awt.Dimension(6, 20));
         jScrollPane2.setViewportView(notesArea);
 
-        closeButton.setVisible(false);
+        closeButton.setVisible(true);
         closeButton.setText("Close");
         closeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -257,15 +257,16 @@ public class raptorAddGUI extends javax.swing.JFrame {
           String notes = notesArea.getText();
           System.out.println(genreType);
           if(selectedMediaType == "Movie"){
-            DBUtil.addBook(title, genreType, intRating, intYearReleased, notes, publisher, isbn);
+            DBUtil.addDVD(title, genreType, intRating, intYearReleased, notes, director);
           }
           if(selectedMediaType == "Book"){
+            DBUtil.addBook(title, genreType, intRating, intYearReleased, notes, publisher, isbn);
           }
           if(selectedMediaType == "CD"){
-
+            DBUtil.addCD(title, genreType, intRating, intYearReleased, notes);
           }
           if(selectedMediaType == "Game"){
-
+            DBUtil.addVideoGame(title, genreType, intRating, intYearReleased, notes);
           }
           /*do stuff with database here */
           /*Connection conn = null;
@@ -291,7 +292,7 @@ public class raptorAddGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_ohGodActionPerformed
 
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
-        
+        this.dispose();
 }//GEN-LAST:event_closeButtonActionPerformed
 
     private void typeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_typeComboBoxActionPerformed
