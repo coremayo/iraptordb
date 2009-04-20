@@ -23,6 +23,7 @@ import javax.swing.*;
  */
 public class iRaptorGUI extends javax.swing.JFrame {
 
+
     /** Creates new form iRaptorGUITest */
     public iRaptorGUI() {
         initComponents();
@@ -251,6 +252,9 @@ public class iRaptorGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+
+
+
     private void addItemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemButtonActionPerformed
         new raptorAddGUI().setVisible(true);
 }//GEN-LAST:event_addItemButtonActionPerformed
@@ -260,6 +264,10 @@ public class iRaptorGUI extends javax.swing.JFrame {
 }//GEN-LAST:event_addItemButtonActionPerformed
 
     private void removeItemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeItemButtonActionPerformed
+       UITableUtil gameTableUtil = new UITableUtil(gameTable, "game");
+       UITableUtil movieTableUtil = new UITableUtil(movieTable, "movie");
+       UITableUtil cdTableUtil = new UITableUtil(CDTable, "cd");
+       UITableUtil bookTableUtil = new UITableUtil(bookTable, "book");
         /* Remove selected item from database */
         int selectedRow = movieTable.getSelectedRow();
         Object selectedID = 0;
@@ -267,15 +275,15 @@ public class iRaptorGUI extends javax.swing.JFrame {
         String selectedIDString = selectedID.toString();
         int selectedIDNum = Integer.parseInt(selectedIDString);
         System.out.println(selectedIDNum);
-        domain.DBUtil.removeBook(selectedIDNum);
-}//GEN-LAST:event_removeItemButtonActionPerformed
+        DBUtil.removeDVD(selectedIDNum);        gameTableUtil.updateTable();        movieTableUtil.updateTable();        cdTableUtil.updateTable();        bookTableUtil.updateTable();}//GEN-LAST:event_removeItemButtonActionPerformed
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
        UITableUtil gameTableUtil = new UITableUtil(gameTable, "game");
        UITableUtil movieTableUtil = new UITableUtil(movieTable, "movie");
        UITableUtil cdTableUtil = new UITableUtil(CDTable, "cd");
        UITableUtil bookTableUtil = new UITableUtil(bookTable, "book");
-       gameTable.setValueAt(10, 0, 0);
+       
+        gameTable.setValueAt(10, 0, 0);
        gameTable.setValueAt("Fire Emblem", 0, 1);
        gameTable.setValueAt("Strategy", 0, 2);
        gameTable.setValueAt(5, 0, 3);
@@ -429,5 +437,5 @@ public class iRaptorGUI extends javax.swing.JFrame {
     private javax.swing.JTabbedPane tabPane;
     private javax.swing.JButton updateButton;
     // End of variables declaration//GEN-END:variables
-
+    
 }
