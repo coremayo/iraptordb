@@ -139,4 +139,20 @@ public class DomainUtil {
 		CDS.put(c.getItemId(), c);
 		return c;
 	}
+	
+	public static Item getItem(int itemId) {
+		if (BOOKS.containsKey(itemId)) {
+			return BOOKS.get(itemId);
+		}
+		if (CDS.containsKey(itemId)) {
+			return CDS.get(itemId);
+		}
+		if (DVDS.containsKey(itemId)) {
+			return DVDS.get(itemId);
+		}
+		if (VIDEOGAMES.containsKey(itemId)) {
+			return VIDEOGAMES.get(itemId);
+		}
+		return null;
+	}
 }

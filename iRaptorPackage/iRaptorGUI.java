@@ -5,6 +5,8 @@ import java.util.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.*;
 
+import domain.DBUtil;
+
 
 /*
  * To change this template, choose Tools | Templates
