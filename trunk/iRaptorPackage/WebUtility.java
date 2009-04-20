@@ -97,6 +97,7 @@ public class WebUtility {
         
         searchURL = new URL("http://www.amazon.com/s/ref=nb_ss_gw?url=search-alias%3D" + type + 
         		  "&field-keywords=" + title + "&x=8&y=2");
+        System.out.println("Search URL: " + searchURL);
         } catch( Exception e ) {
         	throw new IllegalArgumentException("Invalid title");
         }
@@ -104,34 +105,41 @@ public class WebUtility {
         //Grab the Amazon search results page for the given item
         String searchResults = readPage(searchURL);
         
-        int i = searchResults.indexOf("class=\"productTitle\"><a href=\"");
-        if(i >= 0) {
-        	int j = searchResults.indexOf('\"', i+30);
-        	URL itemURL = new URL(searchResults.substring(i, j));
+        Pattern titlePattern = Pattern.compile("<a href=\"([^\"]+)\"><span class=\"srTitle", Pattern.MULTILINE | Pattern.DOTALL);
+		Matcher titleMatcher = titlePattern.matcher(searchResults);
+		
+		int i, j;
+		
+        if(titleMatcher.find()) {
+        	//System.out.println("Found productTitle string:  [" + titleMatcher.group(1)+ "]");
+        	
+        	URL itemURL = new URL(titleMatcher.group(1));
+        	//System.out.println("itemURL = "+ itemURL.toString());
         	
         	String itemPage = readPage(itemURL);
         	
-        	i = itemPage.indexOf("Explore similar items");
-        	if(i > 0) {
-        		j = itemPage.lastIndexOf('\"', i);
-        		i = itemPage.lastIndexOf('\"', i-1);
+        	
+        	Pattern simPattern = Pattern.compile("<a href=\"([^\"]+)\">Explore similar items</a>", Pattern.MULTILINE | Pattern.DOTALL);
+        	Matcher simMatcher = simPattern.matcher(itemPage);
+        	if(simMatcher.find()) {
+        		//System.out.println("Found similar items");
         		
-        		if(i > 0 && j > 0) {
-        			String similar = itemPage.substring(i, j);
-        			URL similarURL = new URL(similar);
-        			
-        			String similarPage = readPage(similarURL);
-        			
-        			Pattern p = Pattern.compile("\\G.*<div class=\"simProductInfo\"><a href=\"[^\"]+\">([^>]+)</a>");
-        			Matcher m = p.matcher(similarPage);
-        			
-        			for(int c = 0; c < 5; c++) {
-        				if(m.matches()) {
-        					recommendations.set(c, m.group(0));
-        				}
+        		URL similarURL = new URL(simMatcher.group(1));
+        		//System.out.println("Similar URL = "+ similarURL.toString());
+
+        		String similarPage = readPage(similarURL);
+
+        		Pattern p = Pattern.compile("<div class=\"simProductInfo\"><a href=\"[^\"]+\">([^>]+)</a>");
+        		Matcher m = p.matcher(similarPage);
+
+        		for(int c = 0; c < 5; c++) {
+        			if(m.find()) {
+        				//System.out.println("Found a match: " + m.group(1));
+        				recommendations.add(m.group(1));
         			}
-        			
         		}
+
+
         		
         	}
         	
@@ -157,7 +165,9 @@ public class WebUtility {
     		code += (line + "\n");
     	}
     	
-    	
+//    	System.out.println("=========================================");
+//    	System.out.println(code);
+//    	System.out.println("=========================================");
     	return code;
     }
     
