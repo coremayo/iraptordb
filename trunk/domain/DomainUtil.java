@@ -9,16 +9,21 @@ import java.util.Collection;
 import java.util.Hashtable;
 
 public class DomainUtil {
-	private static Hashtable<Integer,Book> BOOKS = new Hashtable<Integer,Book>();
-	private static Hashtable<Integer,DVD> DVDS = new Hashtable<Integer,DVD>();
-	private static Hashtable<Integer,VideoGame> VIDEOGAMES = new Hashtable<Integer,VideoGame>();
-	private static Hashtable<Integer,CD> CDS = new Hashtable<Integer,CD>();
+	
+	private static Hashtable<Integer,Book> BOOKS;
+	private static Hashtable<Integer,DVD> DVDS;
+	private static Hashtable<Integer,VideoGame> VIDEOGAMES;
+	private static Hashtable<Integer,CD> CDS;
 	
 	protected static void populateItems() {
 		try {
+			BOOKS = new Hashtable<Integer,Book>();
 			populateBooks();
+			DVDS = new Hashtable<Integer,DVD>();
 			populateDVDs();
+			CDS = new Hashtable<Integer,CD>();
 			populateCDs();
+			VIDEOGAMES = new Hashtable<Integer,VideoGame>();
 			populateVideoGames();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -157,7 +162,7 @@ public class DomainUtil {
 		return null;
 	}
 	
-	public static void removeItem(int itemId)  {
+	public static void removeItem(int itemId) {
 		String type = "";
 		if (BOOKS.containsKey(itemId)) {
 			//item is a book
@@ -183,10 +188,10 @@ public class DomainUtil {
 			//we don't have that item :(
 			return;
 		}
-		String sql;
-		Connection conn = DBUtil.getConnection();
-		Statement s;
 		try {
+			String sql;
+			Connection conn = DBUtil.getConnection();
+			Statement s;
 			sql = 
 				"DELETE FROM " + type + " WHERE itemId = " + itemId + "; " + 
 				"DELETE FROM Item WHERE itemId = " + itemId + ";";

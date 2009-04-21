@@ -2,7 +2,6 @@ package iRaptorTest;
 
 import static org.junit.Assert.*;
 
-import java.io.File;
 import java.util.Collection;
 
 import org.junit.BeforeClass;
@@ -20,10 +19,10 @@ public class SearchUtilTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		DBUtil.fileName = File.createTempFile("RaptorUnitTests", ".db");
-		System.out.println("Testing DBUtil using file: " + 
-				DBUtil.fileName.getAbsolutePath());
-		DBUtil.setUpDatabase();
+		DBUtil.openTemporaryFile();
+		System.out.println(
+				"Testing DBUtil using file: " + 
+				DBUtil.getFilename());
 		
 		Item i = DomainUtil.addBook(title1);
 		i.addTag(tag1);

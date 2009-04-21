@@ -1,6 +1,5 @@
 package iRaptorTest;
 
-import java.io.File;
 import java.util.Collection;
 
 import org.junit.BeforeClass;
@@ -16,10 +15,10 @@ public class DomainTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		DBUtil.fileName = File.createTempFile("RaptorUnitTests", ".db");
-		System.out.println("Testing DBUtil using file: " + 
-				DBUtil.fileName.getAbsolutePath());
-		DBUtil.setUpDatabase();
+		DBUtil.openTemporaryFile();
+		System.out.println(
+				"Testing DBUtil using file: " + 
+				DBUtil.getFilename());
 	}
 	
 	@Test
