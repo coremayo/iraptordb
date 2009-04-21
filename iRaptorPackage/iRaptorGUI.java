@@ -266,7 +266,7 @@ public class iRaptorGUI extends javax.swing.JFrame {
         String selectedIDString = selectedID.toString();
         int selectedIDNum = Integer.parseInt(selectedIDString);
         System.out.println(selectedIDNum);
-        DBUtil.removeDVD(selectedIDNum);        gameTableUtil.updateTable();        movieTableUtil.updateTable();        cdTableUtil.updateTable();        bookTableUtil.updateTable();}//GEN-LAST:event_removeItemButtonActionPerformed
+        DomainUtil.removeItem(selectedIDNum);        gameTableUtil.updateTable();        movieTableUtil.updateTable();        cdTableUtil.updateTable();        bookTableUtil.updateTable();}//GEN-LAST:event_removeItemButtonActionPerformed
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
        UITableUtil gameTableUtil = new UITableUtil(gameTable, "game");
@@ -424,6 +424,7 @@ public class iRaptorGUI extends javax.swing.JFrame {
     * @param args the command line arguments
     */
     public static void main(String args[]) {
+    	DBUtil.openTemporaryFile();
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
