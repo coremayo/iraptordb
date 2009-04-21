@@ -259,14 +259,48 @@ public class iRaptorGUI extends javax.swing.JFrame {
        UITableUtil movieTableUtil = new UITableUtil(movieTable, "movie");
        UITableUtil cdTableUtil = new UITableUtil(CDTable, "cd");
        UITableUtil bookTableUtil = new UITableUtil(bookTable, "book");
-        /* Remove selected item from database */
-        int selectedRow = movieTable.getSelectedRow();
+       int selectedIndex = tabPane.getSelectedIndex();
+       if(selectedIndex == 0 ){
+    	   int selectedRow = gameTable.getSelectedRow();
+    	   Object selectedID = gameTable.getValueAt(selectedRow , 0);
+    	   String stringSelectedID = selectedID.toString();
+    	   int intSelectedID = Integer.parseInt(stringSelectedID);
+    	   DomainUtil.removeItem(intSelectedID);
+       }
+       if(selectedIndex == 1 ){
+    	   int selectedRow = CDTable.getSelectedRow();
+    	   Object selectedID = CDTable.getValueAt(selectedRow , 0);
+    	   String stringSelectedID = selectedID.toString();
+    	   int intSelectedID = Integer.parseInt(stringSelectedID);
+    	   DomainUtil.removeItem(intSelectedID);
+       }
+       if(selectedIndex == 2 ){
+    	   int selectedRow = movieTable.getSelectedRow();
+    	   Object selectedID = movieTable.getValueAt(selectedRow , 0);
+    	   String stringSelectedID = selectedID.toString();
+    	   int intSelectedID = Integer.parseInt(stringSelectedID);
+    	   DomainUtil.removeItem(intSelectedID);
+       }
+       if(selectedIndex == 3 ){
+    	   int selectedRow = bookTable.getSelectedRow();
+    	   Object selectedID = bookTable.getValueAt(selectedRow , 0);
+    	   String stringSelectedID = selectedID.toString();
+    	   int intSelectedID = Integer.parseInt(stringSelectedID);
+    	   DomainUtil.removeItem(intSelectedID);
+       }
+       
+       /* Remove selected item from database */
+        /*int selectedRow = movieTable.getSelectedRow();
         Object selectedID = 0;
         selectedID = movieTable.getValueAt(selectedRow, 0);
         String selectedIDString = selectedID.toString();
         int selectedIDNum = Integer.parseInt(selectedIDString);
-        System.out.println(selectedIDNum);
-        DomainUtil.removeItem(selectedIDNum);        gameTableUtil.updateTable();        movieTableUtil.updateTable();        cdTableUtil.updateTable();        bookTableUtil.updateTable();}//GEN-LAST:event_removeItemButtonActionPerformed
+        System.out.println(selectedIDNum);*/
+        
+        gameTableUtil.updateTable();        
+        movieTableUtil.updateTable();        
+        cdTableUtil.updateTable();        
+        bookTableUtil.updateTable();}//GEN-LAST:event_removeItemButtonActionPerformed
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
        UITableUtil gameTableUtil = new UITableUtil(gameTable, "game");
@@ -361,24 +395,31 @@ public class iRaptorGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_updateButtonActionPerformed
 /* Searches the web for a description of the related item*/
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-
+    		
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void searchWebButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchWebButtonActionPerformed
         int selectedIndex = tabPane.getSelectedIndex();
-        int selectedRow = movieTable.getSelectedRow();
-        String selectedTitle = movieTable.getValueAt(selectedRow, 1).toString();
+        
         try{
         if(selectedIndex == 0){
+        	int selectedRow = gameTable.getSelectedRow();
+            String selectedTitle = gameTable.getValueAt(selectedRow, 1).toString();
             WebUtility.amazonSearch(selectedTitle, "game");
         }
         if(selectedIndex == 1){
+        	int selectedRow = CDTable.getSelectedRow();
+            String selectedTitle = CDTable.getValueAt(selectedRow, 1).toString();
             WebUtility.amazonSearch(selectedTitle, "CD");
         }
         if(selectedIndex == 2){
+        	int selectedRow = movieTable.getSelectedRow();
+            String selectedTitle = movieTable.getValueAt(selectedRow, 1).toString();
             iRaptorPackage.WebUtility.amazonSearch(selectedTitle, "DVD");
         }
         if(selectedIndex == 3){
+        	int selectedRow = bookTable.getSelectedRow();
+            String selectedTitle = bookTable.getValueAt(selectedRow, 1).toString();
             WebUtility.amazonSearch(selectedTitle, "book");
         }
         }catch(Exception e){}
@@ -410,9 +451,27 @@ public class iRaptorGUI extends javax.swing.JFrame {
         //String selectedTitle = movieTable.getValueAt(selectedRow, 1).toString();
         System.out.println("HERE WE GO");
         try{
-            //if(selectedIndex == 0){
-            Vector<String> recomendations = WebUtility.getSuggestions("Fire Emblem"/*selectedTitle*/, "game");
-        
+            if(selectedIndex == 0){
+            	int selectedRow = gameTable.getSelectedRow();
+            	String selectedTitle = gameTable.getValueAt(selectedRow, 1).toString();	
+            	Vector<String> recomendations = WebUtility.getSuggestions(selectedTitle, "game");
+            }
+            if(selectedIndex == 1){
+            	int selectedRow = CDTable.getSelectedRow();
+                String selectedTitle = CDTable.getValueAt(selectedRow, 1).toString();
+                Vector<String> recomendations = WebUtility.getSuggestions(selectedTitle, "CD");
+            	}
+            if(selectedIndex == 2){
+            	int selectedRow = movieTable.getSelectedRow();
+                String selectedTitle = movieTable.getValueAt(selectedRow, 1).toString();
+                Vector<String> recomendations = WebUtility.getSuggestions(selectedTitle, "DVD");
+            	}
+            if(selectedIndex == 3){
+            	int selectedRow = bookTable.getSelectedRow();
+                String selectedTitle = bookTable.getValueAt(selectedRow, 1).toString();
+                Vector<String> recomendations = WebUtility.getSuggestions(selectedTitle, "book");
+            	}
+            
         
         }catch(Exception e){System.out.println(e.toString());}
         System.out.println("THIS IS DONE");
