@@ -257,29 +257,38 @@ public class raptorAddGUI extends javax.swing.JFrame {
           String notes = notesArea.getText();
           System.out.println(genreType);
           if(selectedMediaType == "Movie"){
-            DBUtil.addDVD(title, genreType, intRating, intYearReleased, notes, director);
+            domain.DVD d = domain.DomainUtil.addDVD(title);
+            d.setDirectorName(director);
+            d.setGenre(genreType);
+            d.setNotes(notes);
+            d.setRating(intRating);
+            d.setYear(intYearReleased);
           }
           if(selectedMediaType == "Book"){
-            DBUtil.addBook(title, genreType, intRating, intYearReleased, notes, publisher, isbn);
+            domain.Book b = domain.DomainUtil.addBook(title);
+            b.setGenre(genreType);
+            b.setRating(intRating);
+            b.setYear(intYearReleased);
+            b.setNotes(notes);
+            b.setPublisher(publisher);
+            b.setIsbn(isbn);
           }
           if(selectedMediaType == "CD"){
-            DBUtil.addCD(title, genreType, intRating, intYearReleased, notes);
+            domain.CD c = domain.DomainUtil.addCD(title);
+            c.setGenre(genreType);
+            c.setNotes(notes);
+            c.setRating(intRating);
+            c.setYear(intYearReleased);
+
           }
           if(selectedMediaType == "Game"){
-            DBUtil.addVideoGame(title, genreType, intRating, intYearReleased, notes);
-          }
-          /*do stuff with database here */
-          /*Connection conn = null;
-          try{
-          Class.forName("org.sqlite.JDBC");
-          conn = DriverManager.getConnection("jdbc:sqlite:test.db");
-          Statement query = conn.createStatement();
-          String s = "INSERT INTO Item(title, genre, rating, year, dateAdded, notes) VALUES ('" + title + "','" + genreType + "'," + rating + "," + yearReleased + ", CURRENT_TIMESTAMP" + ",'" + notes + "');";
-          query.executeUpdate(s);
-          }catch(Exception e){System.out.println(e.getMessage());}
-          finally{
-              try{
-                  if (conn != null) conn.close();} catch(SQLException e){}}*/
+            domain.VideoGame VG = domain.DomainUtil.addVideoGame(title);
+            VG.setGenre(genreType);
+            VG.setNotes(notes);
+            VG.setRating(intRating);
+            VG.setYear(intYearReleased);
+            }
+          
 
 }//GEN-LAST:event_addItemButtonActionPerformed
 

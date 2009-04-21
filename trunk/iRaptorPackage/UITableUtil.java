@@ -4,6 +4,8 @@
  */
 
 package iRaptorPackage;
+
+import domain.*;
 import javax.swing.*;
 import java.sql.*;
 import java.util.*;
@@ -16,6 +18,10 @@ import javax.swing.*;
 public class UITableUtil {
     JTable theTableModel = new JTable();
     Object type;
+    Collection<domain.VideoGame> listOVideoGames = domain.DomainUtil.getVideoGames();
+    Collection<domain.DVD> listODVDs = domain.DomainUtil.getDVDs();
+    Collection<domain.Book> listOBooks = domain.DomainUtil.getBooks();
+    Collection<domain.CD> listOCDs = domain.DomainUtil.getCDs();
 
 
     public UITableUtil(JTable table, String type){
@@ -25,7 +31,12 @@ public class UITableUtil {
     }
     public void updateTable(){
         if(type == "movie"){
-            Connection conn = null;
+            
+        
+        
+        
+        }
+            /*Connection conn = null;
 
             int rowCount = 0;
             try{
@@ -88,7 +99,7 @@ public class UITableUtil {
                 conn2.close();
             }catch(Exception e){System.out.println(e.getMessage());
                         }
-        }
+        }*/
         if(type == "game"){
                 Connection conn = null;
 

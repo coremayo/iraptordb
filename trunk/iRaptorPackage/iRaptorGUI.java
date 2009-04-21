@@ -1,5 +1,6 @@
 package iRaptorPackage;
 
+import domain.*;
 import java.sql.*;
 import java.util.*;
 import javax.swing.table.DefaultTableModel;
@@ -61,18 +62,6 @@ public class iRaptorGUI extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
-        
-        /*------------------------------------------------------------
-         * FOR TESTING PURPOSESS (do not delete)
-         */
-        gameTable.setName("game table");
-        CDTable.setName("cd table");
-        movieTable.setName("movie table");
-        bookTable.setName("book table");
-        searchiRaptorButton.setName("search button");
-        addItemButton.setName("add item button");
-        updateButton.setName("update table button");
-        removeItemButton.setName("remove item button");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("iRaptor");
@@ -173,6 +162,11 @@ public class iRaptorGUI extends javax.swing.JFrame {
         });
 
         recommendButton.setText("Recommend");
+        recommendButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                recommendButtonActionPerformed(evt);
+            }
+        });
 
         updateButton.setText("Update Table");
         updateButton.addActionListener(new java.awt.event.ActionListener() {
@@ -189,11 +183,6 @@ public class iRaptorGUI extends javax.swing.JFrame {
         });
 
         searchiRaptorButton.setText("Search iRaptor");
-        searchiRaptorButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	searchiRaptorButtonActionPerformed(evt);
-            }
-        });
 
         strategyGuideButton.setText("Get Strategy Guide");
         strategyGuideButton.addActionListener(new java.awt.event.ActionListener() {
@@ -257,9 +246,9 @@ public class iRaptorGUI extends javax.swing.JFrame {
 
 
 
-    private void addItemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemButtonActionPerformed
+    private void addItemButtonActionPerformed(java.awt.event.ActionEvent evt) {                                              
         new raptorAddGUI().setVisible(true);
-}//GEN-LAST:event_addItemButtonActionPerformed
+}                                             
     
     private void searchiRaptorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemButtonActionPerformed
         new searchRaptorGUI().setVisible(true);
@@ -376,11 +365,22 @@ public class iRaptorGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void searchWebButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchWebButtonActionPerformed
+        int selectedIndex = tabPane.getSelectedIndex();
         int selectedRow = movieTable.getSelectedRow();
         String selectedTitle = movieTable.getValueAt(selectedRow, 1).toString();
-        String selectedGenre = movieTable.getValueAt(selectedRow, 2).toString();
         try{
-        iRaptorPackage.WebUtility.amazonSearch(selectedTitle, "DVD");
+        if(selectedIndex == 0){
+            WebUtility.amazonSearch(selectedTitle, "game");
+        }
+        if(selectedIndex == 1){
+            WebUtility.amazonSearch(selectedTitle, "CD");
+        }
+        if(selectedIndex == 2){
+            iRaptorPackage.WebUtility.amazonSearch(selectedTitle, "DVD");
+        }
+        if(selectedIndex == 3){
+            WebUtility.amazonSearch(selectedTitle, "book");
+        }
         }catch(Exception e){}
     }//GEN-LAST:event_searchWebButtonActionPerformed
 
@@ -403,6 +403,22 @@ public class iRaptorGUI extends javax.swing.JFrame {
          }catch(Exception e){}
          // TODO add your handling code here:
     }//GEN-LAST:event_strategyGuideButtonActionPerformed
+
+    private void recommendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_recommendButtonActionPerformed
+        int selectedIndex = tabPane.getSelectedIndex();
+        //int selectedRow = movieTable.getSelectedRow();
+        //String selectedTitle = movieTable.getValueAt(selectedRow, 1).toString();
+        System.out.println("HERE WE GO");
+        try{
+            //if(selectedIndex == 0){
+            Vector<String> recomendations = WebUtility.getSuggestions("Fire Emblem"/*selectedTitle*/, "game");
+        
+        
+        }catch(Exception e){System.out.println(e.toString());}
+        System.out.println("THIS IS DONE");
+        //JOptionPane test = new JOptionPane("HELP!");
+        //test.setVisible(true);
+    }//GEN-LAST:event_recommendButtonActionPerformed
 
     /**
     * @param args the command line arguments
