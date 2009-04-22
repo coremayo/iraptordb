@@ -306,7 +306,9 @@ public class iRaptorGUI extends javax.swing.JFrame {
        
        
        movieTableUtil.updateTable();
-        
+       gameTableUtil.updateTable();
+       cdTableUtil.updateTable();
+       bookTableUtil.updateTable();
     }//GEN-LAST:event_updateButtonActionPerformed
 /* Searches the web for a description of the related item*/
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed

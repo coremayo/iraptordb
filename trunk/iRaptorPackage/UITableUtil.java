@@ -19,7 +19,8 @@ import javax.swing.*;
  */
 public class UITableUtil {
     JTable theTableModel = new JTable();
-    Object type;
+    String type;
+    javax.swing.table.DefaultTableModel testTable; 
     Collection<domain.VideoGame> listOVideoGames = domain.DomainUtil.getVideoGames();
     Collection<domain.DVD> listODVDs = domain.DomainUtil.getDVDs();
     Collection<domain.Book> listOBooks = domain.DomainUtil.getBooks();
@@ -29,6 +30,7 @@ public class UITableUtil {
     public UITableUtil(JTable table, String type){
     this.type = type;
     theTableModel = table;
+    testTable = (DefaultTableModel)theTableModel.getModel();
 
     }
     public void updateTable(){
@@ -36,6 +38,7 @@ public class UITableUtil {
             int i = 0;
         	Collection<domain.DVD> DVDCollection = domain.DomainUtil.getDVDs();
             Iterator<domain.DVD> dvdIterator = DVDCollection.iterator();
+            testTable.setNumRows(DVDCollection.size());
             while(dvdIterator.hasNext()){
             	domain.DVD currentDVD = dvdIterator.next();
             	for(int j =0; j<8;j++){
@@ -72,12 +75,150 @@ public class UITableUtil {
             			theTableModel.setValueAt(DVDnotes, i, j);
             		}
             	}
+            	i++;
+            	}
+            }
+            if(type == "game"){
+            	int i = 0;
+            	Collection<domain.VideoGame> VideoGameCollection = domain.DomainUtil.getVideoGames();
+                Iterator<domain.VideoGame> VideoGameIterator = VideoGameCollection.iterator();
+                testTable.setNumRows(VideoGameCollection.size());
+                while(VideoGameIterator.hasNext()){
+                	domain.VideoGame currentDVD = VideoGameIterator.next();
+                	for(int j =0; j<8;j++){
+                		int ItemId = currentDVD.getItemId();
+                		String DVDName = currentDVD.getTitle();
+                		String DVDgenre = currentDVD.getGenre();
+                		String DVDnotes = currentDVD.getNotes();
+                		int DVDYearReleased = currentDVD.getYear();
+                		int DVDRating = currentDVD.getRating();
+                		List<Tag> DVDTags = currentDVD.getTags();
+                		Date DVDAdded = currentDVD.getDateAdded();
+                		if(j == 0){
+                			theTableModel.setValueAt(ItemId, i, j);
+                		}
+                		if(j == 1){
+                			theTableModel.setValueAt(DVDName, i, j);
+                		}
+                		if(j == 2){
+                			theTableModel.setValueAt(DVDgenre, i, j);
+                		}
+                		if(j == 3){
+                			theTableModel.setValueAt(DVDRating, i, j);
+                		}
+                		if(j == 4){
+                			theTableModel.setValueAt(DVDAdded, i, j);
+                		}
+                		if(j == 5){
+                			theTableModel.setValueAt(DVDYearReleased, i, j);
+                		}
+                		//if(j == 6){
+                		//	theTableModel.setValueAt(ItemId, i, j);
+                		//}
+                		if(j == 7){
+                			theTableModel.setValueAt(DVDnotes, i, j);
+                		}
+                	}
+                	i++;
+                	}
+            	
+            	
+            }
+            if(type == "book"){
+            	int i = 0;
+            	Collection<domain.Book> VideoGameCollection = domain.DomainUtil.getBooks();
+                Iterator<domain.Book> VideoGameIterator = VideoGameCollection.iterator();
+                testTable.setNumRows(VideoGameCollection.size());
+                while(VideoGameIterator.hasNext()){
+                	domain.Book currentDVD = VideoGameIterator.next();
+                	for(int j =0; j<8;j++){
+                		int ItemId = currentDVD.getItemId();
+                		String DVDName = currentDVD.getTitle();
+                		String DVDgenre = currentDVD.getGenre();
+                		String DVDnotes = currentDVD.getNotes();
+                		int DVDYearReleased = currentDVD.getYear();
+                		int DVDRating = currentDVD.getRating();
+                		List<Tag> DVDTags = currentDVD.getTags();
+                		Date DVDAdded = currentDVD.getDateAdded();
+                		if(j == 0){
+                			theTableModel.setValueAt(ItemId, i, j);
+                		}
+                		if(j == 1){
+                			theTableModel.setValueAt(DVDName, i, j);
+                		}
+                		if(j == 2){
+                			theTableModel.setValueAt(DVDgenre, i, j);
+                		}
+                		if(j == 3){
+                			theTableModel.setValueAt(DVDRating, i, j);
+                		}
+                		if(j == 4){
+                			theTableModel.setValueAt(DVDYearReleased, i, j);
+                		}
+                		if(j == 5){
+                			theTableModel.setValueAt(DVDAdded, i, j);
+                		}
+                		//if(j == 6){
+                		//	theTableModel.setValueAt(ItemId, i, j);
+                		//}
+                		if(j == 7){
+                			theTableModel.setValueAt(DVDnotes, i, j);
+                		}
+                	}
+                	i++;
+                	}
+            	
             	
             }
             
-            	
-            
-        }}}
+        
+    if(type == "cd"){
+    	int i = 0;
+    	Collection<domain.CD> VideoGameCollection = domain.DomainUtil.getCDs();
+        Iterator<domain.CD> VideoGameIterator = VideoGameCollection.iterator();
+        testTable.setNumRows(VideoGameCollection.size());
+        while(VideoGameIterator.hasNext()){
+        	domain.CD currentDVD = VideoGameIterator.next();
+        	for(int j =0; j<8;j++){
+        		int ItemId = currentDVD.getItemId();
+        		String DVDName = currentDVD.getTitle();
+        		String DVDgenre = currentDVD.getGenre();
+        		String DVDnotes = currentDVD.getNotes();
+        		int DVDYearReleased = currentDVD.getYear();
+        		int DVDRating = currentDVD.getRating();
+        		List<Tag> DVDTags = currentDVD.getTags();
+        		Date DVDAdded = currentDVD.getDateAdded();
+        		if(j == 0){
+        			theTableModel.setValueAt(ItemId, i, j);
+        		}
+        		if(j == 1){
+        			theTableModel.setValueAt(DVDName, i, j);
+        		}
+        		if(j == 2){
+        			theTableModel.setValueAt(DVDgenre, i, j);
+        		}
+        		if(j == 3){
+        			theTableModel.setValueAt(DVDRating, i, j);
+        		}
+        		if(j == 4){
+        			theTableModel.setValueAt(DVDYearReleased, i, j);
+        		}
+        		if(j == 5){
+        			theTableModel.setValueAt(DVDAdded, i, j);
+        		}
+        		//if(j == 6){
+        		//	theTableModel.setValueAt(ItemId, i, j);
+        		//}
+        		if(j == 7){
+        			theTableModel.setValueAt(DVDnotes, i, j);
+        		}
+        	}
+        	i++;
+        	}
+    	
+    	
+    }}}
+    
             	
             
             

@@ -126,7 +126,7 @@ public class raptorAddGUI extends javax.swing.JFrame {
             }
         });
 
-        directorLabel.setText("Director");
+        directorLabel.setText("Director/Artist");
         directorLabel.setVisible(true);
 
         isbnLabel.setText("ISBN");
