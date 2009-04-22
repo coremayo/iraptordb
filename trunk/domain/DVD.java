@@ -74,4 +74,9 @@ public class DVD extends Item {
 		this.directorName = directorName;
 		updateDB();
 	}
+
+	@Override
+	public String toString() {
+		return "DVD titled: " + this.getTitle() + " directed by: " + this.getDirectorName();
+	}
 }

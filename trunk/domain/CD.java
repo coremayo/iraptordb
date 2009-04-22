@@ -193,4 +193,17 @@ public class CD extends Item {
 			}
 		}
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder ret = new StringBuilder();
+		ret.append("CD titled: ");
+		ret.append(this.getTitle());
+		
+		for (Creator c : artists) {
+			ret.append(" with artist: ");
+			ret.append(c.getName());
+		}
+		return ret.toString();
+	}
 }

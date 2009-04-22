@@ -44,4 +44,9 @@ public class VideoGame extends Item {
 	protected VideoGame(ResultSet rs) throws SQLException {
 		super(rs);
 	}
+
+	@Override
+	public String toString() {
+		return "Video Game title" + this.getTitle();
+	}
 }
