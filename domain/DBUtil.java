@@ -156,10 +156,16 @@ public class DBUtil {
 	 */
 	public static JFileChooser getFileChooser() {
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        File homeDir = new File(System.getProperty("user.home"));
+        fileChooser.setCurrentDirectory(homeDir);
         fileChooser.setAcceptAllFileFilterUsed(false);
         fileChooser.setFileFilter((javax.swing.filechooser.FileFilter) getFileFilter());
         fileChooser.setDialogTitle("Open a " + APPLICATION_NAME +" File");
+        fileChooser.setSelectedFile(new File(
+        		homeDir.getAbsolutePath() + 
+        		File.separator + 
+        		APPLICATION_NAME + 
+        		FILE_EXTENSION));
 		return fileChooser;
 	}
 
