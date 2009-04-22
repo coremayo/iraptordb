@@ -9,6 +9,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
+
 /* converted sql queries to use prepared statements
  * useful website about prepared statements and sql injection:
  * http://www.owasp.org/index.php/Preventing_SQL_Injection_in_Java
@@ -25,6 +28,8 @@ import java.sql.Statement;
 public class DBUtil {
 	// this is the database file that our program will read/write to
 	private static File THE_FILE;
+	public static final String FILE_EXTENSION = ".rdb";
+	public static final String APPLICATION_NAME = "Raptor";
 	
 	/**
 	 * Returns the Connection to our database 
@@ -70,46 +75,40 @@ public class DBUtil {
 		conn.close();
 	}
 	
-	public static void openNewFile(String pathname) {
-		
-		File file = new File(pathname);
+	public static void openFile(File file) {
 		if (file.exists()) {
-			// if the file already exists then it cannot be new!
-		} else {
-			THE_FILE = file;
-			try {
-				createTables();
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			DomainUtil.populateItems();
+			openExistingFile(file);
+		} else  {
+			openNewFile(file);
 		}
 	}
 	
-	public static void openExistingFile(String pathname) {
-		
-		File file = new File(pathname);
-		if (!file.exists()) {
-			// if the file doesn't exist then we cannot open it!
-		} else {
-			THE_FILE = file;
-			try {
-				createTables();
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			DomainUtil.populateItems();
+	private static void openNewFile(File file) {
+		//Does our new file have our extension?
+        if (!file.getName().endsWith(FILE_EXTENSION)){
+        	//DOH! it doesn't 
+        	file = new File(file.getAbsolutePath() + FILE_EXTENSION);
+        }
+		THE_FILE = file;
+		try {
+			createTables();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
+		DomainUtil.populateItems();
+	}
+	
+	private static void openExistingFile(File file) {
+		THE_FILE = file;
+		DomainUtil.populateItems();
 	}
 	
 	public static void openTemporaryFile() {
 		
 		try {
-			THE_FILE = File.createTempFile("RaptorUnitTests", ".db");
+			THE_FILE = File.createTempFile(APPLICATION_NAME + "Temp", FILE_EXTENSION);
 			createTables();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -124,8 +123,21 @@ public class DBUtil {
 	 * being used by the database
 	 * @return
 	 */
-	public static String getFilename() {
-		return THE_FILE.getAbsolutePath();
+	public static File getFile() {
+		return THE_FILE.getAbsoluteFile();
+	}
+	
+	public static FileFilter getFileFilter() {
+		return new DBUtil().new DBFileFilter();
+	}
+
+	public static JFileChooser getFileChooser() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        fileChooser.setFileFilter((javax.swing.filechooser.FileFilter) getFileFilter());
+        fileChooser.setDialogTitle("Open a " + APPLICATION_NAME +" File");
+		return fileChooser;
 	}
 
 	/**
@@ -216,6 +228,17 @@ public class DBUtil {
 		 */
 		public void setStatement(Statement statement) {
 			this.statement = statement;
+		}
+	}
+
+	public class DBFileFilter extends FileFilter {
+		@Override
+		public boolean accept(File f) {
+			return f.getName().toLowerCase().endsWith(FILE_EXTENSION);
+		}
+		@Override
+		public String getDescription() {
+			return FILE_EXTENSION + " files";
 		}
 	}
 }
