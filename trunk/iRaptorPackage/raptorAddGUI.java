@@ -127,7 +127,7 @@ public class raptorAddGUI extends javax.swing.JFrame {
         });
 
         directorLabel.setText("Director");
-        directorLabel.setVisible(false);
+        directorLabel.setVisible(true);
 
         isbnLabel.setText("ISBN");
         isbnLabel.setVisible(false);
@@ -135,7 +135,7 @@ public class raptorAddGUI extends javax.swing.JFrame {
         publisherLabel.setText("Publisher");
         publisherLabel.setVisible(false);
 
-        directorField.setVisible(false);
+        directorField.setVisible(true);
         directorField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 directorFieldActionPerformed(evt);

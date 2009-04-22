@@ -98,13 +98,13 @@ public class iRaptorGUI extends javax.swing.JFrame {
 
         movieTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null , null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "idNum", "Title", "Genre", "Rating", "Year Released", "Date Added", "Notes"
+                "idNum", "Name", "Genre", "Rating", "Year Released", "Date Added","Tags", "Notes"
             }
         ));
         jScrollPane5.setViewportView(movieTable);
@@ -302,12 +302,7 @@ public class iRaptorGUI extends javax.swing.JFrame {
        UITableUtil cdTableUtil = new UITableUtil(CDTable, "cd");
        UITableUtil bookTableUtil = new UITableUtil(bookTable, "book");
        
-        gameTable.setValueAt(10, 0, 0);
-       gameTable.setValueAt("Fire Emblem", 0, 1);
-       gameTable.setValueAt("Strategy", 0, 2);
-       gameTable.setValueAt(5, 0, 3);
-       gameTable.setValueAt("2009-04-04 21:06:55", 0, 4);
-       gameTable.setValueAt(2009, 0, 5);
+       
        movieTableUtil.updateTable();
         
     }//GEN-LAST:event_updateButtonActionPerformed
@@ -403,15 +398,8 @@ public class iRaptorGUI extends javax.swing.JFrame {
     public static void main(String args[]) {
 
     	//Lets open a file!
-    	JFileChooser fileChooser = DBUtil.getFileChooser();
-        fileChooser.showSaveDialog(null);
-        if (fileChooser.getSelectedFile() != null) {
-        	DBUtil.openFile(fileChooser.getSelectedFile());
-        } else {
-        	//If user did not specify a file, use a temporary file
-        	DBUtil.openTemporaryFile();
-        }
-
+    	JFileChooser fileChooser = domain.DBUtil.getFileChooser();
+        fileChooser.showOpenDialog(null);    	domain.DBUtil.openFile(fileChooser.getSelectedFile());
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
