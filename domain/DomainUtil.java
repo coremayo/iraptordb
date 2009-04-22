@@ -48,7 +48,7 @@ public class DomainUtil {
 			   "SELECT Item.*, " +
 			           "DVD.directorName " + 
 			     "FROM Item " +
-			"LEFT JOIN DVD " +
+			"INNER JOIN DVD " +
 			       "ON DVD.itemId = Item.itemId;";
 		Connection conn = DBUtil.getConnection();
 		PreparedStatement ps = conn.prepareStatement(sqltxt);
@@ -71,7 +71,7 @@ public class DomainUtil {
 		String sqltxt = 
 			   "SELECT Item.* " +
 			     "FROM Item " +
-			"LEFT JOIN VideoGame " +
+			"INNER JOIN VideoGame " +
 			       "ON VideoGame.itemId = Item.itemId;";
 		Connection conn = DBUtil.getConnection();
 		PreparedStatement ps = conn.prepareStatement(sqltxt);
@@ -94,7 +94,7 @@ public class DomainUtil {
 		String sqltxt = 
 			   "SELECT Item.* " +
 			     "FROM Item " +
-			"LEFT JOIN CD " +
+			"INNER JOIN CD " +
 			       "ON CD.itemId = Item.itemId;";
 		Connection conn = DBUtil.getConnection();
 		PreparedStatement ps = conn.prepareStatement(sqltxt);
@@ -119,7 +119,7 @@ public class DomainUtil {
 	                   "Book.isbn, " +
 	                   "Book.publisher " +
 			     "FROM Item " +
-			"LEFT JOIN Book " +
+			"INNER JOIN Book " +
 			       "ON Book.itemId = Item.itemId;";
 		Connection conn = DBUtil.getConnection();
 		PreparedStatement ps = conn.prepareStatement(sqltxt);
