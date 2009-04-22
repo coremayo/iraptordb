@@ -97,7 +97,7 @@ public class WebUtility {
         
         searchURL = new URL("http://www.amazon.com/s/ref=nb_ss_gw?url=search-alias%3D" + type + 
         		  "&field-keywords=" + title + "&x=8&y=2");
-        System.out.println("Search URL: " + searchURL);
+        //System.out.println("Search URL: " + searchURL);
         } catch( Exception e ) {
         	throw new IllegalArgumentException("Invalid title");
         }
