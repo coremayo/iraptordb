@@ -46,7 +46,7 @@ public class WebUtilityTest {
 			v = WebUtility.getSuggestions("Finding Nemo", "dvd");
 			System.out.println(v.toString());
 			if(v.size() == 5) {
-				if( !v.get(0).startsWith("Monsters") ) //First should be Monsters, Inc.
+				if( !v.get(0).startsWith("A Bug's Life") ) //First should be Monsters, Inc.
 					fail("Wrong suggestions");
 			} else {
 				fail("Incorrect number of suggestions returned");
