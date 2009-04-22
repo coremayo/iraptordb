@@ -9,6 +9,8 @@ import domain.*;
 import javax.swing.*;
 import java.sql.*;
 import java.util.*;
+import java.util.Date;
+
 import javax.swing.table.DefaultTableModel;
 import javax.swing.*;
 /**
@@ -31,11 +33,58 @@ public class UITableUtil {
     }
     public void updateTable(){
         if(type == "movie"){
+            int i = 0;
+        	Collection<domain.DVD> DVDCollection = domain.DomainUtil.getDVDs();
+            Iterator<domain.DVD> dvdIterator = DVDCollection.iterator();
+            while(dvdIterator.hasNext()){
+            	domain.DVD currentDVD = dvdIterator.next();
+            	for(int j =0; j<8;j++){
+            		int ItemId = currentDVD.getItemId();
+            		String DVDName = currentDVD.getTitle();
+            		String DVDgenre = currentDVD.getGenre();
+            		String DVDnotes = currentDVD.getNotes();
+            		int DVDYearReleased = currentDVD.getYear();
+            		int DVDRating = currentDVD.getRating();
+            		List<Tag> DVDTags = currentDVD.getTags();
+            		Date DVDAdded = currentDVD.getDateAdded();
+            		if(j == 0){
+            			theTableModel.setValueAt(ItemId, i, j);
+            		}
+            		if(j == 1){
+            			theTableModel.setValueAt(DVDName, i, j);
+            		}
+            		if(j == 2){
+            			theTableModel.setValueAt(DVDgenre, i, j);
+            		}
+            		if(j == 3){
+            			theTableModel.setValueAt(DVDRating, i, j);
+            		}
+            		if(j == 4){
+            			theTableModel.setValueAt(DVDYearReleased, i, j);
+            		}
+            		if(j == 5){
+            			theTableModel.setValueAt(DVDAdded, i, j);
+            		}
+            		//if(j == 6){
+            		//	theTableModel.setValueAt(ItemId, i, j);
+            		//}
+            		if(j == 7){
+            			theTableModel.setValueAt(DVDnotes, i, j);
+            		}
+            	}
+            	
+            }
+            
+            	
+            
+        }}}
+            	
+            
+            
             
         
         
         
-        }
             /*Connection conn = null;
 
             int rowCount = 0;
@@ -100,7 +149,7 @@ public class UITableUtil {
             }catch(Exception e){System.out.println(e.getMessage());
                         }
         }*/
-        if(type == "game"){
+        /*if(type == "game"){
                 Connection conn = null;
 
                     int rowCount = 0;
@@ -295,5 +344,5 @@ public class UITableUtil {
                 }catch(Exception e){System.out.println(e.getMessage());
                             }
         }
-    }
-}
+    }*/
+
