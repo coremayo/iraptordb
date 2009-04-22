@@ -18,7 +18,7 @@ public class DomainTest {
 		DBUtil.openTemporaryFile();
 		System.out.println(
 				"Testing DBUtil using file: " + 
-				DBUtil.getFile().getName());
+				DBUtil.getFile().getAbsolutePath());
 	}
 	
 	@Test

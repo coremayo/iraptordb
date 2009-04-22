@@ -45,7 +45,8 @@ public class DomainUtil {
 	 */
 	private static void populateDVDs() throws SQLException {
 		String sqltxt = 
-			   "SELECT * " +
+			   "SELECT Item.*, " +
+			           "DVD.directorName " + 
 			     "FROM Item " +
 			"LEFT JOIN DVD " +
 			       "ON DVD.itemId = Item.itemId;";
@@ -68,7 +69,7 @@ public class DomainUtil {
 	 */
 	private static void populateVideoGames() throws SQLException {
 		String sqltxt = 
-			   "SELECT * " +
+			   "SELECT Item.* " +
 			     "FROM Item " +
 			"LEFT JOIN VideoGame " +
 			       "ON VideoGame.itemId = Item.itemId;";
@@ -91,7 +92,7 @@ public class DomainUtil {
 	 */
 	private static void populateCDs() throws SQLException {
 		String sqltxt = 
-			   "SELECT * " +
+			   "SELECT Item.* " +
 			     "FROM Item " +
 			"LEFT JOIN CD " +
 			       "ON CD.itemId = Item.itemId;";
@@ -114,7 +115,9 @@ public class DomainUtil {
 	 */
 	private static void populateBooks() throws SQLException {
 		String sqltxt = 
-			   "SELECT * " +
+			   "SELECT Item.*, " +
+	                   "Book.isbn, " +
+	                   "Book.publisher " +
 			     "FROM Item " +
 			"LEFT JOIN Book " +
 			       "ON Book.itemId = Item.itemId;";

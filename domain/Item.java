@@ -34,9 +34,10 @@ public abstract class Item {
 	 * @throws SQLException
 	 */
 	protected Item(ResultSet rs) throws SQLException {
-		this.dateAdded = rs.getDate("dateAdded");
+		java.sql.Date badDate = rs.getDate("dateAdded");
+		this.dateAdded = new java.util.Date(badDate.getTime());
 		this.genre = rs.getString("genre");
-		this.itemId = rs.getInt("Item.itemId");
+		this.itemId = rs.getInt("itemId");
 		this.notes = rs.getString("notes");
 		this.rating = rs.getInt("rating");
 		this.title = rs.getString("title");
