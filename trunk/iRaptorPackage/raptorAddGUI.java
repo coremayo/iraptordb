@@ -280,6 +280,7 @@ public class raptorAddGUI extends javax.swing.JFrame {
             c.setNotes(notes);
             c.setRating(intRating);
             c.setYear(intYearReleased);
+            c.addArtist(director);
 
           }
           if(selectedMediaType == "Game"){
@@ -324,10 +325,10 @@ public class raptorAddGUI extends javax.swing.JFrame {
               publisherField.setVisible(false);
       }
       if(selectedMediaType == "CD"){
-              directorLabel.setVisible(false);
+              directorLabel.setVisible(true);
               isbnLabel.setVisible(false);
               publisherLabel.setVisible(false);
-              directorField.setVisible(false);
+              directorField.setVisible(true);
               isbnField.setVisible(false);
               publisherField.setVisible(false);
       }
