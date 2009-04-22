@@ -74,6 +74,9 @@ public abstract class Item {
 			ps.executeUpdate();
 			ps.close();
 			
+			// Unfortunately, the PreparedStatement.getGeneratedKeys() function 
+			// is not yet implemented for the sqlite jdbc driver, so we have to 
+			// instead do this shitty query.
 			sqltxt = "SELECT MAX(itemId) AS itemId, dateAdded FROM Item;";
 			ps = conn.prepareStatement(sqltxt);
 			ResultSet rs = ps.executeQuery();
