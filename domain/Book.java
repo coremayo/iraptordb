@@ -235,4 +235,17 @@ public class Book extends Item {
 			}
 		}
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder ret = new StringBuilder();
+		ret.append("Book titled: ");
+		ret.append(this.getTitle());
+		
+		for (Creator c : authors) {
+			ret.append(" by: ");
+			ret.append(c.getName());
+		}
+		return ret.toString();
+	}
 }

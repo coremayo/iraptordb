@@ -331,4 +331,6 @@ public abstract class Item {
 	public void removeItem() {
 		DomainUtil.removeItem(itemId);
 	}
+	
+	public abstract String toString();
 }
