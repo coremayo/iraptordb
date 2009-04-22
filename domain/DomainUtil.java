@@ -8,6 +8,12 @@ import java.sql.Statement;
 import java.util.Collection;
 import java.util.Hashtable;
 
+/**
+ * Contains utilities that are to be used to interact with 
+ * the domain classes
+ * @author Corey
+ *
+ */
 public class DomainUtil {
 	
 	private static Hashtable<Integer,Book> BOOKS;
@@ -15,6 +21,9 @@ public class DomainUtil {
 	private static Hashtable<Integer,VideoGame> VIDEOGAMES;
 	private static Hashtable<Integer,CD> CDS;
 	
+	/**
+	 * Parses the database to create objects for all items.
+	 */
 	protected static void populateItems() {
 		try {
 			BOOKS = new Hashtable<Integer,Book>();
@@ -30,6 +39,10 @@ public class DomainUtil {
 		}
 	}
 	
+	/**
+	 * populates all DVDs from the database
+	 * @throws SQLException
+	 */
 	private static void populateDVDs() throws SQLException {
 		String sqltxt = 
 			   "SELECT * " +
@@ -49,6 +62,10 @@ public class DomainUtil {
 		conn.close();
 	}
 	
+	/**
+	 * populates all VideoGames from the database
+	 * @throws SQLException
+	 */
 	private static void populateVideoGames() throws SQLException {
 		String sqltxt = 
 			   "SELECT * " +
@@ -68,6 +85,10 @@ public class DomainUtil {
 		conn.close();
 	}
 	
+	/**
+	 * populates all CDs from the database
+	 * @throws SQLException
+	 */
 	private static void populateCDs() throws SQLException {
 		String sqltxt = 
 			   "SELECT * " +
@@ -87,6 +108,10 @@ public class DomainUtil {
 		conn.close();
 	}
 	
+	/**
+	 * populates all Books from the database
+	 * @throws SQLException
+	 */
 	private static void populateBooks() throws SQLException {
 		String sqltxt = 
 			   "SELECT * " +
@@ -106,46 +131,87 @@ public class DomainUtil {
 		conn.close();
 	}
 
+	/**
+	 * Gets a collection of all the books that are in the database 
+	 * @return
+	 */
 	public static Collection<Book> getBooks() {
 		return BOOKS.values();
 	}
 	
+	/**
+	 * Creates a new instance of a Book item and add it to the database.
+	 * @param title The title of the new book.
+	 * @return the newly created Book item.
+	 */
 	public static Book addBook(String title) {
 		Book b = new Book(title);
 		BOOKS.put(b.getItemId(), b);
 		return b;
 	}
 
+	/**
+	 * Gets a collection of all the DVDs from the database.
+	 * @return
+	 */
 	public static Collection<DVD> getDVDs() {
 		return DVDS.values();
 	}
 	
+	/**
+	 * Creates a new instance of a DVD item and adds it to the database.
+	 * @param title The title of the new DVD.
+	 * @return The newly created DVD item.
+	 */
 	public static DVD addDVD(String title) {
 		DVD d = new DVD(title);
 		DVDS.put(d.getItemId(), d);
 		return d;
 	}
 
+	/**
+	 * Gets a collection of all the VideoGame items in the database.
+	 * @return
+	 */
 	public static Collection<VideoGame> getVideoGames() {
 		return VIDEOGAMES.values();
 	}
 	
+	/**
+	 * Creates a new instance of a VideoGame item and adds it to the database.
+	 * @param title The title of the newly created DVD.
+	 * @return The newly created DVD item.
+	 */
 	public static VideoGame addVideoGame(String title) {
 		VideoGame v = new VideoGame(title);
 		VIDEOGAMES.put(v.getItemId(), v);
 		return v;
 	}
 
+	/**
+	 * Gets a collection of all the CD items from the database. 
+	 * @return
+	 */
 	public static Collection<CD> getCDs() {
 		return CDS.values();
 	}
 	
+	/**
+	 * Creates a new instance of a CD item and also adds it to the database.
+	 * @param title The title of the new CD.
+	 * @return The newly created CD item.
+	 */
 	public static CD addCD(String title) {
 		CD c = new CD(title);
 		CDS.put(c.getItemId(), c);
 		return c;
 	}
 	
+	/**
+	 * Gets an item from the database referenced by the itemId.
+	 * @param itemId The itemId of the item to be retrieved.
+	 * @return
+	 */
 	public static Item getItem(int itemId) {
 		if (BOOKS.containsKey(itemId)) {
 			return BOOKS.get(itemId);
@@ -162,6 +228,12 @@ public class DomainUtil {
 		return null;
 	}
 	
+	/**
+	 * Removes an item from the database. 
+	 * That item should no longer be used as that 
+	 * would most likely cause us some problems.
+	 * @param itemId
+	 */
 	public static void removeItem(int itemId) {
 		String type = "";
 		if (BOOKS.containsKey(itemId)) {
@@ -198,6 +270,7 @@ public class DomainUtil {
 			s = conn.createStatement();
 			s.executeUpdate(sql);
 			s.close();
+			conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

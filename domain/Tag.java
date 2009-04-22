@@ -1,5 +1,11 @@
 package domain;
 
+/**
+ * Represents a Tag. 
+ * Tags are a way to organize and sort Items.
+ * @author Corey
+ *
+ */
 public class Tag {
 	private int tagId;
 	private String name;

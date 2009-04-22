@@ -9,6 +9,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Item is the superclass of all actual item types: DVD, CD, Book, VideoGame.
+ * It contains properties and methods common to all types.
+ * 
+ * @author Corey
+ *
+ */
 public abstract class Item {
 	private int itemId;
 	private String title;
@@ -19,6 +26,13 @@ public abstract class Item {
 	private String notes;
 	private List<Tag> tags;
 
+	/**
+	 * Generates an Item from the ResultSet created by a database query. 
+	 * Also populates all tags of the item.  
+	 * At minimum, the query should "SELECT Item.*"
+	 * @param rs
+	 * @throws SQLException
+	 */
 	protected Item(ResultSet rs) throws SQLException {
 		this.dateAdded = rs.getDate("dateAdded");
 		this.genre = rs.getString("genre");
@@ -29,6 +43,12 @@ public abstract class Item {
 		populateTags();
 	}
 	
+	/**
+	 * Creates a new instance of an Item and writes it to the database.
+	 * Assumes the default rating of 0 (meaning it is unrated) and sets 
+	 * the date added to the CUDATE() database procedure. 
+	 * @param title The title of the new Item.
+	 */
 	protected Item(String title) {
 		super();
 		this.tags = new ArrayList<Tag>();
@@ -67,6 +87,10 @@ public abstract class Item {
 		}
 	}
 	
+	/**
+	 * Generates a list of all tags for the item from the database.
+	 * @throws SQLException
+	 */
 	private void populateTags() throws SQLException {
 		String sqltxt = 
 			    "SELECT Tag.name " +
@@ -89,6 +113,10 @@ public abstract class Item {
 		conn.close();
 	}
 	
+	/**
+	 * Commits any changes that have been made to the item object to the database. 
+	 * Usually called at the end of a setter function.
+	 */
 	private void updateDB(){
 		String sqltxt = 
 			"UPDATE Item " +
@@ -117,10 +145,18 @@ public abstract class Item {
 		}
 	}
 	
+	/**
+	 * Returns a list of all tags that belong to the item.
+	 * @return
+	 */
 	public List<Tag> getTags() {
 		return tags;
 	}
 	
+	/**
+	 * Adds a tag to the item.
+	 * @param tagName
+	 */
 	public void addTag(String tagName) {
 		Connection conn = DBUtil.getConnection();
 		PreparedStatement ps;
@@ -207,6 +243,10 @@ public abstract class Item {
 		}
 	}
 	
+	/**
+	 * Removes a tag from an item.
+	 * @param tagName
+	 */
 	public void removeTag(String tagName) {
 		//first, remove the tag from our local list
 		int tagId = -1;
@@ -241,12 +281,6 @@ public abstract class Item {
 	public int getItemId() {
 		return itemId;
 	}
-//	I don't think there is any reason we need this
-//	public void setItemId(int itemId) {
-//		this.itemId = itemId;
-//		updateDB();
-//	}
-	
 	public String getTitle() {
 		return title;
 	}
@@ -278,16 +312,19 @@ public abstract class Item {
 	public Date getDateAdded() {
 		return dateAdded;
 	}
-//	don't think we really need this either
-//	public void setDateAdded(Date dateAdded) {
-//		this.dateAdded = dateAdded;
-//		updateDB();
-//	}
 	public String getNotes() {
 		return notes;
 	}
 	public void setNotes(String notes) {
 		this.notes = notes;
 		updateDB();
+	}
+	
+	/**
+	 * Removes the item from the database. The item should no longer be 
+	 * operated on as that will definitely cause problems.
+	 */
+	public void removeItem() {
+		DomainUtil.removeItem(itemId);
 	}
 }
