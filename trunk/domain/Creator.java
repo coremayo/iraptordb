@@ -1,5 +1,10 @@
 package domain;
 
+/**
+ * Represents a Creator, i.e. Author, Band, etc. 
+ * @author Corey
+ *
+ */
 public class Creator {
 	private int creatorId;
 	private String name;

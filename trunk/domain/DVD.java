@@ -6,9 +6,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Represents a row from the DVD table in the database.
+ * @author Corey
+ *
+ */
 public class DVD extends Item {
 	private String directorName;
 	
+	/**
+	 * Creates a new instance of a DVD and also adds it to the database.
+	 * @param title The title of the new DVD.
+	 */
 	protected DVD(String title) {
 		super(title);
 		
@@ -26,11 +35,22 @@ public class DVD extends Item {
 		}
 	}
 	
+	/**
+	 * Generates a DVD from the results of a database query. 
+	 * The query should be something like: 
+	 * "SELECT Item.*, DVD.* FROM ITEM INNER JOIN DVD ON DVD.itemId = Item.itemId ..."  
+	 * @param rs The ResultSet created by executing the database query.
+	 * @throws SQLException
+	 */
 	protected DVD(ResultSet rs) throws SQLException {
 		super(rs);
 		this.directorName = rs.getString("directorName");
 	}
 	
+	/**
+	 * Commits any changes that have been made to the item object to the database. 
+	 * Usually called at the end of a setter function.
+	 */
 	private void updateDB() {
 		String sqltxt = "UPDATE DVD SET directorName = ? WHERE itemId = ?;";
 		Connection conn = DBUtil.getConnection();

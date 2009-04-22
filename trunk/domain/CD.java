@@ -8,9 +8,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a CD in the database.
+ * @author Corey
+ *
+ */
 public class CD extends Item {
 	private List<Creator> artists;
 	
+	/**
+	 * Creates a new instance of CD and also adds that CD to the database.
+	 * @param title The title of the new CD.
+	 */
 	protected CD(String title) {
 		super(title);
 		this.artists = new ArrayList<Creator>();
@@ -29,12 +38,23 @@ public class CD extends Item {
 		}
 	}
 	
+	/**
+	 * Generates a CD instance from a database query.
+	 * The database query should be something like: 
+	 * "SELECT Item.*, CD.* FROM Item INNER JOIN CD ON CD.itemId = Item.itemId ..."
+	 * @param rs The ResultSet created by executing the database query.
+	 * @throws SQLException
+	 */
 	protected CD(ResultSet rs) throws SQLException {
 		super(rs);
 		this.artists = new ArrayList<Creator>();
 		populateArtists();
 	}
 	
+	/**
+	 * Gets all the Artists from the database for the CD.
+	 * @throws SQLException
+	 */
 	private void populateArtists() throws SQLException {
 		String sqltxt = 
 			   "SELECT Creator.name " +
