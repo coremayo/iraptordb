@@ -179,6 +179,11 @@ public class iRaptorGUI extends javax.swing.JFrame {
         });
 
         searchiRaptorButton.setText("Search iRaptor");
+        searchiRaptorButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	searchiRaptorButtonActionPerformed(evt);
+            }
+        });
 
         strategyGuideButton.setText("Get Strategy Guide");
         strategyGuideButton.addActionListener(new java.awt.event.ActionListener() {
@@ -244,11 +249,11 @@ public class iRaptorGUI extends javax.swing.JFrame {
 
     private void addItemButtonActionPerformed(java.awt.event.ActionEvent evt) {                                              
         new raptorAddGUI().setVisible(true);
-}                                             
+} //GEN-LAST:event_addItemButtonActionPerformed                                
     
     private void searchiRaptorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemButtonActionPerformed
         new searchRaptorGUI().setVisible(true);
-}//GEN-LAST:event_addItemButtonActionPerformed
+}
 
     private void removeItemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeItemButtonActionPerformed
        UITableUtil gameTableUtil = new UITableUtil(gameTable, "game");
@@ -387,9 +392,7 @@ public class iRaptorGUI extends javax.swing.JFrame {
             	int selectedRow = bookTable.getSelectedRow();
                 String selectedTitle = bookTable.getValueAt(selectedRow, 1).toString();
                 Vector<String> recomendations = WebUtility.getSuggestions(selectedTitle, "book");
-            	}
-            
-        
+            	}        
         }catch(Exception e){System.out.println(e.toString());}
         System.out.println("THIS IS DONE");
         //JOptionPane test = new JOptionPane("HELP!");
@@ -400,7 +403,6 @@ public class iRaptorGUI extends javax.swing.JFrame {
     * @param args the command line arguments
     */
     public static void main(String args[]) {
-
     	//Lets open a file!
     	JFileChooser fileChooser = domain.DBUtil.getFileChooser();
         fileChooser.showOpenDialog(null);

@@ -11,7 +11,14 @@
 
 package iRaptorPackage;
 
-import domain.DBUtil;
+import domain.*;
+
+import java.awt.Dialog;
+import java.util.ArrayList;
+import java.util.Collection;
+
+import javax.swing.JOptionPane;
+import javax.swing.event.*;
 
 /**
  *
@@ -58,9 +65,14 @@ public class searchRaptorGUI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         executeButton.setText("Execute Search");
+        executeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	executeButtonActionPerformed(evt);
+            }
+        });
 
-        itemComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Movies", "Books", "Games", "CDs" }));
-        fieldComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "idNum", "Title", "Genre", "Rating", "Year Released", "Date Added", "Notes" }));
+        itemComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Movies", "Books", "Games", "CDs", "Any Item" }));
+        fieldComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Title", "Genre", "Tags" }));
         
 
         itemComboBox.addActionListener(new java.awt.event.ActionListener() {
@@ -71,23 +83,9 @@ public class searchRaptorGUI extends javax.swing.JFrame {
         
 
         itemLabel.setText("Choose type of item to search for:");
-        
+     
 
-
-        resultTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        resultTable.setColumnSelectionAllowed(true);
-        jScrollPane1.setViewportView(resultTable);
-        resultTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-
-        
-        
+     
         //fieldComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         
 
@@ -105,6 +103,7 @@ public class searchRaptorGUI extends javax.swing.JFrame {
                 searchTextFieldActionPerformed(evt);
             }
         });
+        
 
         textLabel.setText("Enter the text to search for:");
 
@@ -181,40 +180,81 @@ public class searchRaptorGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    
 
     private void itemComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemComboBoxActionPerformed
-        // TODO add your handling code here:
-    	Object selectedMediaType = itemComboBox.getSelectedItem();
-    	
-        if(selectedMediaType == "Movies"){
-            fieldComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "idNum", "Title", "Genre", "Rating", "Year Released", "Date Added", "Notes" }));
-        }
-        
-        if(selectedMediaType == "CDs"){
-            fieldComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "idNum", "Name", "Artist", "Genre", "Rating", "Year Released", "Date Added", "Tags", "Other" }));
-        }
-        
-        if(selectedMediaType == "Games"){
-            fieldComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "idNum", "Name", "Genre", "Rating", "Date Added", "Year Released", "Tags", "Other" }));
-        }
-        
-        if(selectedMediaType == "Books"){
-            fieldComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "idNum", "Name", "Authors", "Genre", "Rating", "Date Added", "Year Released", "isbn", "Publisher", "Tags", "Other" }));
-        }
-        
+        // TODO add your handling code here:   	
+//       if(selectedItemType == "Movies"){
+//            
+//       }
+//        
+//        if(selectedItemType == "CDs"){
+//            
+//        }
+//        
+//        if(selectedItemType == "Games"){
+//        }
+//        
+//        if(selectedItemType == "Books"){
+//        } 
+//        
+//        if(selectedItemType == "Any Item"){
+//        } 
         
      //addBook(title, genreType, intRating, intYearReleased, notes, publisher, isbn);
     }//GEN-LAST:event_itemComboBoxActionPerformed
 
     private void searchTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchTextFieldActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_searchTextFieldActionPerformed
 
     private void fieldComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldComboBoxActionPerformed
-        // TODO add your handling code here:
+    	selectedFieldType = itemComboBox.getSelectedItem();
     }//GEN-LAST:event_fieldComboBoxActionPerformed
-
-   
+    
+    
+    private void executeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldComboBoxActionPerformed
+        
+    	enteredText = searchTextField.getText();
+    	selectedItemType = itemComboBox.getSelectedItem();
+    	selectedFieldType = itemComboBox.getSelectedItem();
+    	if (enteredText.equals("")) {
+        	JOptionPane.showMessageDialog( null, "Please enter something to search for");        	
+        }
+    	
+        //else we can take the test in the textfield and execute the search
+        else {
+        	// execute the "search control" code
+        	if (selectedFieldType=="Movies") {
+        		
+	        	if (selectedFieldType == "Title") {
+	        		results = SearchUtil.searchTitle((String)selectedFieldType);
+//	        		for (int i=0; i<results.size(); i++){
+//	        			if (!(results instanceof DVD)) {
+	        				//remove the items here that are not of type DVD
+//	        				results
+//	        			}
+//	        		}
+	        			
+	        	}
+	        	else {
+	        	}
+        	}
+        
+            resultTable.setModel(new javax.swing.table.DefaultTableModel(
+                    new Object [][] {
+                    },
+                    new String [] {
+                    }
+                ));
+                resultTable.setColumnSelectionAllowed(true);
+                jScrollPane1.setViewportView(resultTable);
+                resultTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+                
+        	
+        }
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton executeButton;
@@ -227,7 +267,30 @@ public class searchRaptorGUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable resultTable;
     private javax.swing.JTextField searchTextField;
+    
+    private Object selectedItemType;
+    private Object selectedFieldType;
+    private String enteredText;
+    
+    Collection<Item> results; // = new ArrayList<Item>();
     // End of variables declaration//GEN-END:variables
 
 
+    
+//    class MyDocumentListener implements DocumentListener {
+//     
+//        public void insertUpdate(DocumentEvent e) {
+//            enteredText = e.toString();
+//            System.out.println(enteredText);
+//        }
+//        public void removeUpdate(DocumentEvent e) {
+//            //updateLog(e, "removed from");
+//        }
+//        public void changedUpdate(DocumentEvent e) {
+//            //Plain text components do not fire these events
+//        }   
+//    }
+
 }
+
+
