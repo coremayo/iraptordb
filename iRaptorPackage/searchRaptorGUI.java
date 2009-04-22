@@ -36,32 +36,31 @@ public class searchRaptorGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        executeButton = new javax.swing.JButton();
         itemComboBox = new javax.swing.JComboBox();
-        jLabel1 = new javax.swing.JLabel();
+        itemLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jComboBox2 = new javax.swing.JComboBox();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        resultTable = new javax.swing.JTable();
+        fieldComboBox = new javax.swing.JComboBox();
+        fieldLabel = new javax.swing.JLabel();
+        searchTextField = new javax.swing.JTextField();
+        textLabel = new javax.swing.JLabel();
+        resultLabel = new javax.swing.JLabel();
         
         /*--------------------------------------------------------------
          * FOR TESTING PURPOSES (do not delete)
          */
-        jButton1.setName("search item done button");
-        jTable1.setName("all item table");
+        executeButton.setName("search item done button");
+        resultTable.setName("all item table");
         itemComboBox.setName("search item combo box");
-        jTextField1.setName("title text field");
+        searchTextField.setName("title text field");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Execute Search");
+        executeButton.setText("Execute Search");
 
         itemComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Movies", "Books", "Games", "CDs" }));
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "idNum", "Title", "Genre", "Rating", "Year Released", "Date Added", "Notes" }));
+        fieldComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "idNum", "Title", "Genre", "Rating", "Year Released", "Date Added", "Notes" }));
         
 
         itemComboBox.addActionListener(new java.awt.event.ActionListener() {
@@ -71,11 +70,11 @@ public class searchRaptorGUI extends javax.swing.JFrame {
         });
         
 
-        jLabel1.setText("Choose type of item to search for:");
+        itemLabel.setText("Choose type of item to search for:");
         
 
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        resultTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -83,33 +82,33 @@ public class searchRaptorGUI extends javax.swing.JFrame {
 
             }
         ));
-        jTable1.setColumnSelectionAllowed(true);
-        jScrollPane1.setViewportView(jTable1);
-        jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        resultTable.setColumnSelectionAllowed(true);
+        jScrollPane1.setViewportView(resultTable);
+        resultTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         
         
-        //jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        //fieldComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         
 
-        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+        fieldComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox2ActionPerformed(evt);
+                fieldComboBoxActionPerformed(evt);
             }
         });
 
-        jLabel2.setText("Choose the field to search within:");
+        fieldLabel.setText("Choose the field to search within:");
 
-        jTextField1.setText("jTextField1");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        searchTextField.setText("");
+        searchTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                searchTextFieldActionPerformed(evt);
             }
         });
 
-        jLabel4.setText("Enter the text to search for:");
+        textLabel.setText("Enter the text to search for:");
 
-        jLabel5.setText("Results:");
+        resultLabel.setText("Results:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -117,11 +116,10 @@ public class searchRaptorGUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(itemLabel)
                 .addContainerGap(229, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(319, Short.MAX_VALUE)
-                .addComponent(jLabel3)
                 .addGap(86, 86, 86))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -129,27 +127,27 @@ public class searchRaptorGUI extends javax.swing.JFrame {
                 .addContainerGap(20, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(166, Short.MAX_VALUE)
-                .addComponent(jLabel5)
+                .addComponent(resultLabel)
                 .addGap(200, 200, 200))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(241, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(executeButton)
                 .addGap(57, 57, 57))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel4)
+                .addComponent(textLabel)
                 .addContainerGap(258, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(244, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(225, Short.MAX_VALUE)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fieldComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(124, 124, 124))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(199, Short.MAX_VALUE)
-                .addComponent(jLabel2)
+                .addComponent(fieldLabel)
                 .addGap(45, 45, 45))
             .addGroup(layout.createSequentialGroup()
                 .addGap(57, 57, 57)
@@ -160,23 +158,22 @@ public class searchRaptorGUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(13, 13, 13)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(itemLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(itemComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
-                .addComponent(jLabel2)
+                .addComponent(fieldLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fieldComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
+                    .addComponent(textLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
-                .addComponent(jButton1)
+                .addComponent(executeButton)
                 .addGap(37, 37, 37)
-                .addComponent(jLabel5)
+                .addComponent(resultLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31))
@@ -190,47 +187,46 @@ public class searchRaptorGUI extends javax.swing.JFrame {
     	Object selectedMediaType = itemComboBox.getSelectedItem();
     	
         if(selectedMediaType == "Movies"){
-            jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "idNum", "Title", "Genre", "Rating", "Year Released", "Date Added", "Notes" }));
+            fieldComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "idNum", "Title", "Genre", "Rating", "Year Released", "Date Added", "Notes" }));
         }
         
         if(selectedMediaType == "CDs"){
-            jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "idNum", "Name", "Artist", "Genre", "Rating", "Year Released", "Date Added", "Tags", "Other" }));
+            fieldComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "idNum", "Name", "Artist", "Genre", "Rating", "Year Released", "Date Added", "Tags", "Other" }));
         }
         
         if(selectedMediaType == "Games"){
-            jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "idNum", "Name", "Genre", "Rating", "Date Added", "Year Released", "Tags", "Other" }));
+            fieldComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "idNum", "Name", "Genre", "Rating", "Date Added", "Year Released", "Tags", "Other" }));
         }
         
         if(selectedMediaType == "Books"){
-            jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "idNum", "Name", "Authors", "Genre", "Rating", "Date Added", "Year Released", "isbn", "Publisher", "Tags", "Other" }));
+            fieldComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "idNum", "Name", "Authors", "Genre", "Rating", "Date Added", "Year Released", "isbn", "Publisher", "Tags", "Other" }));
         }
         
         
-            //addBook(title, genreType, intRating, intYearReleased, notes, publisher, isbn);
+     //addBook(title, genreType, intRating, intYearReleased, notes, publisher, isbn);
     }//GEN-LAST:event_itemComboBoxActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void searchTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_searchTextFieldActionPerformed
 
-    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+    private void fieldComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldComboBoxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox2ActionPerformed
+    }//GEN-LAST:event_fieldComboBoxActionPerformed
 
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton executeButton;
     private javax.swing.JComboBox itemComboBox;
-    private javax.swing.JComboBox jComboBox2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
+    private javax.swing.JComboBox fieldComboBox;
+    private javax.swing.JLabel itemLabel;
+    private javax.swing.JLabel fieldLabel;
+    private javax.swing.JLabel textLabel;
+    private javax.swing.JLabel resultLabel;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable resultTable;
+    private javax.swing.JTextField searchTextField;
     // End of variables declaration//GEN-END:variables
 
 

@@ -66,6 +66,7 @@ public class raptorAddGUI extends javax.swing.JFrame {
         addItemButton.setName("add item done button");
         typeComboBox.setName("add item combo box");
         titleField.setName("title text field");
+        //-----------------------------------------------------------------
 
         setTitle("Add Item");
 
