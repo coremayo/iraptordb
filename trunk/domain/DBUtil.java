@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Random;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
@@ -156,16 +157,18 @@ public class DBUtil {
 	 */
 	public static JFileChooser getFileChooser() {
         JFileChooser fileChooser = new JFileChooser();
-        File homeDir = new File(System.getProperty("user.home"));
-        fileChooser.setCurrentDirectory(homeDir);
         fileChooser.setAcceptAllFileFilterUsed(false);
         fileChooser.setFileFilter((javax.swing.filechooser.FileFilter) getFileFilter());
         fileChooser.setDialogTitle("Open a " + APPLICATION_NAME +" File");
-        fileChooser.setSelectedFile(new File(
-        		homeDir.getAbsolutePath() + 
-        		File.separator + 
-        		APPLICATION_NAME + 
-        		FILE_EXTENSION));
+        File homeDir = new File(System.getProperty("user.home"));
+        fileChooser.setCurrentDirectory(homeDir);
+//        File useMe = new File(
+//        		homeDir.getAbsolutePath() + 
+////        		File.separator + 
+//        		APPLICATION_NAME + 
+//        		FILE_EXTENSION);
+//        fileChooser.setSelectedFile(homeDir);
+        //TODO setSelectedFile isn't working for some reason
 		return fileChooser;
 	}
 

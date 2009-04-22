@@ -405,7 +405,12 @@ public class iRaptorGUI extends javax.swing.JFrame {
     	//Lets open a file!
     	JFileChooser fileChooser = DBUtil.getFileChooser();
         fileChooser.showSaveDialog(null);
-    	DBUtil.openFile(fileChooser.getSelectedFile());
+        if (fileChooser.getSelectedFile() != null) {
+        	DBUtil.openFile(fileChooser.getSelectedFile());
+        } else {
+        	//If user did not specify a file, use a temporary file
+        	DBUtil.openTemporaryFile();
+        }
 
         java.awt.EventQueue.invokeLater(new Runnable() {
 
