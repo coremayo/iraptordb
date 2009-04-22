@@ -22,7 +22,7 @@ public class SearchUtilTest {
 		DBUtil.openTemporaryFile();
 		System.out.println(
 				"Testing DBUtil using file: " + 
-				DBUtil.getFilename());
+				DBUtil.getFile().getName());
 		
 		Item i = DomainUtil.addBook(title1);
 		i.addTag(tag1);
