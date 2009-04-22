@@ -1,6 +1,8 @@
 package iRaptorPackage;
 
 import domain.*;
+
+import java.io.File;
 import java.util.*;
 import javax.swing.*;
 
@@ -399,7 +401,13 @@ public class iRaptorGUI extends javax.swing.JFrame {
 
     	//Lets open a file!
     	JFileChooser fileChooser = domain.DBUtil.getFileChooser();
-        fileChooser.showOpenDialog(null);    	domain.DBUtil.openFile(fileChooser.getSelectedFile());
+        fileChooser.showOpenDialog(null);
+        File file = fileChooser.getSelectedFile();
+        if (file != null) {
+        	DBUtil.openFile(file);
+        } else {
+        	DBUtil.openTemporaryFile();
+        }
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
