@@ -41,6 +41,7 @@ public abstract class Item {
 		this.notes = rs.getString("notes");
 		this.rating = rs.getInt("rating");
 		this.title = rs.getString("title");
+		this.tags = new ArrayList<Tag>();
 		populateTags();
 	}
 	
