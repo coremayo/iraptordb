@@ -104,7 +104,7 @@ public class SearchUtil {
 		try {
 			String type = item.getType();
 			String sql = 
-				    "SELECT itemId " +
+				    "SELECT Item.itemId " +
 				      "FROM Item " +
 				"INNER JOIN " + type + " " +
 						"ON " + type + ".itemId = Item.itemId " +
