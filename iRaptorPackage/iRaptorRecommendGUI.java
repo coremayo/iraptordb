@@ -22,7 +22,10 @@ public class iRaptorRecommendGUI extends javax.swing.JFrame {
     /** Creates new form iRaptorRecommendGUI */
     public iRaptorRecommendGUI(Vector<String> recommendations) {
         initComponents();
-        String t = recommendations.toString();
+        String t = "";
+        for(int i = 0; i < recommendations.size(); i++){
+        	t += (recommendations.get(i) + "\n");
+        }
         recommendedItems.setText(t);
 
     }
