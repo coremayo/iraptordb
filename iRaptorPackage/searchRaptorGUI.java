@@ -213,38 +213,59 @@ public class searchRaptorGUI extends javax.swing.JFrame {
         //else we can take the test in the textfield and execute the search
         else {
         	// execute the "search control" code
-        	if (selectedFieldType=="Movies") {
+        	if (selectedItemType=="Movies") {
+        		
+        		String[] columnNames = {"idNum",
+                        "Name",
+                        "Genre",
+                        "Rating",
+                        "DateAdded",
+                        "YearReleased",
+                        "Tags",
+                        "Notes"};
+
         		
 	        	if (selectedFieldType == "Title") {
 	        		results = SearchUtil.searchTitle((String)selectedFieldType);
-//	        		for (int i=0; i<results.size(); i++){
-//	        			if (!(results instanceof DVD)) {
-	        				//remove the items here that are not of type DVD
-//	        				results
-//	        			}
-//	        		}
+	        	}
+	        	else if (selectedFieldType == "Genre"){
+	        		results = SearchUtil.searchTitle((String)selectedFieldType);
+	        	}
+	        	else if (selectedFieldType == "Tags"){
+	        		results = SearchUtil.searchTitle((String)selectedFieldType);
+	        	}
+	        	
+	        	List<Item> updatedResults = null;
+	        	
+	        	int size = results.size();
+	        	for (int i=0; i<size; i++){
+	        		if ((!(results.get(i) instanceof DVD))) {
+	        			updatedResults.add(results.get(i));
+	        		}
+	        	}
+	        	
+	        	int num=updatedResults.size();
+	        	int y = 8;//the numer of fields for a move/dvd
+	        	
+	        	String entries[][];
+	        	entries = new String[num][y];
+	        	
+	        	for(int i=0; i<num; i++){
+	        		for (int j=0; j<y; j++) {
 	        			
+	        			//set entries array
+	        			entries[i][j]=updatedResults.get(num-1).toString();
+	        		}
 	        	}
-	        	else {
-	        	}
-        	}       	
+        	} else if (selectedFieldType=="Books"){
+        		
+        	}
+        	
+        	
+        	///http://java.sun.com/docs/books/tutorial/uiswing/examples/components/SimpleTableDemoProject/src/components/SimpleTableDemo.java
         }
     }
     
-    private void showResultTable() {
-    	
-    	
-    	
-        resultTable.setModel(new javax.swing.table.DefaultTableModel(
-                new Object [][] {
-                },
-                new String [] {
-                }
-            ));
-        resultTable.setColumnSelectionAllowed(true);
-        jScrollPane1.setViewportView(resultTable);
-        resultTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);      
-    }
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -262,8 +283,8 @@ public class searchRaptorGUI extends javax.swing.JFrame {
     private Object selectedItemType;
     private Object selectedFieldType;
     private String enteredText;
-    
-    List<domain.Item> results; // = new ArrayList<Item>();
+   
+    List<Item> results; // = new ArrayList<Item>();
     // End of variables declaration//GEN-END:variables
     
   
