@@ -12,7 +12,7 @@
 package iRaptorPackage;
 
 import domain.*;
-import java.awt.Dimension;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -24,11 +24,9 @@ import javax.swing.table.DefaultTableModel;
  */
 public class searchRaptorGUI extends javax.swing.JFrame {
 	private static final long serialVersionUID = 1L;
-	DBUtil DB;
 
     /** Creates new form searchRaptorGUI */
     public searchRaptorGUI() {
-        DB = new DBUtil();
         initComponents();
     }
 
@@ -53,6 +51,8 @@ public class searchRaptorGUI extends javax.swing.JFrame {
         /*--------------------------------------------------------------
          * FOR TESTING PURPOSES (do not delete)
          */
+        resultTable.setModel(new DefaultTableModel(columnNames, 0));
+        
         executeButton.setName("search item done button");
         resultTable.setName("all item table");
         itemComboBox.setName("search item combo box");
@@ -67,7 +67,7 @@ public class searchRaptorGUI extends javax.swing.JFrame {
             }
         });
 
-        itemComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Movies", "Books", "Games", "CDs", "Any Item" }));
+        itemComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Any Item", "Movies", "Books", "Games", "CDs" }));
         fieldComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Title", "Genre", "Tags" }));
         
 
@@ -114,7 +114,8 @@ public class searchRaptorGUI extends javax.swing.JFrame {
                 .addGap(86, 86, 86))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1)
+//                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(20, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(166, Short.MAX_VALUE)
@@ -166,7 +167,8 @@ public class searchRaptorGUI extends javax.swing.JFrame {
                 .addGap(37, 37, 37)
                 .addComponent(resultLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1)
+//                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31))
         );
 
@@ -186,13 +188,6 @@ public class searchRaptorGUI extends javax.swing.JFrame {
     
     
     private void executeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldComboBoxActionPerformed
-
-    	String[] columnNames = {
-    		"idNum",
-    		"Title",
-    		"Genre",
-    		"Type"
-    	};
     	
     	enteredText = searchTextField.getText();
     	selectedItemType = itemComboBox.getSelectedItem();
@@ -210,33 +205,34 @@ public class searchRaptorGUI extends javax.swing.JFrame {
         	else if (selectedFieldType == "Genre"){
         		results = SearchUtil.searchGenre(searchTextField.getText());
         	}
-//        	else if (selectedFieldType == "Tags"){
         	else {
         		results = SearchUtil.searchTag(searchTextField.getText());
         	}
         	
-        	// execute the "search control" code
-        	String type = "";
-        	//"Movies", "Books", "Games", "CDs", "Any Item"
-        	if (selectedItemType=="Movies") {
-        		type = "DVD";
-        	} else if (selectedFieldType=="Books"){
-        		type = "Book";
-        	} else if (selectedFieldType=="Games") {
-        		type = "VideoGame";
-        	} else if (selectedFieldType == "CDs") {
-        		type = "CD";
-        	}
-        	
-        	for (Item result : results) {
-        		if (result.getType() == type) {
-    				updatedResults.add(result);
-        		}
-    			if (selectedFieldType == "Any Item") {
-    				updatedResults.add(result);
-    			}
-        	}
-        	
+			if (selectedItemType == "Any Item") {
+	        	for (Item result : results) {
+	        		updatedResults.add(result);
+	        	}
+			}
+			else {
+	        	String type = "";
+	        	//"Movies", "Books", "Games", "CDs", "Any Item"
+	        	if (selectedItemType=="Movies") {
+	        		type = "DVD";
+	        	} else if (selectedItemType=="Books"){
+	        		type = "Book";
+	        	} else if (selectedItemType=="Games") {
+	        		type = "VideoGame";
+	        	} else if (selectedItemType == "CDs") {
+	        		type = "CD";
+	        	}
+	        	
+	        	for (Item result : results) {
+	        		if (result.getType() == type) {
+	    				updatedResults.add(result);
+	        		}
+	        	}
+			}
         	int numRows = updatedResults.size();//the number of rows
         	int numCols = columnNames.length;//the numer of fields for a move/dvd
         	
@@ -249,10 +245,7 @@ public class searchRaptorGUI extends javax.swing.JFrame {
         		data[row][3] = updatedResults.get(row).getType();
         	}
 
-            jScrollPane1.setPreferredSize(new Dimension(350, 150));
-        	
         	resultTable.setModel(new DefaultTableModel(data, columnNames));
-        	resultTable.setVisible(true);
         	
         	///http://java.sun.com/docs/books/tutorial/uiswing/examples/components/SimpleTableDemoProject/src/components/SimpleTableDemo.java
         }
@@ -275,12 +268,16 @@ public class searchRaptorGUI extends javax.swing.JFrame {
     private Object selectedItemType;
     private Object selectedFieldType;
     private String enteredText;
+
+	String[] columnNames = {
+		"idNum",
+		"Title",
+		"Genre",
+		"Type"
+	};
    
     //List<Item> results; // = new ArrayList<Item>();
     // End of variables declaration//GEN-END:variables
-    
-  
-    
 }
 
 
