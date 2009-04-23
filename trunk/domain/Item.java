@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,6 +27,8 @@ public abstract class Item {
 	private Date dateAdded;
 	private String notes;
 	private List<Tag> tags;
+	
+	protected static final int NUMFIELDS = 8;
 
 	/**
 	 * Generates an Item from the ResultSet created by a database query. 
@@ -34,8 +38,14 @@ public abstract class Item {
 	 * @throws SQLException
 	 */
 	protected Item(ResultSet rs) throws SQLException {
-		java.sql.Date badDate = rs.getDate("dateAdded");
-		this.dateAdded = new java.util.Date(badDate.getTime());
+		//yyyy-MM-dd HH:mm:ss
+		SimpleDateFormat s = new SimpleDateFormat();
+		s.applyPattern("yyyy-MM-dd");
+		try {
+			this.dateAdded = s.parse(rs.getString("dateAdded"));
+		} catch (ParseException e) {
+			throw new SQLException(e);
+		}
 		this.genre = rs.getString("genre");
 		this.itemId = rs.getInt("itemId");
 		this.notes = rs.getString("notes");
@@ -66,7 +76,7 @@ public abstract class Item {
 			") VALUES (" +
 			          "?, " +
 			          "?, " +
-			          "CURRENT_TIMESTAMP);";
+			          "CURRENT_DATE);";
 		Connection conn = DBUtil.getConnection();
 		
 		try {
@@ -336,4 +346,6 @@ public abstract class Item {
 	public abstract String toString();
 	
 	public abstract String getType();
+	
+	public abstract int numberOfFields();
 }

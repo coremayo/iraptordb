@@ -74,6 +74,7 @@ public class SearchUtilTest {
 		assertEquals(1, c.size());
 	}
 	
+	@Test
 	public void testGetSimilarItem() {
 		String t1 = "title1", t2 = "title2", t3 = "title3";
 		String g1 = "genre1", g2 = "genre2";
