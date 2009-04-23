@@ -88,6 +88,34 @@ public class iRaptorGUI extends javax.swing.JFrame {
                 tagButtonActionPerformed(evt);
             }
         });
+
+        movieTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null , null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "ID", "Name", "Genre", "Rating", "Year Released", "Date Added","Tags", "Notes"
+            }
+        ));
+        movieScrollPane.setViewportView(movieTable);
+
+        org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(movieScrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 896, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanel1Layout.createSequentialGroup()
+                .add(movieScrollPane, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 380, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        tabPane.addTab("Movies", jPanel1);
         
         gameTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -118,34 +146,6 @@ public class iRaptorGUI extends javax.swing.JFrame {
         cdScrollPane.setViewportView(CDTable);
 
         tabPane.addTab("CDs", cdScrollPane);
-
-        movieTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null, null , null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
-            },
-            new String [] {
-                "ID", "Name", "Genre", "Rating", "Year Released", "Date Added","Tags", "Notes"
-            }
-        ));
-        movieScrollPane.setViewportView(movieTable);
-
-        org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(movieScrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 896, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanel1Layout.createSequentialGroup()
-                .add(movieScrollPane, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 380, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        tabPane.addTab("Movies", jPanel1);
 
         bookTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -228,8 +228,8 @@ public class iRaptorGUI extends javax.swing.JFrame {
             .add(layout.createSequentialGroup()
                 .addContainerGap()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-//                    .add(tabScrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 901, Short.MAX_VALUE)
-                        .add(tabScrollPane)
+                    .add(tabScrollPane, 200, 901, Short.MAX_VALUE)
+//                        .add(tabScrollPane, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, Integer.MAX_VALUE)
                     .add(layout.createSequentialGroup()
                         .add(8, 8, 8)
                         .add(addItemButton)
@@ -261,7 +261,7 @@ public class iRaptorGUI extends javax.swing.JFrame {
                     .add(searchiRaptorButton)
                     .add(tagButton))
                 .add(35, 35, 35)
-                .add(tabScrollPane)
+                .add(tabScrollPane, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, Integer.MAX_VALUE)
 //                .add(tabScrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
                 .add(11, 11, 11))
         );
@@ -275,7 +275,15 @@ public class iRaptorGUI extends javax.swing.JFrame {
     	
     	String a = JOptionPane.showInputDialog("Input Tag");
     	int selectedIndex = tabPane.getSelectedIndex();
-    	if(selectedIndex == 0 ){
+        if(selectedIndex == 0 ){
+     	   int selectedRow = movieTable.getSelectedRow();
+     	   Object selectedID = movieTable.getValueAt(selectedRow , 0);
+     	   String stringSelectedID = selectedID.toString();
+     	   int intSelectedID = Integer.parseInt(stringSelectedID);
+     	   domain.Item edittedDVD = DomainUtil.getItem(intSelectedID);
+     	   edittedDVD.addTag(a);
+        }
+    	if(selectedIndex == 1 ){
      	   int selectedRow = gameTable.getSelectedRow();
      	   Object selectedID = gameTable.getValueAt(selectedRow , 0);
      	   String stringSelectedID = selectedID.toString();
@@ -283,21 +291,13 @@ public class iRaptorGUI extends javax.swing.JFrame {
      	   domain.Item edittedVideoGame = DomainUtil.getItem(intSelectedID);
      	   edittedVideoGame.addTag(a);
         }
-        if(selectedIndex == 1 ){
+        if(selectedIndex == 2 ){
      	   int selectedRow = CDTable.getSelectedRow();
      	   Object selectedID = CDTable.getValueAt(selectedRow , 0);
      	   String stringSelectedID = selectedID.toString();
      	   int intSelectedID = Integer.parseInt(stringSelectedID);
      	   domain.Item edittedCD = DomainUtil.getItem(intSelectedID);
      	   edittedCD.addTag(a);
-        }
-        if(selectedIndex == 2 ){
-     	   int selectedRow = movieTable.getSelectedRow();
-     	   Object selectedID = movieTable.getValueAt(selectedRow , 0);
-     	   String stringSelectedID = selectedID.toString();
-     	   int intSelectedID = Integer.parseInt(stringSelectedID);
-     	   domain.Item edittedDVD = DomainUtil.getItem(intSelectedID);
-     	   edittedDVD.addTag(a);
         }
         if(selectedIndex == 3 ){
      	   int selectedRow = bookTable.getSelectedRow();
@@ -336,22 +336,22 @@ public class iRaptorGUI extends javax.swing.JFrame {
        UITableUtil bookTableUtil = new UITableUtil(bookTable, "book");
        int selectedIndex = tabPane.getSelectedIndex();
        if(selectedIndex == 0 ){
+    	   int selectedRow = movieTable.getSelectedRow();
+    	   Object selectedID = movieTable.getValueAt(selectedRow , 0);
+    	   String stringSelectedID = selectedID.toString();
+    	   int intSelectedID = Integer.parseInt(stringSelectedID);
+    	   DomainUtil.removeItem(intSelectedID);
+       }
+       if(selectedIndex == 1 ){
     	   int selectedRow = gameTable.getSelectedRow();
     	   Object selectedID = gameTable.getValueAt(selectedRow , 0);
     	   String stringSelectedID = selectedID.toString();
     	   int intSelectedID = Integer.parseInt(stringSelectedID);
     	   DomainUtil.removeItem(intSelectedID);
        }
-       if(selectedIndex == 1 ){
+       if(selectedIndex == 2 ){
     	   int selectedRow = CDTable.getSelectedRow();
     	   Object selectedID = CDTable.getValueAt(selectedRow , 0);
-    	   String stringSelectedID = selectedID.toString();
-    	   int intSelectedID = Integer.parseInt(stringSelectedID);
-    	   DomainUtil.removeItem(intSelectedID);
-       }
-       if(selectedIndex == 2 ){
-    	   int selectedRow = movieTable.getSelectedRow();
-    	   Object selectedID = movieTable.getValueAt(selectedRow , 0);
     	   String stringSelectedID = selectedID.toString();
     	   int intSelectedID = Integer.parseInt(stringSelectedID);
     	   DomainUtil.removeItem(intSelectedID);
@@ -401,19 +401,19 @@ public class iRaptorGUI extends javax.swing.JFrame {
         
         try{
         if(selectedIndex == 0){
+        	int selectedRow = movieTable.getSelectedRow();
+            String selectedTitle = movieTable.getValueAt(selectedRow, 1).toString();
+            iRaptorPackage.WebUtility.amazonSearch(selectedTitle, "DVD");
+        }
+        if(selectedIndex == 1){
         	int selectedRow = gameTable.getSelectedRow();
             String selectedTitle = gameTable.getValueAt(selectedRow, 1).toString();
             WebUtility.amazonSearch(selectedTitle, "game");
         }
-        if(selectedIndex == 1){
+        if(selectedIndex == 2){
         	int selectedRow = CDTable.getSelectedRow();
             String selectedTitle = CDTable.getValueAt(selectedRow, 1).toString();
             WebUtility.amazonSearch(selectedTitle, "CD");
-        }
-        if(selectedIndex == 2){
-        	int selectedRow = movieTable.getSelectedRow();
-            String selectedTitle = movieTable.getValueAt(selectedRow, 1).toString();
-            iRaptorPackage.WebUtility.amazonSearch(selectedTitle, "DVD");
         }
         if(selectedIndex == 3){
         	int selectedRow = bookTable.getSelectedRow();
@@ -425,7 +425,7 @@ public class iRaptorGUI extends javax.swing.JFrame {
 
     private void tabPaneStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tabPaneStateChanged
         int selectedIndex = tabPane.getSelectedIndex();
-        if(selectedIndex == 0){
+        if(selectedIndex == 1){
             strategyGuideButton.setVisible(true);
         }// TODO add your handling code here:
         else{
@@ -449,19 +449,19 @@ public class iRaptorGUI extends javax.swing.JFrame {
         //String selectedTitle = movieTable.getValueAt(selectedRow, 1).toString();
         try{
             if(selectedIndex == 0){
+            	int selectedRow = movieTable.getSelectedRow();
+                String selectedTitle = movieTable.getValueAt(selectedRow, 1).toString();
+                new iRaptorRecommendGUI(selectedTitle, "DVD").setVisible(true);
+            	}
+            if(selectedIndex == 1){
             	int selectedRow = gameTable.getSelectedRow();
             	String selectedTitle = gameTable.getValueAt(selectedRow, 1).toString();	
             	new iRaptorRecommendGUI(selectedTitle, "game").setVisible(true);
             }
-            if(selectedIndex == 1){
+            if(selectedIndex == 2){
             	int selectedRow = CDTable.getSelectedRow();
                 String selectedTitle = CDTable.getValueAt(selectedRow, 1).toString();
                 new iRaptorRecommendGUI(selectedTitle, "CD").setVisible(true);
-            	}
-            if(selectedIndex == 2){
-            	int selectedRow = movieTable.getSelectedRow();
-                String selectedTitle = movieTable.getValueAt(selectedRow, 1).toString();
-                new iRaptorRecommendGUI(selectedTitle, "DVD").setVisible(true);
             	}
             if(selectedIndex == 3){
             	int selectedRow = bookTable.getSelectedRow();
