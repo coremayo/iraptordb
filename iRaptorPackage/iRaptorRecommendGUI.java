@@ -22,7 +22,14 @@ public class iRaptorRecommendGUI extends javax.swing.JFrame {
     /** Creates new form iRaptorRecommendGUI */
     public iRaptorRecommendGUI(String title, String type) {
         initComponents();
-        Vector<String> recommendations = new Vector<String>();
+        setRecommendations(title, type);
+
+    }
+
+    
+    
+    private void setRecommendations(String title, String type){
+    	Vector<String> recommendations = new Vector<String>();
         try{
         recommendations = WebUtility.getSuggestions(title, type);
         }catch(Exception e){}
@@ -31,9 +38,10 @@ public class iRaptorRecommendGUI extends javax.swing.JFrame {
         	t += (recommendations.get(i) + "\n");
         }
         recommendedItems.setText(t);
-
+    	
     }
-
+    
+    
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is

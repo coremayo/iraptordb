@@ -421,7 +421,6 @@ public class iRaptorGUI extends javax.swing.JFrame {
         //int selectedRow = movieTable.getSelectedRow();
         //String selectedTitle = movieTable.getValueAt(selectedRow, 1).toString();
         System.out.println("HERE WE GO");
-        Vector<String> recomendations = new Vector<String>();
         try{
             if(selectedIndex == 0){
             	int selectedRow = gameTable.getSelectedRow();
