@@ -58,6 +58,7 @@ public class iRaptorGUI extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
+        tagButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("iRaptor");
@@ -67,7 +68,15 @@ public class iRaptorGUI extends javax.swing.JFrame {
                 tabPaneStateChanged(evt);
             }
         });
-
+        
+        tagButton.setText("Add a Tag");
+        tagButton.setVisible(true);
+        tagButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tagButtonActionPerformed(evt);
+            }
+        });
+        
         gameTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null},
@@ -222,7 +231,8 @@ public class iRaptorGUI extends javax.swing.JFrame {
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(strategyGuideButton)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 64, Short.MAX_VALUE)
-                        .add(recommendButton)))
+                        .add(recommendButton)
+                        .add(tagButton)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -235,7 +245,8 @@ public class iRaptorGUI extends javax.swing.JFrame {
                     .add(addItemButton)
                     .add(searchWebButton)
                     .add(strategyGuideButton)
-                    .add(searchiRaptorButton))
+                    .add(searchiRaptorButton)
+                    .add(tagButton))
                 .add(35, 35, 35)
                 .add(tabPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
                 .add(11, 11, 11))
@@ -246,7 +257,44 @@ public class iRaptorGUI extends javax.swing.JFrame {
 
 
 
-
+    private void tagButtonActionPerformed(java.awt.event.ActionEvent evt){
+    	
+    	String a = JOptionPane.showInputDialog("Input Tag");
+    	int selectedIndex = tabPane.getSelectedIndex();
+    	if(selectedIndex == 0 ){
+     	   int selectedRow = gameTable.getSelectedRow();
+     	   Object selectedID = gameTable.getValueAt(selectedRow , 0);
+     	   String stringSelectedID = selectedID.toString();
+     	   int intSelectedID = Integer.parseInt(stringSelectedID);
+     	   domain.Item edittedVideoGame = DomainUtil.getItem(intSelectedID);
+     	   edittedVideoGame.addTag(a);
+        }
+        if(selectedIndex == 1 ){
+     	   int selectedRow = CDTable.getSelectedRow();
+     	   Object selectedID = CDTable.getValueAt(selectedRow , 0);
+     	   String stringSelectedID = selectedID.toString();
+     	   int intSelectedID = Integer.parseInt(stringSelectedID);
+     	   domain.Item edittedCD = DomainUtil.getItem(intSelectedID);
+     	   edittedCD.addTag(a);
+        }
+        if(selectedIndex == 2 ){
+     	   int selectedRow = movieTable.getSelectedRow();
+     	   Object selectedID = movieTable.getValueAt(selectedRow , 0);
+     	   String stringSelectedID = selectedID.toString();
+     	   int intSelectedID = Integer.parseInt(stringSelectedID);
+     	   domain.Item edittedDVD = DomainUtil.getItem(intSelectedID);
+     	   edittedDVD.addTag(a);
+        }
+        if(selectedIndex == 3 ){
+     	   int selectedRow = bookTable.getSelectedRow();
+     	   Object selectedID = bookTable.getValueAt(selectedRow , 0);
+     	   String stringSelectedID = selectedID.toString();
+     	   int intSelectedID = Integer.parseInt(stringSelectedID);
+     	  domain.Item edittedBook = DomainUtil.getItem(intSelectedID);
+     	  edittedBook.addTag(a);
+        }
+    	
+    }
     private void addItemButtonActionPerformed(java.awt.event.ActionEvent evt) {                                              
         new raptorAddGUI().setVisible(true);
 } //GEN-LAST:event_addItemButtonActionPerformed                                
@@ -372,29 +420,34 @@ public class iRaptorGUI extends javax.swing.JFrame {
         //int selectedRow = movieTable.getSelectedRow();
         //String selectedTitle = movieTable.getValueAt(selectedRow, 1).toString();
         System.out.println("HERE WE GO");
+        Vector<String> recomendations = new Vector<String>();
         try{
             if(selectedIndex == 0){
             	int selectedRow = gameTable.getSelectedRow();
             	String selectedTitle = gameTable.getValueAt(selectedRow, 1).toString();	
-            	Vector<String> recomendations = WebUtility.getSuggestions(selectedTitle, "game");
+            	recomendations = WebUtility.getSuggestions(selectedTitle, "game");
             }
             if(selectedIndex == 1){
             	int selectedRow = CDTable.getSelectedRow();
                 String selectedTitle = CDTable.getValueAt(selectedRow, 1).toString();
-                Vector<String> recomendations = WebUtility.getSuggestions(selectedTitle, "CD");
+                recomendations = WebUtility.getSuggestions(selectedTitle, "CD");
             	}
             if(selectedIndex == 2){
             	int selectedRow = movieTable.getSelectedRow();
                 String selectedTitle = movieTable.getValueAt(selectedRow, 1).toString();
-                Vector<String> recomendations = WebUtility.getSuggestions(selectedTitle, "DVD");
+                recomendations = WebUtility.getSuggestions(selectedTitle, "DVD");
             	}
             if(selectedIndex == 3){
             	int selectedRow = bookTable.getSelectedRow();
                 String selectedTitle = bookTable.getValueAt(selectedRow, 1).toString();
-                Vector<String> recomendations = WebUtility.getSuggestions(selectedTitle, "book");
-            	}        
+                recomendations = WebUtility.getSuggestions(selectedTitle, "book");
+            	}
         }catch(Exception e){System.out.println(e.toString());}
+        for(int i = 0; i < recomendations.size(); i++){
+        	System.out.println(recomendations.get(i));
+        }
         System.out.println("THIS IS DONE");
+        
         //JOptionPane test = new JOptionPane("HELP!");
         //test.setVisible(true);
     }//GEN-LAST:event_recommendButtonActionPerformed
@@ -408,9 +461,9 @@ public class iRaptorGUI extends javax.swing.JFrame {
         fileChooser.showOpenDialog(null);
         File file = fileChooser.getSelectedFile();
         if (file != null) {
-        	DBUtil.openFile(file);
+        	domain.DBUtil.openFile(file);
         } else {
-        	DBUtil.openTemporaryFile();
+        	domain.DBUtil.openTemporaryFile();
         }
         java.awt.EventQueue.invokeLater(new Runnable() {
 
@@ -442,6 +495,7 @@ public class iRaptorGUI extends javax.swing.JFrame {
     private javax.swing.JButton strategyGuideButton;
     private javax.swing.JTabbedPane tabPane;
     private javax.swing.JButton updateButton;
+    private javax.swing.JButton tagButton;
     // End of variables declaration//GEN-END:variables
     
 }
