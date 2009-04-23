@@ -49,4 +49,8 @@ public class VideoGame extends Item {
 	public String toString() {
 		return "Video Game title" + this.getTitle();
 	}
+	
+	public String getType() {
+		return "VideoGame";
+	}
 }

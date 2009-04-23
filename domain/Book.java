@@ -248,4 +248,8 @@ public class Book extends Item {
 		}
 		return ret.toString();
 	}
+	
+	public String getType() {
+		return "Book";
+	}
 }

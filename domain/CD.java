@@ -206,4 +206,8 @@ public class CD extends Item {
 		}
 		return ret.toString();
 	}
+	
+	public String getType() {
+		return "CD";
+	}
 }

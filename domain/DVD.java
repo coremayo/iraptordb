@@ -79,4 +79,8 @@ public class DVD extends Item {
 	public String toString() {
 		return "DVD titled: " + this.getTitle() + " directed by: " + this.getDirectorName();
 	}
+	
+	public String getType() {
+		return "DVD";
+	}
 }
