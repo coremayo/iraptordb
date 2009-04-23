@@ -4,6 +4,7 @@ import domain.*;
 
 import java.io.File;
 import java.util.*;
+
 import javax.swing.*;
 
 
@@ -443,9 +444,7 @@ public class iRaptorGUI extends javax.swing.JFrame {
                 recomendations = WebUtility.getSuggestions(selectedTitle, "book");
             	}
         }catch(Exception e){System.out.println(e.toString());}
-        for(int i = 0; i < recomendations.size(); i++){
-        	System.out.println(recomendations.get(i));
-        }
+        new iRaptorRecommendGUI(recomendations).setVisible(true);
         System.out.println("THIS IS DONE");
         
         //JOptionPane test = new JOptionPane("HELP!");
