@@ -51,6 +51,7 @@ public abstract class Item {
 		this.rating = rs.getInt("rating");
 		this.title = rs.getString("title");
 		this.tags = new ArrayList<Tag>();
+		this.year = rs.getInt("year");
 		populateTags();
 	}
 	
