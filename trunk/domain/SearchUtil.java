@@ -3,6 +3,7 @@ package domain;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,5 +91,44 @@ public class SearchUtil {
 			e.printStackTrace();
 		}
 		return theList;
+	}
+	
+	/**
+	 * Finds an item in the database with the same genre and type as 
+	 * the one supplied and returns that item or null if there are none.
+	 * @param item
+	 * @return A similar item or null
+	 */
+	public static Item getSimilarItem(Item item) {
+		Connection conn = null;
+		try {
+			String type = item.getType();
+			String sql = 
+				    "SELECT itemId " +
+				      "FROM Item " +
+				"INNER JOIN " + type + " " +
+						"ON " + type + ".itemId = Item.itemId " +
+					 "WHERE genre = ?;";
+			
+			conn = DBUtil.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, item.getGenre());
+			ResultSet rs = ps.executeQuery();
+			
+			int itemId;
+			while (rs.next()) {
+				itemId = rs.getInt("itemId");
+				if (itemId != item.getItemId()) {
+					//we've found our match
+					conn.close();
+					return DomainUtil.getItem(itemId);
+				}
+			}
+			conn.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }
