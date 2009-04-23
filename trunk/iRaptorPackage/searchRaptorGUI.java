@@ -13,15 +13,12 @@ package iRaptorPackage;
 
 import domain.*;
 
+import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
-import javax.swing.event.*;
 
-import javax.swing.JLabel;
-import javax.swing.JTable;
-import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -198,62 +195,9 @@ public class searchRaptorGUI extends javax.swing.JFrame {
 
     	String[] columnNames = {
     		"idNum",
-    		"Name",
+    		"Title",
     		"Genre",
-    		"Rating",
-    		"DateAdded",
-    		"YearReleased",
-    		"Tags",
-    		"Notes"
-    	};
-    	
-    	String[] bookColumnNames = {
-    		"idNum",
-    		"Name",
-    		"Genre",
-    		"Rating",
-    		"DateAdded",
-    		"YearReleased",
-    		"Tags",
-    		"Notes",
-    		"Authors",
-    		"Publisher",
-    		"isbn"
-    	};
-    	
-    	String[] cdColumnNames = {
-    		"idNum",
-    		"Name",
-    		"Genre",
-    		"Rating",
-    		"DateAdded",
-    		"YearReleased",
-    		"Tags",
-    		"Notes",
-    		"Artists"
-    	};
-    	
-    	String[] dvdColumnNames = {
-    		"idNum",
-    		"Name",
-    		"Genre",
-    		"Rating",
-    		"DateAdded",
-    		"YearReleased",
-    		"Tags",
-    		"Notes",
-    		"Director"
-    	};
-    	
-    	String[] videoGameColumnNames = {
-    		"idNum",
-    		"Name",
-    		"Genre",
-    		"Rating",
-    		"DateAdded",
-    		"YearReleased",
-    		"Tags",
-    		"Notes"
+    		"Type"
     	};
     	
     	enteredText = searchTextField.getText();
@@ -265,6 +209,7 @@ public class searchRaptorGUI extends javax.swing.JFrame {
         	//else we can take the text in the text field and execute the search
     	
         	List<Item> results;
+        	List<Item> updatedResults = new ArrayList<Item>();
         	if (selectedFieldType == "Title") {
         		results = SearchUtil.searchTitle(searchTextField.getText());
         	}
@@ -280,37 +225,37 @@ public class searchRaptorGUI extends javax.swing.JFrame {
         	String type = "";
         	//"Movies", "Books", "Games", "CDs", "Any Item"
         	if (selectedItemType=="Movies") {
-        		columnNames = dvdColumnNames;
         		type = "DVD";
         	} else if (selectedFieldType=="Books"){
-        		columnNames = bookColumnNames;
         		type = "Book";
         	} else if (selectedFieldType=="Games") {
-        		columnNames = videoGameColumnNames;
         		type = "VideoGame";
         	} else if (selectedFieldType == "CDs") {
-        		columnNames = cdColumnNames;
         		type = "CD";
         	}
         	
         	for (Item result : results) {
-        		if ((!(result.getType().equals(type))) || (selectedFieldType == "Any Item")) {
-        			results.add(result);
+        		if (!(result.getType().equals(type))) {
+    				updatedResults.add(result);
         		}
+    			if (selectedFieldType == "Any Item") {
+    				updatedResults.add(result);
+    			}
         	}
         	
-        	int numRows = results.size();//the number of rows
+        	int numRows = updatedResults.size();//the number of rows
         	int numCols = columnNames.length;//the numer of fields for a move/dvd
         	
         	String data[][] = new String[numRows][numCols];
         	
         	for(int row = 0; row < numRows; row++){
-        		for (int col = 0; col < numCols; col++) {
-        			
-        			//set entries array
-        			data[row][col] = results.get(row).toString();
-        		}
+        		data[row][0] = ((Integer)updatedResults.get(row).getItemId()).toString();
+        		data[row][1] = updatedResults.get(row).getTitle();
+        		data[row][2] = updatedResults.get(row).getGenre();
+        		data[row][3] = updatedResults.get(row).getType();
         	}
+
+            jScrollPane1.setPreferredSize(new Dimension(350, 150));
         	
         	resultTable.setModel(new DefaultTableModel(data, columnNames));
         	resultTable.setVisible(true);
