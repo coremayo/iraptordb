@@ -109,7 +109,7 @@ public abstract class Item {
 		Tag tag;
 		while (rs.next()) {
 			tag = new Tag();
-			tag.setName(rs.getString("Tag.name"));
+			tag.setName(rs.getString("name"));
 			tags.add(tag);
 		}
 		rs.close();
