@@ -62,11 +62,12 @@ public class Book extends Item {
 	 */
 	private void populateAuthors() throws SQLException{
 		String sqltxt = 
-			   "SELECT Creator.name " +
-			     "FROM Creator " +
-			"LEFT JOIN BookAuthor " +
-			       "ON BookAuthor.author_creatorId = Creator.creatorId " +
-			    "WHERE BookAuthor.book_itemId = ?;";
+			    "SELECT Creator.name, " +
+			            "Creator.creatorId " +
+			      "FROM Creator " +
+			"INNER JOIN BookAuthor " +
+			        "ON BookAuthor.author_creatorId = Creator.creatorId " +
+			     "WHERE BookAuthor.book_itemId = ?;";
 		Connection conn = DBUtil.getConnection();
 		PreparedStatement ps = conn.prepareStatement(sqltxt);
 		ps.setInt(1, this.getItemId());
