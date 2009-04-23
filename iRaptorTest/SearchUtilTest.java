@@ -7,6 +7,7 @@ import java.util.Collection;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import domain.Book;
 import domain.DBUtil;
 import domain.DomainUtil;
 import domain.Item;
@@ -71,5 +72,22 @@ public class SearchUtilTest {
 		
 		c = SearchUtil.searchTitle(title3);
 		assertEquals(1, c.size());
+	}
+	
+	public void testGetSimilarItem() {
+		String t1 = "title1", t2 = "title2", t3 = "title3";
+		String g1 = "genre1", g2 = "genre2";
+		Book b1, b2, b3;
+		
+		b1 = DomainUtil.addBook(t1);
+		b2 = DomainUtil.addBook(t2);
+		b3 = DomainUtil.addBook(t3);
+		
+		b1.setGenre(g1);
+		b2.setGenre(g1);
+		b3.setGenre(g2);
+		
+		assertEquals(b2, SearchUtil.getSimilarItem(b1));
+		assertEquals(null, SearchUtil.getSimilarItem(b3));
 	}
 }
