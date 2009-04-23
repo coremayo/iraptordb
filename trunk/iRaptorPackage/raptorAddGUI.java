@@ -125,7 +125,7 @@ public class raptorAddGUI extends javax.swing.JFrame {
                 closeButtonActionPerformed(evt);
             }
         });
-
+        genreField.setText("Porn");
         directorLabel.setText("Director/Artist");
         directorLabel.setVisible(true);
 
