@@ -20,6 +20,13 @@ import java.util.Collection;
 import javax.swing.JOptionPane;
 import javax.swing.event.*;
 
+import javax.swing.JTable;
+import javax.swing.JScrollPane;
+import javax.swing.table.TableColumn;
+
+
+
+
 /**
  *
  * @author Michael
@@ -183,29 +190,9 @@ public class searchRaptorGUI extends javax.swing.JFrame {
     
 
     private void itemComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemComboBoxActionPerformed
-        // TODO add your handling code here:   	
-//       if(selectedItemType == "Movies"){
-//            
-//       }
-//        
-//        if(selectedItemType == "CDs"){
-//            
-//        }
-//        
-//        if(selectedItemType == "Games"){
-//        }
-//        
-//        if(selectedItemType == "Books"){
-//        } 
-//        
-//        if(selectedItemType == "Any Item"){
-//        } 
-        
-     //addBook(title, genreType, intRating, intYearReleased, notes, publisher, isbn);
     }//GEN-LAST:event_itemComboBoxActionPerformed
 
     private void searchTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchTextFieldActionPerformed
-        
     }//GEN-LAST:event_searchTextFieldActionPerformed
 
     private void fieldComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldComboBoxActionPerformed
@@ -239,23 +226,26 @@ public class searchRaptorGUI extends javax.swing.JFrame {
 	        	}
 	        	else {
 	        	}
-        	}
-        
-            resultTable.setModel(new javax.swing.table.DefaultTableModel(
-                    new Object [][] {
-                    },
-                    new String [] {
-                    }
-                ));
-                resultTable.setColumnSelectionAllowed(true);
-                jScrollPane1.setViewportView(resultTable);
-                resultTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-                
-        	
+        	}       	
         }
     }
     
-
+    private void showResultTable() {
+    	
+    	
+    	
+        resultTable.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+                },
+                new String [] {
+                }
+            ));
+        resultTable.setColumnSelectionAllowed(true);
+        jScrollPane1.setViewportView(resultTable);
+        resultTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);      
+    }
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton executeButton;
     private javax.swing.JComboBox itemComboBox;
@@ -274,23 +264,20 @@ public class searchRaptorGUI extends javax.swing.JFrame {
     
     Collection<Item> results; // = new ArrayList<Item>();
     // End of variables declaration//GEN-END:variables
-
-
     
-//    class MyDocumentListener implements DocumentListener {
-//     
-//        public void insertUpdate(DocumentEvent e) {
-//            enteredText = e.toString();
-//            System.out.println(enteredText);
-//        }
-//        public void removeUpdate(DocumentEvent e) {
-//            //updateLog(e, "removed from");
-//        }
-//        public void changedUpdate(DocumentEvent e) {
-//            //Plain text components do not fire these events
-//        }   
-//    }
-
+  
+    
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
