@@ -12,17 +12,11 @@
 package iRaptorPackage;
 
 import domain.*;
-
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.JOptionPane;
-
 import javax.swing.table.DefaultTableModel;
-
-
-
 
 /**
  *
@@ -235,7 +229,7 @@ public class searchRaptorGUI extends javax.swing.JFrame {
         	}
         	
         	for (Item result : results) {
-        		if (!(result.getType().equals(type))) {
+        		if (result.getType() == type) {
     				updatedResults.add(result);
         		}
     			if (selectedFieldType == "Any Item") {
