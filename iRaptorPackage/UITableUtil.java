@@ -7,12 +7,11 @@ package iRaptorPackage;
 
 import domain.*;
 import javax.swing.*;
-import java.sql.*;
+import java.text.DateFormat;
 import java.util.*;
 import java.util.Date;
 
 import javax.swing.table.DefaultTableModel;
-import javax.swing.*;
 /**
  *
  * @author Gun Jack
@@ -34,6 +33,10 @@ public class UITableUtil {
 
     }
     public void updateTable(){
+
+    	// This date formatter will make our dates look pretty
+		DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
+    	
         if(type == "movie"){
             int i = 0;
         	Collection<domain.DVD> DVDCollection = domain.DomainUtil.getDVDs();
@@ -67,7 +70,7 @@ public class UITableUtil {
             			theTableModel.setValueAt(DVDYearReleased, i, j);
             		}
             		if(j == 5){
-            			theTableModel.setValueAt(DVDAdded, i, j);
+            			theTableModel.setValueAt(df.format(DVDAdded), i, j);
             		}
             		if(j == 6){
             			theTableModel.setValueAt(TAGS, i, j);
@@ -109,7 +112,7 @@ public class UITableUtil {
                 			theTableModel.setValueAt(DVDRating, i, j);
                 		}
                 		if(j == 4){
-                			theTableModel.setValueAt(DVDAdded, i, j);
+                			theTableModel.setValueAt(df.format(DVDAdded), i, j);
                 		}
                 		if(j == 5){
                 			theTableModel.setValueAt(DVDYearReleased, i, j);
@@ -163,7 +166,7 @@ public class UITableUtil {
                 			theTableModel.setValueAt(DVDRating, i, j);
                 		}
                 		if(j == 5){
-                			theTableModel.setValueAt(DVDAdded, i, j);
+                			theTableModel.setValueAt(df.format(DVDAdded), i, j);
                 		}
                 		if(j == 6){
                 			theTableModel.setValueAt(DVDYearReleased, i, j);
@@ -226,7 +229,7 @@ public class UITableUtil {
         			theTableModel.setValueAt(DVDYearReleased, i, j);
         		}
         		if(j == 6){
-        			theTableModel.setValueAt(DVDAdded, i, j);
+        			theTableModel.setValueAt(df.format(DVDAdded), i, j);
         		}
         		if(j == 7){
         			theTableModel.setValueAt(CDStrings, i, j);
