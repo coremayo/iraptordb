@@ -20,11 +20,17 @@ import domain.DBUtil;
  * @author Gun Jack
  */
 public class raptorAddGUI extends javax.swing.JFrame {
-
+	UITableUtil gameTableUtil;
+	UITableUtil bookTableUtil;
+	UITableUtil movieTableUtil;
+	UITableUtil cdTableUtil;
     /** Creates new form raptorAddGUI */
-    public raptorAddGUI() {
+    public raptorAddGUI(UITableUtil gameUtil, UITableUtil bookUtil, UITableUtil movieUtil, UITableUtil CDUtil) {
         initComponents();
-
+        gameTableUtil = gameUtil;
+        bookTableUtil = bookUtil;
+        movieTableUtil = movieUtil;
+        cdTableUtil = CDUtil;
 
     }
     /** This method is called from within the constructor to
@@ -291,6 +297,11 @@ public class raptorAddGUI extends javax.swing.JFrame {
             VG.setRating(intRating);
             VG.setYear(intYearReleased);
             }
+          gameTableUtil.updateTable();
+      	  bookTableUtil.updateTable();
+      	  movieTableUtil.updateTable();
+          cdTableUtil.updateTable();
+          this.dispose();
           
 
 }//GEN-LAST:event_addItemButtonActionPerformed
