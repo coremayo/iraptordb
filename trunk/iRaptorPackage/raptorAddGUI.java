@@ -272,6 +272,7 @@ public class raptorAddGUI extends javax.swing.JFrame {
             b.setYear(intYearReleased);
             b.setNotes(notes);
             b.setPublisher(publisher);
+            b.addAuthor(director);
             b.setIsbn(isbn);
           }
           if(selectedMediaType == "CD"){
@@ -309,12 +310,12 @@ public class raptorAddGUI extends javax.swing.JFrame {
     private void typeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_typeComboBoxActionPerformed
       Object selectedMediaType = typeComboBox.getSelectedItem();
       if(selectedMediaType == "Book"){
-              directorField.setVisible(false);
+              directorField.setVisible(true);
               isbnField.setVisible(true);
               publisherField.setVisible(true);
               isbnLabel.setVisible(true);
               publisherLabel.setVisible(true);
-              directorLabel.setVisible(false);
+              directorLabel.setVisible(true);
       }
       if(selectedMediaType == "Movie"){
               isbnLabel.setVisible(false);

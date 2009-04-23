@@ -16,6 +16,7 @@ import domain.*;
 import java.awt.Dialog;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 import javax.swing.event.*;
@@ -262,7 +263,7 @@ public class searchRaptorGUI extends javax.swing.JFrame {
     private Object selectedFieldType;
     private String enteredText;
     
-    Collection<Item> results; // = new ArrayList<Item>();
+    List<domain.Item> results; // = new ArrayList<Item>();
     // End of variables declaration//GEN-END:variables
     
   

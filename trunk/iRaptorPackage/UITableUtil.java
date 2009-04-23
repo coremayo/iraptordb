@@ -49,6 +49,7 @@ public class UITableUtil {
             		int DVDYearReleased = currentDVD.getYear();
             		int DVDRating = currentDVD.getRating();
             		List<Tag> DVDTags = currentDVD.getTags();
+            		String TAGS = DVDTags.toString();
             		Date DVDAdded = currentDVD.getDateAdded();
             		if(j == 0){
             			theTableModel.setValueAt(ItemId, i, j);
@@ -68,9 +69,9 @@ public class UITableUtil {
             		if(j == 5){
             			theTableModel.setValueAt(DVDAdded, i, j);
             		}
-            		//if(j == 6){
-            		//	theTableModel.setValueAt(ItemId, i, j);
-            		//}
+            		if(j == 6){
+            			theTableModel.setValueAt(TAGS, i, j);
+            		}
             		if(j == 7){
             			theTableModel.setValueAt(DVDnotes, i, j);
             		}
@@ -93,6 +94,7 @@ public class UITableUtil {
                 		int DVDYearReleased = currentVideoGame.getYear();
                 		int DVDRating = currentVideoGame.getRating();
                 		List<Tag> DVDTags = currentVideoGame.getTags();
+                		String TAGS = DVDTags.toString();
                 		Date DVDAdded = currentVideoGame.getDateAdded();
                 		if(j == 0){
                 			theTableModel.setValueAt(ItemId, i, j);
@@ -112,9 +114,9 @@ public class UITableUtil {
                 		if(j == 5){
                 			theTableModel.setValueAt(DVDYearReleased, i, j);
                 		}
-                		//if(j == 6){
-                		//	theTableModel.setValueAt(ItemId, i, j);
-                		//}
+                		if(j == 6){
+                			theTableModel.setValueAt(TAGS, i, j);
+                		}
                 		if(j == 7){
                 			theTableModel.setValueAt(DVDnotes, i, j);
                 		}
