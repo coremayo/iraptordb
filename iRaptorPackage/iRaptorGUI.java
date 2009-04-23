@@ -457,7 +457,7 @@ public class iRaptorGUI extends javax.swing.JFrame {
     public static void main(String args[]) {
     	//Lets open a file!
     	JFileChooser fileChooser = domain.DBUtil.getFileChooser();
-        fileChooser.showOpenDialog(null);
+        fileChooser.showSaveDialog(null);
         File file = fileChooser.getSelectedFile();
         if (file != null) {
         	domain.DBUtil.openFile(file);
