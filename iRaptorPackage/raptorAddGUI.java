@@ -262,7 +262,6 @@ public class raptorAddGUI extends javax.swing.JFrame {
           String publisher = publisherField.getText();
           String director = directorField.getText();
           String notes = notesArea.getText();
-          System.out.println(genreType);
           if(selectedMediaType == "Movie"){
             domain.DVD d = domain.DomainUtil.addDVD(title);
             d.setDirectorName(director);
