@@ -426,25 +426,25 @@ public class iRaptorGUI extends javax.swing.JFrame {
             if(selectedIndex == 0){
             	int selectedRow = gameTable.getSelectedRow();
             	String selectedTitle = gameTable.getValueAt(selectedRow, 1).toString();	
-            	recomendations = WebUtility.getSuggestions(selectedTitle, "game");
+            	new iRaptorRecommendGUI(selectedTitle, "game").setVisible(true);
             }
             if(selectedIndex == 1){
             	int selectedRow = CDTable.getSelectedRow();
                 String selectedTitle = CDTable.getValueAt(selectedRow, 1).toString();
-                recomendations = WebUtility.getSuggestions(selectedTitle, "CD");
+                new iRaptorRecommendGUI(selectedTitle, "CD").setVisible(true);
             	}
             if(selectedIndex == 2){
             	int selectedRow = movieTable.getSelectedRow();
                 String selectedTitle = movieTable.getValueAt(selectedRow, 1).toString();
-                recomendations = WebUtility.getSuggestions(selectedTitle, "DVD");
+                new iRaptorRecommendGUI(selectedTitle, "DVD").setVisible(true);
             	}
             if(selectedIndex == 3){
             	int selectedRow = bookTable.getSelectedRow();
                 String selectedTitle = bookTable.getValueAt(selectedRow, 1).toString();
-                recomendations = WebUtility.getSuggestions(selectedTitle, "book");
+                new iRaptorRecommendGUI(selectedTitle, "book").setVisible(true);
             	}
         }catch(Exception e){System.out.println(e.toString());}
-        new iRaptorRecommendGUI(recomendations).setVisible(true);
+        
         System.out.println("THIS IS DONE");
         
         //JOptionPane test = new JOptionPane("HELP!");

@@ -20,8 +20,12 @@ import java.util.Vector;
 public class iRaptorRecommendGUI extends javax.swing.JFrame {
 
     /** Creates new form iRaptorRecommendGUI */
-    public iRaptorRecommendGUI(Vector<String> recommendations) {
+    public iRaptorRecommendGUI(String title, String type) {
         initComponents();
+        Vector<String> recommendations = new Vector<String>();
+        try{
+        recommendations = WebUtility.getSuggestions(title, type);
+        }catch(Exception e){}
         String t = "";
         for(int i = 0; i < recommendations.size(); i++){
         	t += (recommendations.get(i) + "\n");
