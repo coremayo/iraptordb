@@ -55,7 +55,7 @@ public class iRaptorRecommendGUI extends javax.swing.JFrame {
         recommendedItems = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
 
         recommendedItems.setColumns(20);
         recommendedItems.setRows(5);

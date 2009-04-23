@@ -133,7 +133,7 @@ public class UITableUtil {
                 testTable.setNumRows(VideoGameCollection.size());
                 while(VideoGameIterator.hasNext()){
                 	domain.Book currentDVD = VideoGameIterator.next();
-                	for(int j =0; j<8;j++){
+                	for(int j =0; j<11;j++){
                 		int ItemId = currentDVD.getItemId();
                 		String DVDName = currentDVD.getTitle();
                 		String DVDgenre = currentDVD.getGenre();
@@ -141,7 +141,12 @@ public class UITableUtil {
                 		int DVDYearReleased = currentDVD.getYear();
                 		int DVDRating = currentDVD.getRating();
                 		List<Tag> DVDTags = currentDVD.getTags();
+                		List<Creator> BookAuthors = currentDVD.getAuthors();
+                		String Authors = BookAuthors.toString();
+                		String dvdTags = DVDTags.toString();
+                		String bookISBN = currentDVD.getIsbn();
                 		Date DVDAdded = currentDVD.getDateAdded();
+                		String bookP = currentDVD.getPublisher();
                 		if(j == 0){
                 			theTableModel.setValueAt(ItemId, i, j);
                 		}
@@ -149,21 +154,30 @@ public class UITableUtil {
                 			theTableModel.setValueAt(DVDName, i, j);
                 		}
                 		if(j == 2){
-                			theTableModel.setValueAt(DVDgenre, i, j);
+                			theTableModel.setValueAt(Authors, i, j);
                 		}
                 		if(j == 3){
-                			theTableModel.setValueAt(DVDRating, i, j);
+                			theTableModel.setValueAt(DVDgenre, i, j);
                 		}
                 		if(j == 4){
-                			theTableModel.setValueAt(DVDYearReleased, i, j);
+                			theTableModel.setValueAt(DVDRating, i, j);
                 		}
                 		if(j == 5){
                 			theTableModel.setValueAt(DVDAdded, i, j);
                 		}
-                		//if(j == 6){
-                		//	theTableModel.setValueAt(ItemId, i, j);
-                		//}
+                		if(j == 6){
+                			theTableModel.setValueAt(DVDYearReleased, i, j);
+                		}
                 		if(j == 7){
+                			theTableModel.setValueAt(bookISBN, i, j);
+                		}
+                		if(j == 8){
+                			theTableModel.setValueAt(bookP , i, j);
+                		}
+                		if(j ==9){
+                			theTableModel.setValueAt(dvdTags, i, j);
+                		}
+                		if(j == 10){
                 			theTableModel.setValueAt(DVDnotes, i, j);
                 		}
                 	}
@@ -187,9 +201,11 @@ public class UITableUtil {
         		String DVDgenre = currentDVD.getGenre();
         		List<Creator> CDArtsist = currentDVD.getArtists();
         		String DVDnotes = currentDVD.getNotes();
+        		String CDString = CDArtsist.toString();
         		int DVDYearReleased = currentDVD.getYear();
         		int DVDRating = currentDVD.getRating();
         		List<Tag> DVDTags = currentDVD.getTags();
+        		String CDStrings = DVDTags.toString();
         		Date DVDAdded = currentDVD.getDateAdded();
         		if(j == 0){
         			theTableModel.setValueAt(ItemId, i, j);
@@ -198,7 +214,7 @@ public class UITableUtil {
         			theTableModel.setValueAt(DVDName, i, j);
         		}
         		if(j == 2){
-        			theTableModel.setValueAt(DVDgenre, i, j);
+        			theTableModel.setValueAt(CDString, i, j);
         		}
         		if(j == 3){
         			theTableModel.setValueAt(DVDgenre, i, j);
@@ -213,7 +229,7 @@ public class UITableUtil {
         			theTableModel.setValueAt(DVDAdded, i, j);
         		}
         		if(j == 7){
-        			//theTableModel.setValueAt(DVDTags, i, j);
+        			theTableModel.setValueAt(CDStrings, i, j);
         		}
         		if(j == 8){
         			theTableModel.setValueAt(DVDnotes, i, j);

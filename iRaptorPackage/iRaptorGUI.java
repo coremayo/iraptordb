@@ -69,7 +69,7 @@ public class iRaptorGUI extends javax.swing.JFrame {
                 tabPaneStateChanged(evt);
             }
         });
-        
+        updateButton.setVisible(false);
         tagButton.setText("Add a Tag");
         tagButton.setVisible(true);
         tagButton.addActionListener(new java.awt.event.ActionListener() {
@@ -297,7 +297,12 @@ public class iRaptorGUI extends javax.swing.JFrame {
     	
     }
     private void addItemButtonActionPerformed(java.awt.event.ActionEvent evt) {                                              
-        new raptorAddGUI().setVisible(true);
+        
+        UITableUtil gameTableUtil = new UITableUtil(gameTable, "game");
+        UITableUtil movieTableUtil = new UITableUtil(movieTable, "movie");
+        UITableUtil cdTableUtil = new UITableUtil(CDTable, "cd");
+        UITableUtil bookTableUtil = new UITableUtil(bookTable, "book");
+        new raptorAddGUI(gameTableUtil, bookTableUtil, movieTableUtil,  cdTableUtil).setVisible(true);
 } //GEN-LAST:event_addItemButtonActionPerformed                                
     
     private void searchiRaptorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemButtonActionPerformed
