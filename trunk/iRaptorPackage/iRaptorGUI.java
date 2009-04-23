@@ -440,7 +440,6 @@ public class iRaptorGUI extends javax.swing.JFrame {
         int selectedIndex = tabPane.getSelectedIndex();
         //int selectedRow = movieTable.getSelectedRow();
         //String selectedTitle = movieTable.getValueAt(selectedRow, 1).toString();
-        System.out.println("HERE WE GO");
         try{
             if(selectedIndex == 0){
             	int selectedRow = gameTable.getSelectedRow();
@@ -462,12 +461,9 @@ public class iRaptorGUI extends javax.swing.JFrame {
                 String selectedTitle = bookTable.getValueAt(selectedRow, 1).toString();
                 new iRaptorRecommendGUI(selectedTitle, "book").setVisible(true);
             	}
-        }catch(Exception e){System.out.println(e.toString());}
-        
-        System.out.println("THIS IS DONE");
-        
-        //JOptionPane test = new JOptionPane("HELP!");
-        //test.setVisible(true);
+        }catch(Exception e){
+        	e.printStackTrace();
+        }
     }//GEN-LAST:event_recommendButtonActionPerformed
 
     /**

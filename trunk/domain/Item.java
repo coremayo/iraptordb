@@ -1,6 +1,5 @@
 package domain;
 
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -63,10 +62,6 @@ public abstract class Item {
 	 */
 	protected Item(String title) {
 		super();
-		this.tags = new ArrayList<Tag>();
-		this.title = title;
-		this.rating = 0;
-		
 		String sqltxt = 
 			  "INSERT " +
 			    "INTO Item (" +
@@ -89,11 +84,24 @@ public abstract class Item {
 			// Unfortunately, the PreparedStatement.getGeneratedKeys() function 
 			// is not yet implemented for the sqlite jdbc driver, so we have to 
 			// instead do this shitty query.
-			sqltxt = "SELECT MAX(itemId) AS itemId, dateAdded FROM Item;";
+			sqltxt = "SELECT MAX(itemId) AS max_itemId, Item.* FROM Item;";
 			ps = conn.prepareStatement(sqltxt);
 			ResultSet rs = ps.executeQuery();
+			//yyyy-MM-dd HH:mm:ss
+			SimpleDateFormat s = new SimpleDateFormat();
+			s.applyPattern("yyyy-MM-dd");
+			try {
+				this.dateAdded = s.parse(rs.getString("dateAdded"));
+			} catch (ParseException e) {
+				throw new SQLException(e);
+			}
+			this.genre = rs.getString("genre");
 			this.itemId = rs.getInt("itemId");
-			this.dateAdded = rs.getDate("dateAdded");
+			this.notes = rs.getString("notes");
+			this.rating = rs.getInt("rating");
+			this.title = rs.getString("title");
+			this.tags = new ArrayList<Tag>();
+			populateTags();
 			rs.close();
 			ps.close();
 			conn.close();
