@@ -16,6 +16,8 @@ import java.util.List;
 public class CD extends Item {
 	private List<Creator> artists;
 	
+	private final int NUMFIELDS = 1;
+	
 	/**
 	 * Creates a new instance of CD and also adds that CD to the database.
 	 * @param title The title of the new CD.
@@ -209,5 +211,10 @@ public class CD extends Item {
 	
 	public String getType() {
 		return "CD";
+	}
+
+	@Override
+	public int numberOfFields() {
+		return Item.NUMFIELDS + this.NUMFIELDS;
 	}
 }

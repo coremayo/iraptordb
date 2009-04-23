@@ -17,6 +17,8 @@ public class Book extends Item {
 	private String isbn;
 	private List<Creator> authors;
 	
+	private final int NUMFIELDS = 3;
+	
 	/**
 	 * Creates a new Book object and adds it to the database.
 	 * @param title The title of the new book.
@@ -251,5 +253,10 @@ public class Book extends Item {
 	
 	public String getType() {
 		return "Book";
+	}
+
+	@Override
+	public int numberOfFields() {
+		return Item.NUMFIELDS + this.NUMFIELDS;
 	}
 }

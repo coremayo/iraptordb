@@ -14,6 +14,8 @@ import java.sql.SQLException;
 public class DVD extends Item {
 	private String directorName;
 	
+	private final int NUMFIELDS = 1;
+	
 	/**
 	 * Creates a new instance of a DVD and also adds it to the database.
 	 * @param title The title of the new DVD.
@@ -82,5 +84,10 @@ public class DVD extends Item {
 	
 	public String getType() {
 		return "DVD";
+	}
+
+	@Override
+	public int numberOfFields() {
+		return Item.NUMFIELDS + this.NUMFIELDS;
 	}
 }

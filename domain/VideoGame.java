@@ -13,6 +13,8 @@ import java.sql.SQLException;
  */
 public class VideoGame extends Item {
 	
+	private final int NUMFIELDS = 0;
+	
 	/**
 	 * Generates a new VideoGame instance and adds it to the database. 
 	 * @param title The title of the new VideoGame.
@@ -52,5 +54,10 @@ public class VideoGame extends Item {
 	
 	public String getType() {
 		return "VideoGame";
+	}
+
+	@Override
+	public int numberOfFields() {
+		return Item.NUMFIELDS + this.NUMFIELDS;
 	}
 }
