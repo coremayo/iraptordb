@@ -67,10 +67,6 @@ public class searchRaptorGUI extends javax.swing.JFrame {
         itemComboBox.setName("search item combo box");
         searchTextField.setName("title text field");
         
-        
-        resultTable.setModel(new DefaultTableModel(4,4));
-        jScrollPane1.setToolTipText("hello world!");
-
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         executeButton.setText("Execute Search");
@@ -200,6 +196,16 @@ public class searchRaptorGUI extends javax.swing.JFrame {
     
     private void executeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldComboBoxActionPerformed
 
+    	String[] columnNames = {
+    		"idNum",
+    		"Name",
+    		"Genre",
+    		"Rating",
+    		"DateAdded",
+    		"YearReleased",
+    		"Tags",
+    		"Notes"
+    	};
     	
     	String[] bookColumnNames = {
     		"idNum",
@@ -239,7 +245,7 @@ public class searchRaptorGUI extends javax.swing.JFrame {
     		"Director"
     	};
     	
-    	String[] videoGameColumnnames = {
+    	String[] videoGameColumnNames = {
     		"idNum",
     		"Name",
     		"Genre",
@@ -260,62 +266,54 @@ public class searchRaptorGUI extends javax.swing.JFrame {
     	
         	List<Item> results;
         	if (selectedFieldType == "Title") {
-        		results = SearchUtil.searchTitle((String)selectedFieldType);
+        		results = SearchUtil.searchTitle(searchTextField.getText());
         	}
         	else if (selectedFieldType == "Genre"){
-        		results = SearchUtil.searchGenre((String)selectedFieldType);
+        		results = SearchUtil.searchGenre(searchTextField.getText());
         	}
 //        	else if (selectedFieldType == "Tags"){
         	else {
-        		results = SearchUtil.searchTag((String)selectedFieldType);
+        		results = SearchUtil.searchTag(searchTextField.getText());
         	}
         	
         	// execute the "search control" code
+        	String type = "";
+        	//"Movies", "Books", "Games", "CDs", "Any Item"
         	if (selectedItemType=="Movies") {
-        		String[] columnNames = dvdColumnNames;
-        		
-	        	for (Item result : results){
-	        		if (!(result instanceof DVD)) {
-	        			results.add(result);
-	        		}
-	        	}
-	        	
-	        	int numRows = results.size();//the number of rows
-	        	int numCols = columnNames.length;//the numer of fields for a move/dvd
-	        	
-	        	String data[][] = new String[numRows][numCols];
-	        	
-	        	for(int row = 0; row < numRows; row++){
-	        		for (int col = 0; col < numCols; col++) {
-	        			
-	        			//set entries array
-	        			data[row][col] = results.get(row).toString();
-	        		}
-	        	}
-	        	
-	        	System.out.println("we wouldd be showing you a  cool table right now, but ...\n"+ 
-	        			"rows: " + numRows + " cols: " + numCols);
-	            
-	        	DefaultTableModel dataModel = new DefaultTableModel(data, columnNames);
-	        	resultTable.setModel(dataModel);
-	        	resultTable.setVisible(true);
-	        	
-	        	
-	        	JTable table = new JTable(data, columnNames);
-	        	table.setVisible(true);
-	            JScrollPane scrollPane = new JScrollPane(table);
-	            scrollPane.setVisible(true);
-	            this.add(scrollPane);
-
-
-	        	
-	        	
-	        	
-	        	
+        		columnNames = dvdColumnNames;
+        		type = "DVD";
         	} else if (selectedFieldType=="Books"){
-        		
+        		columnNames = bookColumnNames;
+        		type = "Book";
+        	} else if (selectedFieldType=="Games") {
+        		columnNames = videoGameColumnNames;
+        		type = "VideoGame";
+        	} else if (selectedFieldType == "CDs") {
+        		columnNames = cdColumnNames;
+        		type = "CD";
         	}
         	
+        	for (Item result : results) {
+        		if ((!(result.getType().equals(type))) || (selectedFieldType == "Any Item")) {
+        			results.add(result);
+        		}
+        	}
+        	
+        	int numRows = results.size();//the number of rows
+        	int numCols = columnNames.length;//the numer of fields for a move/dvd
+        	
+        	String data[][] = new String[numRows][numCols];
+        	
+        	for(int row = 0; row < numRows; row++){
+        		for (int col = 0; col < numCols; col++) {
+        			
+        			//set entries array
+        			data[row][col] = results.get(row).toString();
+        		}
+        	}
+        	
+        	resultTable.setModel(new DefaultTableModel(data, columnNames));
+        	resultTable.setVisible(true);
         	
         	///http://java.sun.com/docs/books/tutorial/uiswing/examples/components/SimpleTableDemoProject/src/components/SimpleTableDemo.java
         }
