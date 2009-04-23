@@ -29,6 +29,14 @@ public class iRaptorGUI extends javax.swing.JFrame {
 	/** Creates new form iRaptorGUITest */
     public iRaptorGUI() {
         initComponents();
+        UITableUtil gameTableUtil = new UITableUtil(gameTable, "game");
+        UITableUtil movieTableUtil = new UITableUtil(movieTable, "movie");
+        UITableUtil cdTableUtil = new UITableUtil(CDTable, "cd");
+        UITableUtil bookTableUtil = new UITableUtil(bookTable, "book");
+        gameTableUtil.updateTable();
+    	bookTableUtil.updateTable();
+    	movieTableUtil.updateTable();
+        cdTableUtil.updateTable();
     }
 
     /** This method is called from within the constructor to
@@ -294,7 +302,14 @@ public class iRaptorGUI extends javax.swing.JFrame {
      	  domain.Item edittedBook = DomainUtil.getItem(intSelectedID);
      	  edittedBook.addTag(a);
         }
-    	
+        UITableUtil gameTableUtil = new UITableUtil(gameTable, "game");
+        UITableUtil movieTableUtil = new UITableUtil(movieTable, "movie");
+        UITableUtil cdTableUtil = new UITableUtil(CDTable, "cd");
+        UITableUtil bookTableUtil = new UITableUtil(bookTable, "book");
+        movieTableUtil.updateTable();
+        gameTableUtil.updateTable();
+        cdTableUtil.updateTable();
+        bookTableUtil.updateTable();
     }
     private void addItemButtonActionPerformed(java.awt.event.ActionEvent evt) {                                              
         
