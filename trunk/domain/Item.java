@@ -97,7 +97,7 @@ public abstract class Item {
 	 */
 	private void populateTags() throws SQLException {
 		String sqltxt = 
-			    "SELECT Tag.name " +
+			    "SELECT name " +
 			      "FROM Tag " +
 			"INNER JOIN ItemTag " +
 			        "ON ItemTag.tagid = Tag.tagId " +
@@ -333,4 +333,6 @@ public abstract class Item {
 	}
 	
 	public abstract String toString();
+	
+	public abstract String getType();
 }
