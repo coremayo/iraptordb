@@ -41,7 +41,7 @@ public class searchRaptorGUI extends javax.swing.JFrame {
         itemComboBox = new javax.swing.JComboBox();
         itemLabel = new javax.swing.JLabel();
         resultTable = new javax.swing.JTable();
-        jScrollPane1 = new javax.swing.JScrollPane(resultTable);
+        resultScrollPane = new javax.swing.JScrollPane(resultTable);
         fieldComboBox = new javax.swing.JComboBox();
         fieldLabel = new javax.swing.JLabel();
         searchTextField = new javax.swing.JTextField();
@@ -114,7 +114,7 @@ public class searchRaptorGUI extends javax.swing.JFrame {
                 .addGap(86, 86, 86))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addComponent(resultScrollPane)
 //                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(20, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -167,7 +167,7 @@ public class searchRaptorGUI extends javax.swing.JFrame {
                 .addGap(37, 37, 37)
                 .addComponent(resultLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1)
+                .addComponent(resultScrollPane)
 //                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31))
         );
@@ -261,7 +261,7 @@ public class searchRaptorGUI extends javax.swing.JFrame {
     private javax.swing.JLabel fieldLabel;
     private javax.swing.JLabel textLabel;
     private javax.swing.JLabel resultLabel;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane resultScrollPane;
     private javax.swing.JTable resultTable;
     private javax.swing.JTextField searchTextField;
     
@@ -270,7 +270,7 @@ public class searchRaptorGUI extends javax.swing.JFrame {
     private String enteredText;
 
 	String[] columnNames = {
-		"idNum",
+		"ID",
 		"Title",
 		"Genre",
 		"Type"

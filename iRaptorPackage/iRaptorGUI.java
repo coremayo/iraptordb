@@ -3,8 +3,6 @@ package iRaptorPackage;
 import domain.*;
 
 import java.io.File;
-import java.util.*;
-
 import javax.swing.*;
 
 
@@ -46,16 +44,16 @@ public class iRaptorGUI extends javax.swing.JFrame {
      */
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
         tabPane = new javax.swing.JTabbedPane();
-        jScrollPane3 = new javax.swing.JScrollPane();
+        tabScrollPane = new javax.swing.JScrollPane(tabPane);
+        gameScrollPane = new javax.swing.JScrollPane();
         gameTable = new javax.swing.JTable();
-        jScrollPane4 = new javax.swing.JScrollPane();
+        cdScrollPane = new javax.swing.JScrollPane();
         CDTable = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
-        jScrollPane5 = new javax.swing.JScrollPane();
+        movieScrollPane = new javax.swing.JScrollPane();
         movieTable = new javax.swing.JTable();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        bookScrollPane = new javax.swing.JScrollPane();
         bookTable = new javax.swing.JTable();
         addItemButton = new javax.swing.JButton();
         removeItemButton = new javax.swing.JButton();
@@ -68,6 +66,11 @@ public class iRaptorGUI extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         tagButton = new javax.swing.JButton();
+        
+        movieTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+        bookTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+        CDTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+        gameTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("iRaptor");
@@ -94,12 +97,12 @@ public class iRaptorGUI extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "idNum", "Name", "Genre", "Rating", "Date Added", "Year Released", "Tags", "Other"
+                "ID", "Name", "Genre", "Rating", "Date Added", "Year Released", "Tags", "Other"
             }
         ));
-        jScrollPane3.setViewportView(gameTable);
+        gameScrollPane.setViewportView(gameTable);
 
-        tabPane.addTab("Games", jScrollPane3);
+        tabPane.addTab("Games", gameScrollPane);
 
         CDTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -109,12 +112,12 @@ public class iRaptorGUI extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "idNum", "Name", "Artists", "Genre", "Rating", "Year Released", "Date Added", "Tags", "Other"
+                "ID", "Name", "Artists", "Genre", "Rating", "Year Released", "Date Added", "Tags", "Other"
             }
         ));
-        jScrollPane4.setViewportView(CDTable);
+        cdScrollPane.setViewportView(CDTable);
 
-        tabPane.addTab("CDs", jScrollPane4);
+        tabPane.addTab("CDs", cdScrollPane);
 
         movieTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -124,21 +127,21 @@ public class iRaptorGUI extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "idNum", "Name", "Genre", "Rating", "Year Released", "Date Added","Tags", "Notes"
+                "ID", "Name", "Genre", "Rating", "Year Released", "Date Added","Tags", "Notes"
             }
         ));
-        jScrollPane5.setViewportView(movieTable);
+        movieScrollPane.setViewportView(movieTable);
 
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jScrollPane5, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 896, Short.MAX_VALUE)
+            .add(movieScrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 896, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel1Layout.createSequentialGroup()
-                .add(jScrollPane5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 380, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(movieScrollPane, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 380, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -152,14 +155,14 @@ public class iRaptorGUI extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "idNum", "Name", "Authors", "Genre", "Rating", "Date Added", "Year Released", "isbn", "Publisher", "Tags", "Other"
+                "ID", "Name", "Authors", "Genre", "Rating", "Date Added", "Year Released", "isbn", "Publisher", "Tags", "Other"
             }
         ));
-        jScrollPane2.setViewportView(bookTable);
+        bookScrollPane.setViewportView(bookTable);
         bookTable.getColumnModel().getColumn(5).setResizable(false);
         bookTable.getColumnModel().getColumn(8).setResizable(false);
 
-        tabPane.addTab("Books", jScrollPane2);
+        tabPane.addTab("Books", bookScrollPane);
 
         addItemButton.setText("Add Item");
         addItemButton.addActionListener(new java.awt.event.ActionListener() {
@@ -225,7 +228,8 @@ public class iRaptorGUI extends javax.swing.JFrame {
             .add(layout.createSequentialGroup()
                 .addContainerGap()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(tabPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 901, Short.MAX_VALUE)
+//                    .add(tabScrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 901, Short.MAX_VALUE)
+                        .add(tabScrollPane)
                     .add(layout.createSequentialGroup()
                         .add(8, 8, 8)
                         .add(addItemButton)
@@ -257,7 +261,8 @@ public class iRaptorGUI extends javax.swing.JFrame {
                     .add(searchiRaptorButton)
                     .add(tagButton))
                 .add(35, 35, 35)
-                .add(tabPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
+                .add(tabScrollPane)
+//                .add(tabScrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
                 .add(11, 11, 11))
         );
 
@@ -383,11 +388,13 @@ public class iRaptorGUI extends javax.swing.JFrame {
        gameTableUtil.updateTable();
        cdTableUtil.updateTable();
        bookTableUtil.updateTable();
+       
+       
     }//GEN-LAST:event_updateButtonActionPerformed
 /* Searches the web for a description of the related item*/
-    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-    		
-    }//GEN-LAST:event_searchButtonActionPerformed
+//    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
+//    		
+//    }//GEN-LAST:event_searchButtonActionPerformed
 
     private void searchWebButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchWebButtonActionPerformed
         int selectedIndex = tabPane.getSelectedIndex();
@@ -496,11 +503,11 @@ public class iRaptorGUI extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane bookScrollPane;
+    private javax.swing.JScrollPane gameScrollPane;
+    private javax.swing.JScrollPane cdScrollPane;
+    private javax.swing.JScrollPane movieScrollPane;
+    private javax.swing.JScrollPane tabScrollPane;
     private javax.swing.JTable movieTable;
     private javax.swing.JButton recommendButton;
     private javax.swing.JButton removeItemButton;
